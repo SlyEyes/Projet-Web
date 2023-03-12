@@ -1,0 +1,46 @@
+version: '3.9'
+
+
+services:
+    app:
+        build: .
+        image: linkedout/app
+        hostname: linkedout-app
+        restart: unless-stopped
+        volumes:
+            - ./www:/var/www/html
+            - ./apache2/sites-enabled:/etc/apache2/sites-enabled
+        networks:
+            - internal
+            - external
+        depends_on:
+            -   db
+
+    db:
+        image: mysql:8.0
+        hostname: linkedout-db
+        restart: unless-stopped
+        volumes:
+            - linkedout-mysql:/var/lib/mysql
+        networks:
+            - internal
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+
+volumes:
+    linkedout-mysql:
+        external: true
+        name: linkedout-mysql
+
+
+networks:
+    internal:
+        external: false
+        name: linkedout-internal
+    external:
+        external: true
+        name: linkedout

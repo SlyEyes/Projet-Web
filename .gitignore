@@ -1,0 +1,7 @@
+# Editors
+.idea
+.vscode
+
+# Env
+.env
+!.env.example
