@@ -5,3 +5,6 @@
 # Env
 .env
 !.env.example
+
+# Php
+www/vendor

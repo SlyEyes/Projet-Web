@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+args="$*"
+command="composer $args"
+
+docker run -it --rm -v /${PWD}/www:/app ${command}

@@ -1,0 +1,13 @@
+{
+    "name": "linkedout/app",
+    "description": "The next generation internship finder for CESI",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Linkedout\\App\\": "src/"
+        }
+    },
+    "require": {
+        "josegonzalez/dotenv": "dev-master"
+    }
+}
