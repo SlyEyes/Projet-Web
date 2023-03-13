@@ -8,6 +8,7 @@
         }
     },
     "require": {
-        "josegonzalez/dotenv": "dev-master"
+        "josegonzalez/dotenv": "dev-master",
+        "klein/klein": "^2.1"
     }
 }
