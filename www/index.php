@@ -4,7 +4,9 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Import the classes
+use Jenssegers\Blade\Blade;
 use Klein\Klein;
+use Linkedout\App\controllers;
 
 // Set error reporting
 error_reporting(E_ALL ^ E_DEPRECATED);
@@ -22,11 +24,21 @@ if (!getenv('MYSQL_HOST') || !getenv('MYSQL_DATABASE') || !getenv('MYSQL_USER') 
 }
 
 // Template engine
-$blade = new Jenssegers\Blade\Blade(__DIR__ . '/views', __DIR__ . '/cache');
+$blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
+
+// Database connection
+$database = new PDO('mysql:host=' . $_ENV['MYSQL_HOST'] . ';dbname=' . $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
 
 // Configure the router
 $klein = new Klein();
 
+// Routes
+$klein->respond('GET', '/', function () use ($blade, $database) {
+    $controller = new controllers\IndexController($blade, $database);
+    return $controller->render();
+});
+
+// Error handling
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
         case 404:
