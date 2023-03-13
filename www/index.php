@@ -21,6 +21,9 @@ if (!getenv('MYSQL_HOST') || !getenv('MYSQL_DATABASE') || !getenv('MYSQL_USER') 
     throw new Exception('Missing configuration variables');
 }
 
+// Template engine
+$blade = new Jenssegers\Blade\Blade(__DIR__ . '/views', __DIR__ . '/cache');
+
 // Configure the router
 $klein = new Klein();
 
