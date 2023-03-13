@@ -9,3 +9,5 @@
 # Php
 www/vendor
 www/cache
+www/resources/**/*.css
+www/resources/**/*.css.map

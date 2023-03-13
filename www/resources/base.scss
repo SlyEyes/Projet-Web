@@ -1,0 +1,25 @@
+:root {
+    --violet: #765FF7;
+    --black: #160F3D;
+    --white: #F8F7FD;
+    --light-gray: #EEECF9;
+    --gray: #D3D2DE;
+    --dark-gray: #8A8897;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+*:not(pre) {
+    font-family: 'Inter', sans-serif;
+}
+
+body, html {
+    padding: 0;
+    margin: 0;
+    background-color: var(--white);
+    color: var(--black);
+    font-weight: 400;
+    font-size: 1rem;
+}

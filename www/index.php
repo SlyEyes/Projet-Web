@@ -25,6 +25,9 @@ if (!getenv('MYSQL_HOST') || !getenv('MYSQL_DATABASE') || !getenv('MYSQL_USER') 
 
 // Template engine
 $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
+$blade->directive('pagestyle', function ($expression) {
+    return "<?php echo '<link rel=\"stylesheet\" href=\"/resources/pages/' . {$expression} . '.css\">'; ?>";
+});
 
 // Database connection
 $database = new PDO('mysql:host=' . $_ENV['MYSQL_HOST'] . ';dbname=' . $_ENV['MYSQL_DATABASE'], $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
