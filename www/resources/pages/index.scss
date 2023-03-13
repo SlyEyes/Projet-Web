@@ -1,2 +1,41 @@
 @import '../base';
 @import '../components/navbar';
+
+main {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 3rem;
+    max-width: var(--grid-width-sm);
+    width: 100%;
+}
+
+h1 span {
+    color: var(--violet);
+}
+
+form {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+form .btn-primary, form input {
+    border-radius: 1rem;
+}
+
+form input {
+    padding: 1rem;
+    background-color: var(--light-gray);
+    outline: none;
+    border: none;
+    flex: 1;
+}
