@@ -41,6 +41,11 @@ $klein->respond('GET', '/', function () use ($blade, $database) {
     return $controller->render();
 });
 
+$klein->respond('GET', '/login', function () use ($blade, $database) {
+    $controller = new controllers\LoginController($blade, $database);
+    return $controller->render();
+});
+
 // Error handling
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {

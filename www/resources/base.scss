@@ -1,10 +1,12 @@
 :root {
     --violet: #765FF7;
+    --dark-violet: #634fd1;
     --black: #160F3D;
     --white: #F8F7FD;
     --light-gray: #EEECF9;
     --gray: #D3D2DE;
     --dark-gray: #8A8897;
+    --grid-width-xs: 22.5rem;
 }
 
 * {
@@ -42,4 +44,31 @@ button, .btn {
     font-size: 1.125rem;
     line-height: 140%;
     letter-spacing: 0.02rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--violet);
+    color: var(--white);
+    border: none;
+    outline: none;
+    padding: .5rem 1rem;
+    border-radius: 0.5rem;
+
+    &:hover {
+        background-color: var(--dark-violet);
+    }
+}
+
+.input-field {
+    display: block;
+    padding: .75rem;
+    border: 1px solid var(--gray);
+    background-color: var(--white);
+    border-radius: 0.5rem;
+    outline: none;
+
+    &:focus {
+        border-color: var(--violet);
+    }
 }
