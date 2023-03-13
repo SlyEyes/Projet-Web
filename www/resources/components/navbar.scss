@@ -1,0 +1,33 @@
+@import '../base';
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 5rem;
+    padding: 0 1.5rem;
+
+    & .nav-logo .purple {
+        color: var(--violet);
+    }
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+nav a {
+    @extend .btn;
+    text-decoration: none;
+    color: inherit;
+
+    &.login-btn {
+        background-color: var(--violet);
+        color: var(--white);
+        padding: .5rem .75rem;
+        border-radius: .75rem;
+    }
+}

@@ -23,3 +23,23 @@ body, html {
     font-weight: 400;
     font-size: 1rem;
 }
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+h3 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+}
+
+button, .btn {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 140%;
+    letter-spacing: 0.02rem;
+}
