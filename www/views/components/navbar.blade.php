@@ -7,6 +7,6 @@
         <a href="/">Accueil</a>
         <a href="/search">Rechercher un stage</a>
         <a href="/about">À propos</a>
-        <a href="/login" class="login-btn">Connexion</a>
+        <a href="/login" class="btn btn-primary">Connexion</a>
     </nav>
 </header>
