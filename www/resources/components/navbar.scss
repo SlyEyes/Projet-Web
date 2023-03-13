@@ -20,10 +20,15 @@ header {
 nav {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
 }
 
 nav a {
     text-decoration: none;
     color: inherit;
+    display: block;
+    padding: 1rem;
+
+    &.btn {
+        margin-left: 1rem;
+    }
 }
