@@ -3,12 +3,13 @@ version: '3.9'
 
 services:
     app:
-        build: .
+        build:
+            context: .
+            target: prod
         image: linkedout/app
         hostname: linkedout-app
         restart: unless-stopped
         volumes:
-            - ./www:/var/www/html
             - ./apache2/sites-enabled:/etc/apache2/sites-enabled
         networks:
             - internal
