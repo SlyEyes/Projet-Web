@@ -3,6 +3,7 @@
 namespace Linkedout\App\controllers;
 
 use Linkedout\App\models;
+use Linkedout\App\services;
 
 class LoginController extends BaseController
 {
@@ -31,7 +32,12 @@ class LoginController extends BaseController
                 'email' => $email,
             ]);
 
-        $redirect = '/';
+        $redirect = '/profile';
+
+        $jwtService = new services\JwtService();
+        $token = $jwtService->generateToken(['id' => $person->id]);
+
+        setcookie('TOKEN', $token, time() + 3600 * 24 * 7, '/', '', true, true);
 
         http_response_code(302);
         header("Location: {$redirect}");
