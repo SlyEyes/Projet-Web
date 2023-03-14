@@ -16,12 +16,12 @@ class JwtService
         $this->decodeKey = new Key($this->encodeKey, 'HS256');
     }
 
-    public function encode(array $payload): string
+    public function generateToken(array $payload): string
     {
         return JWT::encode($payload, $this->encodeKey, 'HS256');
     }
 
-    public function decode(string $token): array
+    public function decodeToken(string $token): array
     {
         return (array)JWT::decode($token, $this->decodeKey);
     }
