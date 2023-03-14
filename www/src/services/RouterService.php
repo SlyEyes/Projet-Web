@@ -43,7 +43,8 @@ class RouterService
         $this->klein->onHttpError(function ($code, $router) {
             switch ($code) {
                 case 404:
-                    $router->response()->body('Page not found');
+                    $notFoundController = new controllers\NotFoundController($this->blade, $this->database);
+                    $router->response()->body($notFoundController->render());
                     break;
                 default:
                     $router->response()->body('An error has occurred');

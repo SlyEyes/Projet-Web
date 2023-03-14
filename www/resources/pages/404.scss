@@ -1,0 +1,23 @@
+@import '../base';
+@import '../components/navbar';
+
+main {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 2rem;
+    max-width: var(--grid-width-sm);
+    padding: 1rem;
+}
+
+h1, p {
+    margin: 0;
+}
