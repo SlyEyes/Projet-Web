@@ -11,6 +11,7 @@
         "josegonzalez/dotenv": "dev-master",
         "klein/klein": "^2.1",
         "jenssegers/blade": "^1.4",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "firebase/php-jwt": "^6.4"
     }
 }

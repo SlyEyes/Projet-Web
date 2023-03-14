@@ -29,7 +29,11 @@ class EnvService
     public static function checkEnv(): void
     {
         if (!getenv('MYSQL_HOST') || !getenv('MYSQL_DATABASE') || !getenv('MYSQL_USER') || !getenv('MYSQL_PASSWORD')) {
-            throw new Exception('Missing configuration variables');
+            throw new Exception('Missing database configuration variables');
+        }
+
+        if (!getenv('JWT_SECRET')) {
+            throw new Exception('Missing JWT secret variable');
         }
     }
 }

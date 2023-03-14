@@ -21,6 +21,7 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_HOST: ${MYSQL_HOST}
+            JWT_SECRET: ${JWT_SECRET}
 
     db:
         image: mysql:8.0
