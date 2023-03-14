@@ -32,3 +32,19 @@ nav a {
         margin-left: 1rem;
     }
 }
+
+.nav-profile {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.nav-profile-logo {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: var(--violet);
+    color: var(--white);
+}

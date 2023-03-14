@@ -10,9 +10,15 @@ class LoginController extends BaseController
     public function render(): string
     {
         $method = $_SERVER['REQUEST_METHOD'];
+        $personModel = new models\PersonModel($this->database);
 
-        if ($method == 'GET')
-            return $this->blade->make('pages.login');
+        if ($method == 'GET') {
+            $person = $personModel->getPersonFromJwt();
+
+            return $this->blade->make('pages.login', [
+                'person' => $person
+            ]);
+        }
 
         if (empty($_POST['email']) || empty($_POST['password']))
             return $this->blade->make('pages.login', [
@@ -22,7 +28,6 @@ class LoginController extends BaseController
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $personModel = new models\PersonModel($this->database);
 
         $person = $personModel->getPersonByEmail($email);
 
