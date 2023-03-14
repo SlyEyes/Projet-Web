@@ -32,7 +32,7 @@ class RouterService
             return $controller->render();
         });
 
-        $this->klein->respond('GET', '/login', function () {
+        $this->klein->respond(array('GET', 'POST'), '/login', function () {
             $controller = new controllers\LoginController($this->blade, $this->database);
             return $controller->render();
         });

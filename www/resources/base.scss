@@ -6,6 +6,7 @@
     --light-gray: #EEECF9;
     --gray: #D3D2DE;
     --dark-gray: #8A8897;
+    --red: #F53D3D;
     --grid-width-xs: 22.5rem;
     --grid-width-sm: 30rem;
 }
@@ -82,4 +83,9 @@ button, .btn {
     &:focus {
         border-color: var(--violet);
     }
+}
+
+.error {
+    color: var(--red);
+    font-weight: 500;
 }
