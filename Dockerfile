@@ -27,3 +27,5 @@ WORKDIR /var/www/html
 COPY www /var/www/html
 COPY --from=composer /var/www/html/vendor /var/www/html/vendor
 COPY --from=node /var/www/html/resources /var/www/html/resources
+
+RUN mkdir cache && chown www-data:www-data cache
