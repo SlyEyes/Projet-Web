@@ -5,6 +5,10 @@ main {
     display: grid;
     place-content: center;
     min-height: 100vh;
+
+    @media (max-width: 32rem) {
+        min-height: calc(100vh - 4rem);
+    }
 }
 
 section {
@@ -16,6 +20,7 @@ section {
     gap: 3rem;
     max-width: var(--grid-width-sm);
     width: 100%;
+    padding: 1rem;
 }
 
 h1 span {
@@ -26,6 +31,11 @@ form {
     display: flex;
     gap: 1rem;
     width: 100%;
+
+    @media (max-width: 32rem) {
+        flex-direction: column;
+        max-width: 20rem;
+    }
 }
 
 form .btn-primary, form input {
