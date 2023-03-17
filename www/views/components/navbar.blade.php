@@ -1,6 +1,8 @@
 <header>
     <h3 class="nav-logo">
-        <span>Linked</span><span class="purple">Out</span>
+        <a href="/">
+            <span>Linked</span><span class="purple">Out</span>
+        </a>
     </h3>
 
     <nav>

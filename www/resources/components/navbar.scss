@@ -55,6 +55,11 @@ nav {
     }
 }
 
+.nav-logo a, .nav-logo a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
 nav a {
     text-decoration: none;
     color: inherit;
