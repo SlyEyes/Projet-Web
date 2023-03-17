@@ -6,7 +6,7 @@ main {
     place-content: center;
     min-height: 100vh;
 
-    @media screen and (min-width: 32rem) {
+    @media screen and (max-width: 32rem) {
         min-height: calc(100vh - 4rem);
     }
 }
