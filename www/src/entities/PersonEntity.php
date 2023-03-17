@@ -1,23 +1,23 @@
 <?php
-
+// TODO : add attributes for promotions and campus
 namespace Linkedout\App\entities;
 
+// This class is used to store the data of a person
 class PersonEntity
 {
-    public int $id;
     public string $email;
     public string $password;
     public string $firstName;
     public string $lastName;
-    public int $roleId;
+    public string $role;
 
+    // This function is used to create a new PersonEntity object
     public function __construct(array $rawData)
     {
-        $this->id = $rawData['personId'];
         $this->email = $rawData['email'];
         $this->password = $rawData['password'];
         $this->firstName = $rawData['firstName'];
         $this->lastName = $rawData['lastName'];
-        $this->roleId = $rawData['roleId'];
+        $this->role = $rawData['roleName'];
     }
 }
