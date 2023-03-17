@@ -36,6 +36,11 @@ class RouterService
             $controller = new controllers\LoginController($this->blade, $this->database);
             return $controller->render();
         });
+
+        $this->klein->respond('GET', '/company/[i:id]', function () {
+            $controller = new controllers\CompanyController($this->blade, $this->database);
+            return $controller->render();
+        });
     }
 
     public function addErrorHandling(): void
