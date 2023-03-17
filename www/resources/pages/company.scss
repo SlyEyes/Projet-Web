@@ -1,0 +1,74 @@
+@import '../base';
+@import '../components/navbar';
+
+main {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+
+    @media (max-width: 32rem) {
+        min-height: calc(100vh - 4rem);
+    }
+}
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 3rem;
+    max-width: var(--grid-width-sm);
+    width: 100%;
+    padding: 1rem;
+    background-color: rgb(236, 235, 235) ;
+    border-radius: 2%;
+}
+article {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    text-align: start;
+    gap: 3rem;
+    max-width: var(--grid-width-sm);
+    width: 100%;
+    padding: 1rem;
+    background-color: rgb(236, 235, 235) ;
+    border-radius: 2%;
+
+}
+.test {
+    display: inline;
+}
+h2{
+    align-items: start;
+    justify-content: start;
+    text-align: start;
+}
+h3{
+    align-items: start;
+    justify-content: start;
+    text-align: start;
+}
+.a{
+    align-items: start;
+    justify-content: space-between;
+    width: 100px;
+    font-size: 10px;
+    grid-template-columns: 90px 90px 90px;
+    border: 15px solid rgb(255, 255, 255);
+    background-color: white;
+    padding: 0px;
+    margin: 10px;
+    display: grid ;
+
+}
+.a :first-child{
+    align-self: center;
+}
+
+.box {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px 2em;
+  }
