@@ -16,9 +16,9 @@ class PersonModel extends BaseModel
                     persons.password, 
                     persons.firstName, 
                     persons.lastName,
-                    role.roleName
+                    roles.roleName
                 FROM persons 
-                INNER JOIN role ON persons.roleId = role.roleId
+                INNER JOIN roles ON persons.roleId = roles.roleId
                 WHERE personId = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
@@ -36,9 +36,9 @@ class PersonModel extends BaseModel
                     persons.password,
                     persons.firstName,
                     persons.lastName,
-                    role.roleName
+                    roles.roleName
                 FROM persons 
-                INNER JOIN role ON persons.roleId = role.roleId
+                INNER JOIN roles ON persons.roleId = roles.roleId
                 WHERE email = :email';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['email' => $email]);
