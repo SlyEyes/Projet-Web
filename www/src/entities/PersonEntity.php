@@ -2,7 +2,12 @@
 // TODO : add attributes for promotions and campus
 namespace Linkedout\App\entities;
 
-// This class is used to store the data of a person
+use Linkedout\App\enums;
+
+/**
+ * The person entity is responsible for storing all the data related to a person
+ * @package Linkedout\App\entities
+ */
 class PersonEntity
 {
     public int $id;
@@ -10,7 +15,7 @@ class PersonEntity
     public string $password;
     public string $firstName;
     public string $lastName;
-    public string $role;
+    public enums\RoleEnum $role;
 
     // This function is used to create a new PersonEntity object
     public function __construct(array $rawData)
@@ -20,6 +25,6 @@ class PersonEntity
         $this->password = $rawData['password'];
         $this->firstName = $rawData['firstName'];
         $this->lastName = $rawData['lastName'];
-        $this->role = $rawData['roleName'];
+        $this->role = enums\RoleEnum::fromValue($rawData['roleName']);
     }
 }
