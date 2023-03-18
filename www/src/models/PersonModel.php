@@ -46,6 +46,7 @@ class PersonModel extends BaseModel
     public function getPersonByEmail(string $email): ?PersonEntity
     {
         $sql = 'SELECT 
+                    persons.personId, 
                     persons.email,
                     persons.password,
                     persons.firstName,
