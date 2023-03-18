@@ -19,6 +19,11 @@ class TemplateService
         $this->viewsPath = realpath(__DIR__ . '/../../views');
         $this->cachePath = realpath(__DIR__ . '/../../cache');
 
+        // Check if the cache directory exists, if not, create it
+        if (!$this->viewsPath || !is_dir($this->cachePath)) {
+            mkdir(__DIR__ . '/../../cache');
+        }
+
         $this->blade = new Blade($this->viewsPath, $this->cachePath);
     }
 
