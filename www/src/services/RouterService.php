@@ -7,6 +7,10 @@ use Klein\Klein;
 use Linkedout\App\controllers;
 use PDO;
 
+/**
+ * The router service is responsible for routing the requests to the correct controller
+ * @package Linkedout\App\services
+ */
 class RouterService
 {
     protected Klein $klein;
@@ -20,11 +24,19 @@ class RouterService
         $this->klein = new Klein();
     }
 
+    /**
+     * The getter for the Klein router instance
+     * @return Klein
+     */
     public function getKlein(): Klein
     {
         return $this->klein;
     }
 
+    /**
+     * Add all the declared routes to the router
+     * @return void
+     */
     public function addRoutes(): void
     {
         $this->klein->respond('GET', '/', function () {
@@ -43,6 +55,10 @@ class RouterService
         });
     }
 
+    /**
+     * Add the error handling to the router
+     * @return void
+     */
     public function addErrorHandling(): void
     {
         $this->klein->onHttpError(function ($code, $router) {
@@ -57,6 +73,10 @@ class RouterService
         });
     }
 
+    /**
+     * Handle the request to the router and dispatch it to the correct controller
+     * @return void
+     */
     public function dispatch(): void
     {
         $this->klein->dispatch();

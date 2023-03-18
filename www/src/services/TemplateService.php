@@ -4,6 +4,10 @@ namespace Linkedout\App\services;
 
 use Jenssegers\Blade\Blade;
 
+/**
+ * The template service is responsible for loading the template engine and adding custom directives
+ * @package Linkedout\App\services
+ */
 class TemplateService
 {
     protected Blade $blade;
@@ -18,11 +22,19 @@ class TemplateService
         $this->blade = new Blade($this->viewsPath, $this->cachePath);
     }
 
+    /**
+     * The getter for the Blade template engine instance
+     * @return Blade
+     */
     public function getBlade(): Blade
     {
         return $this->blade;
     }
 
+    /**
+     * Add custom directives to the template engine
+     * @return void
+     */
     public function addDirectives(): void
     {
         $this->blade->directive('pagestyle', function ($expression) {
