@@ -14,6 +14,13 @@ $envService = new services\EnvService();
 $envService->loadEnv();
 $envService->checkEnv();
 
+// Development mode cache headers
+if (getenv('APP_ENV') === 'development') {
+    header('Cache-Control: no-cache, no-store, must-revalidate');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+}
+
 // Template engine
 $bladeService = new services\TemplateService();
 $bladeService->addDirectives();

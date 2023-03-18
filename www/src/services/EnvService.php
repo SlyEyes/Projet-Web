@@ -35,5 +35,9 @@ class EnvService
         if (!getenv('JWT_SECRET')) {
             throw new Exception('Missing JWT secret variable');
         }
+
+        if (!getenv('APP_ENV')) {
+            $_ENV['APP_ENV'] = 'production';
+        }
     }
 }

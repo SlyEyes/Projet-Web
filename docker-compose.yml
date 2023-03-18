@@ -22,6 +22,7 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_HOST: ${MYSQL_HOST}
             JWT_SECRET: ${JWT_SECRET}
+            APP_ENV: production
 
     db:
         image: mysql:8.0
