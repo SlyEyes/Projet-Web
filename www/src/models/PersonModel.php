@@ -5,10 +5,19 @@ namespace Linkedout\App\models;
 use Linkedout\App\entities\PersonEntity;
 use Linkedout\App\services;
 
-// This class is used to make requests to the database for the person entity
+
+/**
+ * Model for the person entity
+ * @package Linkedout\App\models
+ */
 class PersonModel extends BaseModel
 {
-    public function getPersonById($id): ?PersonEntity
+    /**
+     * This function is used to get a person from the database
+     * @param $id int|string The id of the person
+     * @return PersonEntity|null The person entity or null if not found
+     */
+    public function getPersonById(mixed $id): ?PersonEntity
     {
         $sql = 'SELECT 
                     persons.personId, 
@@ -29,7 +38,12 @@ class PersonModel extends BaseModel
         return new PersonEntity($result);
     }
 
-    public function getPersonByEmail($email): ?PersonEntity
+    /**
+     * This function is used to get a person from the database
+     * @param $email string The email of the person
+     * @return PersonEntity|null The person entity or null if not found
+     */
+    public function getPersonByEmail(string $email): ?PersonEntity
     {
         $sql = 'SELECT 
                     persons.email,
@@ -49,7 +63,13 @@ class PersonModel extends BaseModel
         return new PersonEntity($result);
     }
 
-    // This function is used to get the person's id from a cookie
+    /**
+     * This function is used to get the current logged in person based on the jwt token.
+     * The token is stored in a cookie named TOKEN, and contains the id of the person.
+     * To decode the token, the JwtService is used.
+     * @return PersonEntity|null The person entity or null if not found
+     * @see JwtService
+     */
     public function getPersonFromJwt(): ?PersonEntity
     {
         if (empty($_COOKIE['TOKEN']))
