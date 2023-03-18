@@ -6,6 +6,7 @@ namespace Linkedout\App\entities;
 // This class is used to store the data of an internship
 class InternshipEntity
 {
+    public int $id;
     public string $description;
     public string $skills;
     public int $salary;
@@ -21,6 +22,7 @@ class InternshipEntity
     // This function is used to create a new InternshipEntity object
     public function __construct(array $rawData)
     {
+        $this->id = $rawData['internshipId'];
         $this->description = $rawData['internshipDescription'];
         $this->skills = $rawData['internshipSkills'];
         $this->salary = $rawData['internshipSalary'];
