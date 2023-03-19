@@ -45,5 +45,9 @@ class TemplateService
         $this->blade->directive('pagestyle', function ($expression) {
             return "<?php echo '<link rel=\"stylesheet\" href=\"/resources/pages/' . {$expression} . '.css\">'; ?>";
         });
+
+        $this->blade->directive('pagescript', function ($expression) {
+            return "<?php echo '<script src=\"/resources/pages/' . {$expression} . '.js\" defer></script>'; ?>";
+        });
     }
 }
