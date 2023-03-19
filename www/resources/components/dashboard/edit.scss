@@ -1,0 +1,21 @@
+@import '../../base';
+
+#logo-preview span {
+    margin: 1rem 0 .5rem;
+    display: block;
+}
+
+#logo-preview img {
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 0;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 8rem;
+}

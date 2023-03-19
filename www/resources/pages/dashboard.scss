@@ -2,6 +2,7 @@
 @import '../components/navbar';
 @import '../components/dashboard/aside';
 @import '../components/dashboard/list';
+@import '../components/dashboard/edit';
 
 main {
     display: grid;
@@ -36,6 +37,7 @@ section {
     color: var(--white);
     font-size: 1.25rem;
     cursor: pointer;
+    border: none;
 
     &:hover {
         background-color: var(--dark-violet);
@@ -45,4 +47,23 @@ section {
         width: 1.5rem;
         height: 1.5rem;
     }
+}
+
+label {
+    display: block;
+    margin: 1rem 0 .5rem;
+}
+
+form input:not([type="checkbox"]):not([type="radio"]), form select {
+    width: 100%;
+}
+
+.field-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.checkbox {
+    height: 2.5rem;
 }

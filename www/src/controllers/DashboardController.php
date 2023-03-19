@@ -49,36 +49,82 @@ class DashboardController extends BaseController
             exit;
         }
 
+        $validCollectionID = is_numeric($this->destination) && $this->destination > 0;
+        if (!empty($this->destination) && $this->destination !== 'new' && !$validCollectionID) {
+            header("Location: /dashboard/{$this->collection}");
+            exit;
+        }
+
         switch ($this->collection) {
             case 'students':
-                $data = $personModel->getAllPersons(roles: [RoleEnum::STUDENT]);
+                if (empty($this->destination))
+                    $data = $personModel->getAllPersons(roles: [RoleEnum::STUDENT]);
+                elseif ($validCollectionID)
+                    $data = $personModel->getPersonById($this->destination);
                 break;
             case 'tutors':
-                $data = $personModel->getAllPersons(roles: [RoleEnum::TUTOR]);
+                if (empty($this->destination))
+                    $data = $personModel->getAllPersons(roles: [RoleEnum::TUTOR]);
+                elseif ($validCollectionID)
+                    $data = $personModel->getPersonById($this->destination);
                 break;
             case 'administrators':
-                $data = $personModel->getAllPersons(roles: [RoleEnum::ADMINISTRATOR]);
+                if (empty($this->destination))
+                    $data = $personModel->getAllPersons(roles: [RoleEnum::ADMINISTRATOR]);
+                elseif ($validCollectionID)
+                    $data = $personModel->getPersonById($this->destination);
                 break;
             case 'internships':
                 $internshipModel = new models\InternshipModel($this->database);
-                $data = $internshipModel->getAllInternships();
+                if (empty($this->destination))
+                    $data = $internshipModel->getAllInternships();
+                elseif ($validCollectionID)
+                    $data = $internshipModel->getInternshipById($this->destination);
                 break;
             case 'enterprises':
                 $enterpriseModel = new models\CompanyModel($this->database);
-                $data = $enterpriseModel->getAllEnterprises();
+                if (empty($this->destination))
+                    $data = $enterpriseModel->getAllEnterprises();
+                elseif ($validCollectionID)
+                    $data = $enterpriseModel->getCompanyById($this->destination);
                 break;
         }
 
+        $pageTitle = $validCollectionID && !empty($data)
+            ? $this->getDynamicPageTitle($data)
+            : $this->getStaticPageTitle();
+
         return $this->blade->render('pages.dashboard', [
             'person' => $person,
-            'pageTitle' => $this->getPageTitle(),
+            'pageTitle' => $pageTitle,
             'collection' => $this->collection,
-            'data' => $data,
+            'data' => $data ?? null,
             'destination' => $this->destination,
         ]);
     }
 
-    private function getPageTitle(): string
+    /**
+     * Returns the page title depending on the collection and the data.
+     * It generates a title for the edit page
+     * @param mixed $data The data to use to generate the title
+     * @return string The page title
+     */
+    private function getDynamicPageTitle(mixed $data): string
+    {
+        return match ($this->collection) {
+            'students', 'tutors', 'administrators' => 'Modification de ' . $data->firstName . ' ' . $data->lastName,
+            'internships' => 'Modification de ' . $data->title,
+            'enterprises' => 'Modification de ' . $data->name,
+            default => 'Erreur',
+        };
+    }
+
+    /**
+     * Returns the page title depending on the collection and the destination.
+     * It generates a title for the list and the new pages
+     * @return string The page title
+     */
+    private function getStaticPageTitle(): string
     {
         $translations = [
             'students' => [

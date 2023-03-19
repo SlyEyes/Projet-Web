@@ -7,3 +7,22 @@ const handleRowClick = row => () => {
 document.querySelectorAll('tbody tr').forEach(row => {
     row.addEventListener('click', handleRowClick(row));
 });
+
+
+// Live preview of the logo in the company edit page
+if (window.location.href.match(/\/enterprises\/(new|\d+)$/)) {
+    const img = document.querySelector('#logo-preview img');
+    const logoInput = document.getElementById('logo');
+
+    logoInput.addEventListener('input', e => {
+        img.src = e.target.value;
+    });
+
+    img.addEventListener('load', () => {
+        logoInput.setCustomValidity('');
+    });
+
+    img.addEventListener('error', () => {
+        logoInput.setCustomValidity('Image invalide');
+    });
+}

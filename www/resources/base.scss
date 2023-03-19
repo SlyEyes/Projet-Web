@@ -86,6 +86,22 @@ button, .btn {
     }
 }
 
+.checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: .25rem;
+
+    label {
+        margin: 0;
+        user-select: none;
+    }
+
+    input {
+        accent-color: var(--violet);
+    }
+}
+
 .error {
     color: var(--red);
     font-weight: 500;
