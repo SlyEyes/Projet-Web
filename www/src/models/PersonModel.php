@@ -3,6 +3,7 @@
 namespace Linkedout\App\models;
 
 use Linkedout\App\entities\PersonEntity;
+use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\services;
 
 
@@ -84,5 +85,39 @@ class PersonModel extends BaseModel
         }
 
         return $this->getPersonById($tokenData['id']);
+    }
+
+    /**
+     * This function is used to get all the persons from the database
+     * @param $limit int The limit of the query
+     * @param $offset int The offset of the query
+     * @return array The array of person entities
+     */
+    public function getAllPersons(int $limit = 50, int $offset = 0, array $roles = [RoleEnum::STUDENT, RoleEnum::TUTOR, RoleEnum::ADMINISTRATOR]): array
+    {
+        $roles = array_map(fn($role) => $role->value, $roles);
+        $sql = 'SELECT 
+                    persons.personId, 
+                    persons.email, 
+                    persons.password, 
+                    persons.firstName, 
+                    persons.lastName,
+                    roles.roleName
+                FROM persons 
+                INNER JOIN roles ON persons.roleId = roles.roleId
+                WHERE roles.roleName IN (:roles)
+                LIMIT :limit OFFSET :offset';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue('offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindValue('roles', implode(',', $roles));
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        $persons = [];
+        foreach ($result as $person) {
+            $persons[] = new PersonEntity($person);
+        }
+        return $persons;
     }
 }

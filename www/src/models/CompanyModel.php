@@ -3,7 +3,6 @@
 namespace Linkedout\App\models;
 
 use Linkedout\App\entities\CompanyEntity;
-use Linkedout\App\services;
 
 /**
  * Model for the company entity
@@ -93,11 +92,40 @@ class CompanyModel extends BaseModel
         ]);
 
         $result = $statement->fetch();
-        if (!$result)
-        {
+        if (!$result) {
             return null;
         }
 
         return new CompanyEntity($result);
+    }
+
+    /**
+     * This function is used to get all companies from the database
+     * @param int $limit The number of companies to return
+     * @param int $offset The offset of the first company to return
+     * @return CompanyEntity[] The company entity or null if not found
+     */
+    public function getAllEnterprises(int $limit = 50, int $offset = 0): array
+    {
+        $sql = 'SELECT 
+                    companies.companyId,
+                    companies.companyLogo, 
+                    companies.companyName, 
+                    companies.companySector, 
+                    companies.companyWebsite, 
+                    companies.maskedCompany
+                FROM companies
+                LIMIT :limit 
+                OFFSET :offset';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        if (!$result) {
+            return [];
+        }
+        return array_map(fn($internship) => new CompanyEntity($internship), $result);
     }
 }
