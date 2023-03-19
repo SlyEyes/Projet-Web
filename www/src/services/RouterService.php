@@ -53,6 +53,12 @@ class RouterService
             $controller = new controllers\CompanyController($this->blade, $this->database);
             return $controller->render();
         });
+
+        $this->klein->respond(array('GET', 'POST'), '/dashboard/[a:collection]?/[a:destination]?', function ($request) {
+            $controller = new controllers\DashboardController($this->blade, $this->database);
+            $controller->setRouteParams($request->collection, $request->destination);
+            return $controller->render();
+        });
     }
 
     /**
