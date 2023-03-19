@@ -17,7 +17,24 @@ class InternshipModel extends BaseModel
      */
     public function getInternshipById (int $id): ?InternshipEntity
     {
-        $sql_request = ''; // TODO: add sql request
+        $sql_request = 'SELECT internshipId, 
+                            internshipDescription, 
+                            internshipSkills, 
+                            internshipSalary, 
+                            internshipOfferDate, 
+                            internshipBeginDate, 
+                            internshipEndDate, 
+                            numberPlaces, 
+                            maskedInternship,
+                            companies.companyId,
+                            companies.companyName AS company,
+                            cities.cityId,
+                            cities.cityName AS city,
+                            cities.zipcode AS cityZipCode
+                        FROM internships
+                        INNER JOIN cities ON internships.cityId = cities.cityId
+                        INNER JOIN companies ON internships.companyId = companies.companyId
+                        WHERE internshipId = :id';
         $statement = $this->db->prepare($sql_request);
         $statement->execute([
             'id' => $id,
