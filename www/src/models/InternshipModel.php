@@ -90,3 +90,34 @@ class InternshipModel extends BaseModel
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
 }
+
+    /**
+     * This function is used to get an internship from the database
+     * @param $id int The id of a company
+     * @return array all internships from a company
+     */
+    public function getInternshipsByCompanyId(int $id): array
+    {
+        $sql_request = 'SELECT 
+                    internshipId, 
+                    internshipTitle, 
+                    internshipBeginDate, 
+                    internshipEndDate, 
+                    numberPlaces, 
+                    companies.companyId,
+                    cities.cityId,
+                    cities.cityName AS city,
+                    cities.zipcode AS cityZipCode
+                FROM internships
+                INNER JOIN cities ON internships.cityId = cities.cityId
+                INNER JOIN companies ON internships.companyId = companies.companyId
+                WHERE companies.companyId = :id'
+                $statement = $this->db->prepare($sql_request);
+                $statement->execute([
+                    'id' => $id,
+                ]);
+        
+                $result = $statement->fetch();
+        
+                return array_map(fn($internship) => new InternshipEntity($internship), $result);
+    }

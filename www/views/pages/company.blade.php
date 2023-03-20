@@ -9,8 +9,9 @@
 @section('content')
     <main>
         <section>
+            <img src="/public/icons/close-purple.svg" class="croix" alt=" " href="/">
             <div>
-        <img src="" alt=" "><h1 class="test" >Crédit Agricole</h1>
+        {{--<img src="{{ $company->logo }}" alt=" "><h1 class="test" >{{ $company->name }}</h1>--}}
             <div>Entreprise<div>
             <article>
                 Note : 4.5/5
@@ -18,21 +19,15 @@
 <h2>Stage Disponible</h2>
 </div>
 <article> 
-    <div class="box">
-<div class="a">
-Dévellopeur Web 
-chez Crédit Agricole
-<br>
-Strasbourg 4 mois
-</div>
-<div class="a">
-Dévellopeur Web 
-chez Crédit Agricole
-<br>
-Nancy 4 mois
-</div>
-</div>
-
+    @foreach ({{$company->stages}} as $stage)
+        <div class="box">
+            <div class="a">
+                {{ $internship->title }}
+                <br>
+                {{ $internship->city }} {{ $stage->endDate - $stage->beginDate }}
+            </div>
+        </div>
+    @endforeach
 </article>
 
         </section>
