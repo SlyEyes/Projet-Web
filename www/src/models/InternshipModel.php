@@ -123,7 +123,6 @@ class InternshipModel extends BaseModel
 
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
-}
 
     /**
      * This function is used to get an internship from the database
@@ -145,13 +144,15 @@ class InternshipModel extends BaseModel
                 FROM internships
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
-                WHERE companies.companyId = :id'
-                $statement = $this->db->prepare($sql_request);
-                $statement->execute([
-                    'id' => $id,
-                ]);
-        
-                $result = $statement->fetch();
-        
-                return array_map(fn($internship) => new InternshipEntity($internship), $result);
+                WHERE companies.companyId = :id';
+        $statement = $this->db->prepare($sql_request);
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        $result = $statement->fetch();
+
+        return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
+}
+
