@@ -128,4 +128,52 @@ class CompanyModel extends BaseModel
         }
         return array_map(fn($company) => new CompanyEntity($company), $result);
     }
+
+    /**
+     * This function is used to create a new company
+     * @param CompanyEntity $newCompany The company to create
+     * @return int The id of the new company
+     */
+    public function createCompany(CompanyEntity $newCompany): int
+    {
+        $sql = 'INSERT INTO companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany) 
+                VALUES (:logo, :name, :sector, :website, :masked)';
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindValue(':logo', $newCompany->logo);
+        $stmt->bindValue(':name', $newCompany->name);
+        $stmt->bindValue(':sector', $newCompany->sector);
+        $stmt->bindValue(':website', $newCompany->website);
+        $stmt->bindValue(':masked', $newCompany->masked, \PDO::PARAM_BOOL);
+
+        $stmt->execute();
+
+        return (int)$this->db->lastInsertId();
+    }
+
+    /**
+     * This function is used to update a company
+     * @param CompanyEntity $company The company to update
+     * @return bool True if the company was updated, false otherwise
+     */
+    public function updateCompany(CompanyEntity $company): bool
+    {
+        $sql = 'UPDATE companies 
+                SET companyLogo = :logo, 
+                    companyName = :name, 
+                    companySector = :sector, 
+                    companyWebsite = :website, 
+                    maskedCompany = :masked
+                WHERE companyId = :id';
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindValue(':id', $company->id, \PDO::PARAM_INT);
+        $stmt->bindValue(':logo', $company->logo);
+        $stmt->bindValue(':name', $company->name);
+        $stmt->bindValue(':sector', $company->sector);
+        $stmt->bindValue(':website', $company->website);
+        $stmt->bindValue(':masked', $company->masked, \PDO::PARAM_BOOL);
+
+        return $stmt->execute();
+    }
 }

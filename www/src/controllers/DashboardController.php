@@ -177,6 +177,26 @@ class DashboardController extends BaseController
                 }
                 break;
             case 'companies':
+                $companyModel = new models\CompanyModel($this->database);
+
+                try {
+                    $newCompany = new entities\CompanyEntity();
+
+                    if ($this->destination != 'new')
+                        $newCompany->id = (int)$this->destination;
+                    $newCompany->name = $_POST['name'];
+                    $newCompany->logo = $_POST['logo'];
+                    $newCompany->sector = $_POST['sector'];
+                    $newCompany->website = $_POST['website'];
+                    $newCompany->masked = !empty($_POST['masked']);
+
+                    if ($this->destination == 'new')
+                        $companyModel->createCompany($newCompany);
+                    else
+                        $companyModel->updateCompany($newCompany);
+                } catch (Exception $e) {
+                    return 'Erreur lors de la création de l\'entreprise : ' . $e->getMessage();
+                }
                 break;
         }
 
