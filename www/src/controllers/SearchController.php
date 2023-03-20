@@ -17,13 +17,18 @@ class SearchController extends BaseController
 
         if ($method == 'GET' && !empty($search))
         {
-            $companies = $companyModel->getCompanyById($search);
-            $companies = $companyModel->getCompanyByName($search);
-            $internships = $internshipModel->getInternshipById($search);
+            $companyById = $companyModel->getCompanyById($search);
+            $companyByName = $companyModel->getCompanyByName($search);
+            $companyBySector = $companyModel->getCompanyBySector($search);
+            $internshipById = $internshipModel->getInternshipById($search);
+            $internshipByTitle = $internshipModel->getInternshipByTitle($search);
 
             return $this->blade->render('pages.search', [
-                'companies' => $companies,
-                'internships' => $internships,
+                'companyById' => $companyById,
+                'companyByName' => $companyByName,
+                'companyBySector' => $companyBySector,
+                'internshipById' => $internshipById,
+                'internshipByTitle' => $internshipByTitle,
             ]);
         } else {
             return $this->blade->render('pages.search', [
