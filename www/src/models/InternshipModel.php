@@ -30,8 +30,8 @@ class InternshipModel extends BaseModel
                             companies.companyId,
                             companies.companyName AS company,
                             cities.cityId,
-                            cities.cityName AS city,
-                            cities.zipcode AS cityZipCode
+                            cities.cityName,
+                            cities.zipcode
                         FROM internships
                         INNER JOIN cities ON internships.cityId = cities.cityId
                         INNER JOIN companies ON internships.companyId = companies.companyId
@@ -64,8 +64,8 @@ class InternshipModel extends BaseModel
                             companies.companyId,
                             companies.companyName AS company,
                             cities.cityId,
-                            cities.cityName AS city,
-                            cities.zipcode AS cityZipCode
+                            cities.cityName,
+                            cities.zipcode
                         FROM internships
                         INNER JOIN cities ON internships.cityId = cities.cityId
                         INNER JOIN companies ON internships.companyId = companies.companyId
@@ -105,8 +105,8 @@ class InternshipModel extends BaseModel
                     companies.companyId,
                     companies.companyName AS company,
                     cities.cityId,
-                    cities.cityName AS city,
-                    cities.zipcode AS cityZipCode
+                    cities.cityName,
+                    cities.zipcode
                 FROM internships 
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
@@ -139,8 +139,8 @@ class InternshipModel extends BaseModel
                     numberPlaces, 
                     companies.companyId,
                     cities.cityId,
-                    cities.cityName AS city,
-                    cities.zipcode AS cityZipCode
+                    cities.cityName,
+                    cities.zipcode
                 FROM internships
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
@@ -155,4 +155,3 @@ class InternshipModel extends BaseModel
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
 }
-
