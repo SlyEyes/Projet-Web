@@ -36,6 +36,8 @@
                        required>
             </div>
 
+            <input type="hidden" name="redirect" value="{{ $redirect }}">
+
             <button type="submit" class="btn-primary">Se connecter</button>
         </form>
     </main>

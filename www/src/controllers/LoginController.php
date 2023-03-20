@@ -16,7 +16,8 @@ class LoginController extends BaseController
             $person = $personModel->getPersonFromJwt();
 
             return $this->blade->make('pages.login', [
-                'person' => $person
+                'person' => $person,
+                'redirect' => $_GET['r'] ?? null,
             ]);
         }
 
@@ -37,7 +38,10 @@ class LoginController extends BaseController
                 'email' => $email,
             ]);
 
-        $redirect = '/profile';
+        if (!empty($_POST['redirect']) && str_starts_with($_POST['redirect'], '/'))
+            $redirect = $_POST['redirect'];
+        else
+            $redirect = '/profile';
 
         $jwtService = new services\JwtService();
         $token = $jwtService->generateToken(['id' => $person->id]);
