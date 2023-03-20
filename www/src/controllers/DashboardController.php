@@ -2,6 +2,8 @@
 
 namespace Linkedout\App\controllers;
 
+use Exception;
+use Linkedout\App\entities;
 use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\models;
 use Linkedout\App\services;
@@ -55,6 +57,9 @@ class DashboardController extends BaseController
             exit;
         }
 
+        if (($validCollectionID || $this->destination == 'new') && $_SERVER['REQUEST_METHOD'] === 'POST')
+            $error = $this->handlePost();
+
         switch ($this->collection) {
             case 'students':
                 if (empty($this->destination))
@@ -100,7 +105,50 @@ class DashboardController extends BaseController
             'collection' => $this->collection,
             'data' => $data ?? null,
             'destination' => $this->destination,
+            'error' => $error ?? null,
         ]);
+    }
+
+    /**
+     * Handles the modifications to the database when the user submits a form
+     * @return string|null The error message if an error occurred, otherwise it redirects the user to the dashboard collection
+     */
+    private function handlePost(): ?string
+    {
+        switch ($this->collection) {
+            case 'students':
+            case 'tutors':
+            case 'administrators':
+                $personModel = new models\PersonModel($this->database);
+
+                try {
+                    $newPerson = new entities\PersonEntity();
+
+                    if ($this->destination != 'new')
+                        $newPerson->id = (int)$this->destination;
+                    $newPerson->firstName = $_POST['firstname'];
+                    $newPerson->lastName = $_POST['lastname'];
+                    $newPerson->email = $_POST['email'];
+                    if (!empty($_POST['password']))
+                        $newPerson->password = $_POST['password'];
+                    $newPerson->role = RoleEnum::fromValue(substr($this->collection, 0, -1));
+
+                    if ($this->destination == 'new')
+                        $personModel->createPerson($newPerson);
+                    else
+                        $personModel->updatePerson($newPerson);
+                } catch (Exception $e) {
+                    return 'Erreur lors de la création de l\'utilisateur : ' . $e->getMessage();
+                }
+                break;
+            case 'internships':
+                break;
+            case 'companies':
+                break;
+        }
+
+        header("Location: /dashboard/{$this->collection}");
+        exit;
     }
 
     /**

@@ -8,20 +8,17 @@
 
 @section('content')
     <main>
-        <form action="/search" method="GET">
-            <h3>Rechercher</h3>
+        <form action="/search" method="GET" id="search-form" title="Barre de recherche">
+            <label for="search-bar">Barre de recherche</label>
+            <input type="text"
+                   id="search-form-input"
+                   class="input-field"
+                   name="s"
+                   value="{{ $search ?? null }}"
+                   placeholder="Rechercher un stage ou une entreprise ..."
+                   required>
 
-            <div class="form-element">
-                <label for="form-search">Rechercher</label>
-                <input type="text"
-                       id="form-search"
-                       name="search"
-                       value="{{ $search ?? null }}"
-                       required>
-                >
-            </div>
-
-            <button type="submit">Rechercher</button>
+            <button type="submit" id="search-form-button" class="btn-primary">Rechercher</button>
         </form>
     </main>
 @endsection

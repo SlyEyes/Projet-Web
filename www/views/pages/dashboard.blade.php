@@ -28,9 +28,14 @@
             @includeWhen(empty($destination), 'components.dashboard.list')
 
             @if (!empty($destination))
+                @if($error)
+                    <div class="error">
+                        <p>{{ $error }}</p>
+                    </div>
+                @endif
                 <form id="content-edit" method="POST">
                     @includeWhen(
-                        array_search($collection, ['students', 'tutors', 'administrators']),
+                        is_numeric(array_search($collection, ['students', 'tutors', 'administrators'])),
                         'components.dashboard.person-edit'
                     )
                     @includeWhen($collection == 'internships', 'components.dashboard.internship-edit')

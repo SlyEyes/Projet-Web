@@ -17,16 +17,16 @@ class InternshipModel extends BaseModel
      */
     public function getInternshipById (int $id): ?InternshipEntity
     {
-        $sql_request = 'SELECT internshipId, 
-                            internshipTitle,
-                            internshipDescription, 
-                            internshipSkills, 
-                            internshipSalary, 
-                            internshipOfferDate, 
-                            internshipBeginDate, 
-                            internshipEndDate, 
-                            numberPlaces, 
-                            maskedInternship,
+        $sql_request = 'SELECT internships.internshipId, 
+                            internships.internshipTitle,
+                            internships.internshipDescription, 
+                            internships.internshipSkills, 
+                            internships.internshipSalary, 
+                            internships.internshipOfferDate, 
+                            internships.internshipBeginDate, 
+                            internships.internshipEndDate, 
+                            internships.numberPlaces, 
+                            internships.maskedInternship,
                             companies.companyId,
                             companies.companyName AS company,
                             cities.cityId,
@@ -49,6 +49,40 @@ class InternshipModel extends BaseModel
         return new InternshipEntity($result);
     }
 
+    public function getInternshipByTitle (string $title): ?InternshipEntity
+    {
+        $sql_request = 'SELECT internships.internshipId, 
+                            internships.internshipTitle,
+                            internships.internshipDescription, 
+                            internships.internshipSkills, 
+                            internships.internshipSalary, 
+                            internships.internshipOfferDate, 
+                            internships.internshipBeginDate, 
+                            internships.internshipEndDate, 
+                            internships.numberPlaces, 
+                            internships.maskedInternship,
+                            companies.companyId,
+                            companies.companyName AS company,
+                            cities.cityId,
+                            cities.cityName AS city,
+                            cities.zipcode AS cityZipCode
+                        FROM internships
+                        INNER JOIN cities ON internships.cityId = cities.cityId
+                        INNER JOIN companies ON internships.companyId = companies.companyId
+                        WHERE internshipTitle = :title';
+        $statement = $this->db->prepare($sql_request);
+        $statement->execute([
+            'title' => $title,
+        ]);
+
+        $result = $statement->fetch();
+        if (!$result) {
+            return null;
+        }
+
+        return new InternshipEntity($result);
+    }
+
     /**
      * Query all the internships from the database
      * @param $limit int The maximum number of internships to return
@@ -58,16 +92,16 @@ class InternshipModel extends BaseModel
     public function getAllInternships(int $limit = 50, int $offset = 0): array
     {
         $sql = 'SELECT 
-                    internshipId, 
-                    internshipTitle,
-                    internshipDescription, 
-                    internshipSkills, 
-                    internshipSalary, 
-                    internshipOfferDate, 
-                    internshipBeginDate, 
-                    internshipEndDate, 
-                    numberPlaces, 
-                    maskedInternship, 
+                    internships.internshipId, 
+                    internships.internshipTitle,
+                    internships.internshipDescription, 
+                    internships.internshipSkills, 
+                    internships.internshipSalary, 
+                    internships.internshipOfferDate, 
+                    internships.internshipBeginDate, 
+                    internships.internshipEndDate, 
+                    internships.numberPlaces, 
+                    internships.maskedInternship, 
                     companies.companyId,
                     companies.companyName AS company,
                     cities.cityId,

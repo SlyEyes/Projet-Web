@@ -60,6 +60,11 @@ class RouterService
             $controller->setRouteParams($request->collection, $request->destination);
             return $controller->render();
         });
+
+        $this->klein->respond(array('GET'), '/search', function ($request) {
+            $controller = new controllers\SearchController($this->blade, $this->database);
+            return $controller->render();
+        });
     }
 
     /**
