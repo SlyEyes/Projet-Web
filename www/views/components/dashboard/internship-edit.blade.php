@@ -49,7 +49,7 @@
     <div>
         <label for="masked">Visibilité</label>
         <div class="checkbox">
-            <input type="checkbox" name="masked" id="masked" {{ ($data->checked ?? false) ? 'checked' : '' }}>
+            <input type="checkbox" name="masked" id="masked" {{ ($data->masked ?? false) ? 'checked' : '' }}>
             <label for="masked">Masqué</label>
         </div>
     </div>
