@@ -85,6 +85,11 @@ class DashboardController extends BaseController
                     $data = $internshipModel->getAllInternships();
                 elseif ($validCollectionID)
                     $data = $internshipModel->getInternshipById($this->destination);
+
+                if ($validCollectionID || $this->destination == 'new') {
+                    $companyModel = new models\CompanyModel($this->database);
+                    $companies = $companyModel->getAllCompanies();
+                }
                 break;
             case 'companies':
                 $companyModel = new models\CompanyModel($this->database);
@@ -106,6 +111,7 @@ class DashboardController extends BaseController
             'data' => $data ?? null,
             'destination' => $this->destination,
             'error' => $error ?? null,
+            'companies' => $companies ?? null,
         ]);
     }
 

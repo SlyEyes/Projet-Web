@@ -66,7 +66,6 @@
         <label for="city">Ville</label>
         {{-- TODO: prevent form submission if the input is disabled due to loading or error --}}
         <select class="input-field"
-                type="text"
                 name="cityId"
                 id="city"
                 {{ !$data ? 'disabled' : '' }}
@@ -75,6 +74,20 @@
             @isset($data->city)
                 <option value="{{ $data->city->id ?? null }}">{{ $data->city->name ?? null }}</option>
             @endisset
+        </select>
+    </div>
+</div>
+
+<div class="field-group">
+    <div>
+        <label for="company">Entreprise</label>
+        <select class="input-field" name="companyId" id="company" required>
+            <option value="" disabled hidden {{ !$data ? 'selected' : '' }}>Sélectionnez une entreprise</option>
+            @foreach($companies as $company)
+                <option value="{{ $company->id }}" {{ $data && $data->company === $company->id ? 'selected' : '' }}>
+                    {{ $company->name }}
+                </option>
+            @endforeach
         </select>
     </div>
 </div>
