@@ -34,7 +34,7 @@
                         'components.dashboard.person-edit'
                     )
                     @includeWhen($collection == 'internships', 'components.dashboard.internship-edit')
-                    @includeWhen($collection == 'enterprises', 'components.dashboard.company-edit')
+                    @includeWhen($collection == 'companies', 'components.dashboard.company-edit')
                 </form>
             @endif
         </section>

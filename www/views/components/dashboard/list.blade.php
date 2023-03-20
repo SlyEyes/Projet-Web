@@ -16,7 +16,7 @@
                 <th>Ville</th>
             </tr>
             @break
-        @case('enterprises')
+        @case('companies')
             <tr>
                 <th>Nom</th>
                 <th>Secteur</th>
@@ -46,7 +46,7 @@
                 </tr>
             @endforeach
             @break
-        @case('enterprises')
+        @case('companies')
             @foreach ($data as $row)
                 <tr data-row-id="{{ $row->id }}">
                     <td>{{ $row->name }}</td>

@@ -12,7 +12,7 @@
     <a class="{{ $collection == 'internships' ? 'btn btn-primary' : '' }}" href="/dashboard/internships">
         Stages
     </a>
-    <a class="{{ $collection == 'enterprises' ? 'btn btn-primary' : '' }}" href="/dashboard/enterprises">
+    <a class="{{ $collection == 'companies' ? 'btn btn-primary' : '' }}" href="/dashboard/companies">
         Entreprises
     </a>
 </aside>

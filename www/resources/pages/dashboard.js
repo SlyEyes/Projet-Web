@@ -10,7 +10,7 @@ document.querySelectorAll('tbody tr').forEach(row => {
 
 
 // Live preview of the logo in the company edit page
-if (window.location.href.match(/\/enterprises\/(new|\d+)$/)) {
+if (window.location.href.match(/\/companies\/(new|\d+)$/)) {
     const img = document.querySelector('#logo-preview img');
     const logoInput = document.getElementById('logo');
 

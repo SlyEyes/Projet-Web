@@ -35,7 +35,7 @@ class DashboardController extends BaseController
             'tutors',
             'administrators',
             'internships',
-            'enterprises',
+            'companies',
         ];
 
         $personModel = new models\PersonModel($this->database);
@@ -81,12 +81,12 @@ class DashboardController extends BaseController
                 elseif ($validCollectionID)
                     $data = $internshipModel->getInternshipById($this->destination);
                 break;
-            case 'enterprises':
-                $enterpriseModel = new models\CompanyModel($this->database);
+            case 'companies':
+                $companyModel = new models\CompanyModel($this->database);
                 if (empty($this->destination))
-                    $data = $enterpriseModel->getAllEnterprises();
+                    $data = $companyModel->getAllCompanies();
                 elseif ($validCollectionID)
-                    $data = $enterpriseModel->getCompanyById($this->destination);
+                    $data = $companyModel->getCompanyById($this->destination);
                 break;
         }
 
@@ -114,7 +114,7 @@ class DashboardController extends BaseController
         return match ($this->collection) {
             'students', 'tutors', 'administrators' => 'Modification de ' . $data->firstName . ' ' . $data->lastName,
             'internships' => 'Modification de ' . $data->title,
-            'enterprises' => 'Modification de ' . $data->name,
+            'companies' => 'Modification de ' . $data->name,
             default => 'Erreur',
         };
     }
@@ -143,7 +143,7 @@ class DashboardController extends BaseController
                 'list' => 'Liste des stages',
                 'new' => 'Nouveau stage',
             ],
-            'enterprises' => [
+            'companies' => [
                 'list' => 'Liste des entreprises',
                 'new' => 'Nouvelle entreprise',
             ],

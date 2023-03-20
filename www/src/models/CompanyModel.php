@@ -105,7 +105,7 @@ class CompanyModel extends BaseModel
      * @param int $offset The offset of the first company to return
      * @return CompanyEntity[] The company entity or null if not found
      */
-    public function getAllEnterprises(int $limit = 50, int $offset = 0): array
+    public function getAllCompanies(int $limit = 50, int $offset = 0): array
     {
         $sql = 'SELECT 
                     companies.companyId,
@@ -126,6 +126,6 @@ class CompanyModel extends BaseModel
         if (!$result) {
             return [];
         }
-        return array_map(fn($internship) => new CompanyEntity($internship), $result);
+        return array_map(fn($company) => new CompanyEntity($company), $result);
     }
 }
