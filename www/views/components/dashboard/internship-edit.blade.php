@@ -12,6 +12,9 @@
 <label for="description">Description</label>
 <textarea class="input-field" name="description" id="description" required>{{ $data->description ?? null }}</textarea>
 
+<label for="skills">Compétences requises</label>
+<textarea class="input-field" name="skills" id="skills" required>{{ $data->skills ?? null }}</textarea>
+
 <div class="field-group">
     <div>
         <label for="begin-date">Date de début</label>

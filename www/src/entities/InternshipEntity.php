@@ -20,8 +20,11 @@ class InternshipEntity
     public CityEntity $city;
 
     // This function is used to create a new InternshipEntity object
-    public function __construct(array $rawData)
+    public function __construct(?array $rawData = null)
     {
+        if ($rawData === null)
+            return;
+
         $this->id = $rawData['internshipId'];
         $this->title = $rawData['internshipTitle'];
         $this->description = $rawData['internshipDescription'];
