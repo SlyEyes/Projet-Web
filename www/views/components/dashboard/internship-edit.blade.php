@@ -51,3 +51,30 @@
         </div>
     </div>
 </div>
+
+<div class="field-group">
+    <div>
+        <label for="zipcode">Code postal</label>
+        <input class="input-field"
+               type="number"
+               id="zipcode"
+               value="{{ $data->city->zipcode ?? null }}"
+               required>
+    </div>
+
+    <div>
+        <label for="city">Ville</label>
+        {{-- TODO: prevent form submission if the input is disabled due to loading or error --}}
+        <select class="input-field"
+                type="text"
+                name="cityId"
+                id="city"
+                {{ !$data ? 'disabled' : '' }}
+                required>
+            <option value="" disabled hidden {{ !$data ? 'selected' : '' }}>Sélectionnez une ville</option>
+            @isset($data->city)
+                <option value="{{ $data->city->id ?? null }}">{{ $data->city->name ?? null }}</option>
+            @endisset
+        </select>
+    </div>
+</div>
