@@ -120,4 +120,40 @@ class PersonModel extends BaseModel
         }
         return $persons;
     }
+
+    /**
+     * Create a new person in the database
+     * @param $person PersonEntity The person entity to create
+     * @return int The id of the created person
+     */
+    public function createPerson(PersonEntity $person): int
+    {
+        $roleModel = new RoleModel($this->db);
+        $role = $roleModel->getRoleFromEnum($person->role);
+
+        $hashedPassword = password_hash($person->password, PASSWORD_ARGON2ID);
+
+        $sql = 'INSERT INTO persons (email, password, firstName, lastName, roleId) 
+                VALUES (:email, :password, :firstName, :lastName, :roleId)';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue('email', $person->email);
+        $stmt->bindValue('password', $hashedPassword);
+        $stmt->bindValue('firstName', $person->firstName);
+        $stmt->bindValue('lastName', $person->lastName);
+        $stmt->bindValue('roleId', $role->id);
+        $stmt->execute();
+
+        return $this->db->lastInsertId();
+    }
+
+    public function updatePerson(PersonEntity $newPerson)
+    {
+        $sql = 'UPDATE persons SET email = :email, firstName = :firstName, lastName = :lastName WHERE personId = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue('email', $newPerson->email);
+        $stmt->bindValue('firstName', $newPerson->firstName);
+        $stmt->bindValue('lastName', $newPerson->lastName);
+        $stmt->bindValue('id', $newPerson->id);
+        $stmt->execute();
+    }
 }

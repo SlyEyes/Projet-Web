@@ -28,6 +28,11 @@
             @includeWhen(empty($destination), 'components.dashboard.list')
 
             @if (!empty($destination))
+                @if($error)
+                    <div class="error">
+                        <p>{{ $error }}</p>
+                    </div>
+                @endif
                 <form id="content-edit" method="POST">
                     @includeWhen(
                         is_numeric(array_search($collection, ['students', 'tutors', 'administrators'])),
