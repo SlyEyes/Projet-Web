@@ -30,7 +30,7 @@
             @if (!empty($destination))
                 <form id="content-edit" method="POST">
                     @includeWhen(
-                        array_search($collection, ['students', 'tutors', 'administrators']),
+                        is_numeric(array_search($collection, ['students', 'tutors', 'administrators'])),
                         'components.dashboard.person-edit'
                     )
                     @includeWhen($collection == 'internships', 'components.dashboard.internship-edit')
