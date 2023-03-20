@@ -18,8 +18,11 @@ class PersonEntity
     public enums\RoleEnum $role;
 
     // This function is used to create a new PersonEntity object
-    public function __construct(array $rawData)
+    public function __construct(?array $rawData = null)
     {
+        if (!$rawData)
+            return;
+
         $this->id = $rawData['personId'];
         $this->email = $rawData['email'];
         $this->password = $rawData['password'];
