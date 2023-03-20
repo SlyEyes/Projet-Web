@@ -7,6 +7,7 @@ namespace Linkedout\App\entities;
 class InternshipEntity
 {
     public int $id;
+    public string $title;
     public string $description;
     public string $skills;
     public int $salary;
@@ -23,6 +24,7 @@ class InternshipEntity
     public function __construct(array $rawData)
     {
         $this->id = $rawData['internshipId'];
+        $this->title = $rawData['internshipTitle'];
         $this->description = $rawData['internshipDescription'];
         $this->skills = $rawData['internshipSkills'];
         $this->salary = $rawData['internshipSalary'];

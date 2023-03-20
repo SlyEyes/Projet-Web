@@ -40,7 +40,7 @@
         @case('internships')
             @foreach ($data as $row)
                 <tr data-row-id="{{ $row->id }}">
-                    <td>{{-- TODO: insert title --}}</td>
+                    <td>{{ $row->title }}</td>
                     <td>{{ $row->company }}</td>
                     <td>{{ $row->city }}</td>
                 </tr>
