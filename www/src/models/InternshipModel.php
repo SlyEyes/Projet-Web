@@ -18,6 +18,7 @@ class InternshipModel extends BaseModel
     public function getInternshipById (int $id): ?InternshipEntity
     {
         $sql_request = 'SELECT internshipId, 
+                            internshipTitle,
                             internshipDescription, 
                             internshipSkills, 
                             internshipSalary, 
@@ -58,6 +59,7 @@ class InternshipModel extends BaseModel
     {
         $sql = 'SELECT 
                     internshipId, 
+                    internshipTitle,
                     internshipDescription, 
                     internshipSkills, 
                     internshipSalary, 
