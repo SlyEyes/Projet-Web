@@ -9,7 +9,7 @@
 @section('content')
     <main>
         <form action="/search" method="GET" id="search-form" title="Barre de recherche">
-            <label for="search-bar">Barre de recherche</label>
+            <label for="search-form-input">Barre de recherche</label>
             <input type="text"
                    id="search-form-input"
                    class="input-field"
