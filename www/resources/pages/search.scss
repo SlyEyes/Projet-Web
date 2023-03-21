@@ -26,16 +26,33 @@ main {
 }
 
 section {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  width: 50rem;
+
+  #filter-zone {
+    background-color: var(--light-gray);
+  }
+
+  #results-list {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    width: 50rem;
 
-    #filter-zone{
-      background-color: red;
+    .result {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      background-color: var(--light-gray);
+      border: var(--light-gray) solid 10px;
+      border-radius: 10px;
+      list-style: none;
+
+      img {
+        width: 50px;
+        border-radius: 10px;
+      }
     }
-
-    #results-list {
-
-    }
+  }
 }

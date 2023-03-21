@@ -27,8 +27,12 @@
 
             <ul id="results-list">
                 @foreach ($results as $result)
-                    <li>
-                        <h3>{{ $result->name }}</h3>
+                    <li class="result">
+                        <img src="{{ $result->logo }}" alt="Logo de {{ $result->name }}">
+                        <div>
+                            <h3>{{ $result->name }}</h3>
+                            <p>Secteur {{ $result->sector }}</p>
+                        </div>
                     </li>
                 @endforeach
             </ul>
