@@ -9,7 +9,8 @@
 @section('content')
     <main>
         <section>
-            <img src="/public/icons/close-purple.svg" class="croix" alt=" " href="/">
+            {{-- TODO: mettre le href de la croix --}}
+            <img src="/public/icons/close-purple.svg" class="croix" alt=" ">
 
             <div>
         <img src="{{ $company->logo }}" alt=" "><h1 class="test" >{{ $company->name }}</h1>
