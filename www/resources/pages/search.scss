@@ -11,47 +11,62 @@ main {
   }
 }
 
-#search-form {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-
-  label {
-    display: none;
-  }
-
-  #search-form-input {
-    width: 50rem;
-  }
-}
-
 section {
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 1rem;
   width: 50rem;
 
   #filter-zone {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
     background-color: var(--light-gray);
+    border: var(--light-gray) solid 10px;
+    border-radius: 10px;
+    width: 25rem;
   }
 
-  #results-list {
+  #search-zone {
     display: flex;
     flex-direction: column;
     gap: 1em;
 
-    .result {
+    #search-form {
       display: flex;
       flex-direction: row;
       gap: 1em;
-      background-color: var(--light-gray);
-      border: var(--light-gray) solid 10px;
-      border-radius: 10px;
-      list-style: none;
 
-      img {
-        width: 50px;
+      label {
+        display: none;
+      }
+
+      #search-form-input {
+        width: 25rem;
+      }
+    }
+
+    #results-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      margin: 0;
+      padding: 0;
+
+      .result {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        background-color: var(--light-gray);
+        border: var(--light-gray) solid 10px;
         border-radius: 10px;
+        list-style: none;
+
+        img {
+          width: 75px;
+          height: 75px;
+          border-radius: 10px;
+        }
       }
     }
   }
