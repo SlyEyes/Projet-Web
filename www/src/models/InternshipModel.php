@@ -123,7 +123,7 @@ class InternshipModel extends BaseModel
 
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
-}
+
 
     /**
      * This function is used to get an internship from the database
@@ -135,23 +135,34 @@ class InternshipModel extends BaseModel
         $sql_request = 'SELECT 
                     internshipId, 
                     internshipTitle, 
+                    internshipDescription,
+                    internshipSkills,
+                    internshipSalary,
                     internshipBeginDate, 
-                    internshipEndDate, 
+                    internshipEndDate,
+                    internshipOfferDate, 
                     numberPlaces, 
+                    maskedInternship,
                     companies.companyId,
+                    companies.companyId,
+                    companies.companyName AS company,
                     cities.cityId,
                     cities.cityName AS city,
                     cities.zipcode AS cityZipCode
                 FROM internships
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
-                WHERE companies.companyId = :id'
-                $statement = $this->db->prepare($sql_request);
-                $statement->execute([
-                    'id' => $id,
-                ]);
-        
-                $result = $statement->fetch();
-        
-                return array_map(fn($internship) => new InternshipEntity($internship), $result);
+                WHERE companies.companyId = :id';
+        $statement = $this->db->prepare($sql_request);
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        $result = $statement->fetchAll();
+
+        if (!$result)
+            return [];
+
+        return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
+}

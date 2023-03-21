@@ -35,7 +35,9 @@ class CompanyController extends BaseController
 
 
         return $this->blade->make('pages.company', [
-            'person' => $person
+            'person' => $person,
+            'company' => $company,
+            'internships' => $internships,
         ]); 
     }
 }

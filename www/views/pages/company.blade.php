@@ -19,12 +19,12 @@
 <h2>Stage Disponible</h2>
 </div>
 <article> 
-    @foreach ({{$company->stages}} as $stage)
+    @foreach ($internships as $internship)
         <div class="box">
             <div class="a">
                 {{ $internship->title }}
                 <br>
-                {{ $internship->city }} {{ $stage->endDate - $stage->beginDate }}
+                {{ $internship->city }} {{ $internship->endDate }} - {{ $internship->beginDate }}
             </div>
         </div>
     @endforeach
