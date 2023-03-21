@@ -9,6 +9,8 @@
 @section('content')
     <main>
         <section>
+            <img src="/public/icons/close-purple.svg" class="close-btn" alt="x" onclick="window.history.back()">
+
             <div class="internship-header">
                 <img src="{{ $company->logo }}" alt="{{ $company->name }} logo">
                 <div class="internship-title">

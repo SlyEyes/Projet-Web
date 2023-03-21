@@ -20,6 +20,7 @@ section {
     padding: 1.5rem;
     background-color: var(--light-gray);
     border-radius: 1rem;
+    position: relative;
 
     @media screen and (max-width: 48rem) {
         background-color: var(--white);
@@ -28,6 +29,20 @@ section {
     @media screen and (max-width: 32rem) {
         padding: 1rem;
     }
+}
+
+.close-btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    border: var(--violet) 2px solid;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
 }
 
 .internship-header {
