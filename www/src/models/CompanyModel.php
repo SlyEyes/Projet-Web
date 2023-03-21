@@ -10,6 +10,38 @@ use Linkedout\App\entities\CompanyEntity;
  */
 class CompanyModel extends BaseModel
 {
+    public function getCompaniesBySearch($search): array
+    {
+        $sql = 'SELECT 
+                    companies.companyId,
+                    companies.companyLogo,
+                    companies.companyName,
+                    companies.companySector,
+                    companies.companyWebsite,
+                    companies.maskedCompany,
+                    MATCH(companyName) AGAINST(:search) as scoreCompanyName,
+                    MATCH(companySector) AGAINST(:search) as scoreCompanySector
+                FROM companies
+                WHERE
+                    MATCH(companyName) AGAINST(:search) OR
+                    MATCH(companySector) AGAINST(:search)
+                ORDER BY scoreCompanyName DESC, scoreCompanySector DESC';
+
+        $statement = $this->db->prepare($sql);
+        $statement->execute([
+            'search' => $search,
+        ]);
+
+        $result = $statement->fetchAll();
+
+        if (!$result)
+        {
+            return [];
+        }
+
+        return array_map(fn($company) => new CompanyEntity($company), $result);
+    }
+
     /**
      * This function is used to get a company from the database
      * @param $id int The id of the company

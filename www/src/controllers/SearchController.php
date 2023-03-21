@@ -2,37 +2,38 @@
 
 namespace Linkedout\App\controllers;
 
-use Linkedout\App\models\CompanyModel;
-use Linkedout\App\models\InternshipModel;
+use Linkedout\App\models;
 
 class SearchController extends BaseController
 {
     public function render(): string
     {
-        $companyModel = new CompanyModel($this->database);
-        $internshipModel = new InternshipModel($this->database);
+        $companyModel = new models\CompanyModel($this->database);
+        $internshipModel = new models\InternshipModel($this->database);
 
         $method = $_SERVER['REQUEST_METHOD'];
-        $search = $_POST['search'];
+        $search = $_GET['q'];
+
+        $personModel = new models\PersonModel($this->database);
+        $person = $personModel->getPersonFromJwt();
+
+        if ($person === null) {
+            header("Location: /login?r=/search?q=$search");
+            exit;
+        }
 
         if ($method == 'GET' && !empty($search))
         {
-            $companyById = $companyModel->getCompanyById($search);
-            $companyByName = $companyModel->getCompanyByName($search);
-            $companyBySector = $companyModel->getCompanyBySector($search);
-            $internshipById = $internshipModel->getInternshipById($search);
-            $internshipByTitle = $internshipModel->getInternshipByTitle($search);
+            $results = $companyModel->getCompaniesBySearch($search);
 
             return $this->blade->render('pages.search', [
-                'companyById' => $companyById,
-                'companyByName' => $companyByName,
-                'companyBySector' => $companyBySector,
-                'internshipById' => $internshipById,
-                'internshipByTitle' => $internshipByTitle,
+                'results' => $results,
+                'person' => $person,
             ]);
         } else {
             return $this->blade->render('pages.search', [
                 'error' => 'Veuillez entrer un nom de société ou de stage valide',
+                'person' => $person,
             ]);
         }
     }

@@ -9,16 +9,29 @@
 @section('content')
     <main>
         <form action="/search" method="GET" id="search-form" title="Barre de recherche">
-            <label for="search-bar">Barre de recherche</label>
+            <label for="search-form-input">Barre de recherche</label>
             <input type="text"
                    id="search-form-input"
                    class="input-field"
-                   name="s"
-                   value="{{ $search ?? null }}"
-                   placeholder="Rechercher un stage ou une entreprise ..."
+                   name="q"
+                   placeholder="Tapez le nom d'un stage ou d'une entreprise ..."
                    required>
 
             <button type="submit" id="search-form-button" class="btn-primary">Rechercher</button>
         </form>
+
+        <section>
+            <div id="filter-zone">
+
+            </div>
+
+            <ul id="results-list">
+                @foreach ($results as $result)
+                    <li>
+                        <h3>{{ $result->name }}</h3>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
     </main>
 @endsection
