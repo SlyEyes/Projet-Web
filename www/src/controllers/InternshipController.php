@@ -2,9 +2,8 @@
 
 namespace Linkedout\App\controllers;
 
-use DateTime;
-use Exception;
 use Linkedout\App\models;
+use Linkedout\App\utils\TimeUtil;
 
 class InternshipController extends BaseController
 {
@@ -31,15 +30,7 @@ class InternshipController extends BaseController
         $companyModel = new models\CompanyModel($this->database);
         $company = $companyModel->getCompanyById($internship->companyId);
 
-        try {
-            $beginDate = new DateTime($internship->beginDate);
-            $endDate = new DateTime($internship->endDate);
-            $days = $beginDate->diff($endDate)->days;
-            $months = round($days / 30);
-            $formattedDuration = $months . ' mois';
-        } catch (Exception) {
-            $formattedDuration = 'Durée invalide';
-        }
+        $formattedDuration = TimeUtil::calculateDuration($internship->beginDate, $internship->endDate);
 
         return $this->blade->make('pages.internship', [
             'person' => $person,
