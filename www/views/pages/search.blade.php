@@ -14,7 +14,6 @@
                    id="search-form-input"
                    class="input-field"
                    name="q"
-                   value="{{  null  }}"
                    placeholder="Tapez le nom d'un stage ou d'une entreprise ..."
                    required>
 
@@ -27,7 +26,11 @@
             </div>
 
             <ul id="results-list">
-
+                @foreach ($results as $result)
+                    <li>
+                        <h3>{{ $result->name }}</h3>
+                    </li>
+                @endforeach
             </ul>
         </section>
     </main>
