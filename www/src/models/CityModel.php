@@ -13,7 +13,7 @@ class CityModel extends BaseModel
      */
     public function getCitiesByZipcode(string $zipcode): array
     {
-        $sql_request = 'SELECT * FROM cities WHERE zipcode = :zipcode';
+        $sql_request = 'SELECT * FROM cities WHERE cities.zipcode = :zipcode';
         $statement = $this->db->prepare($sql_request);
         $statement->execute([
             'zipcode' => $zipcode,

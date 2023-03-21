@@ -133,8 +133,10 @@ class PersonModel extends BaseModel
 
         $hashedPassword = password_hash($person->password, PASSWORD_ARGON2ID);
 
-        $sql = 'INSERT INTO persons (email, password, firstName, lastName, roleId) 
-                VALUES (:email, :password, :firstName, :lastName, :roleId)';
+        $sql = 'INSERT INTO persons 
+                    (email, password, firstName, lastName, roleId) 
+                VALUES 
+                    (:email, :password, :firstName, :lastName, :roleId)';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue('email', $person->email);
         $stmt->bindValue('password', $hashedPassword);
@@ -148,7 +150,11 @@ class PersonModel extends BaseModel
 
     public function updatePerson(PersonEntity $newPerson)
     {
-        $sql = 'UPDATE persons SET email = :email, firstName = :firstName, lastName = :lastName WHERE personId = :id';
+        $sql = 'UPDATE persons 
+                SET email = :email, 
+                    firstName = :firstName, 
+                    lastName = :lastName 
+                WHERE personId = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue('email', $newPerson->email);
         $stmt->bindValue('firstName', $newPerson->firstName);

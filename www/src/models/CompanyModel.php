@@ -136,8 +136,10 @@ class CompanyModel extends BaseModel
      */
     public function createCompany(CompanyEntity $newCompany): int
     {
-        $sql = 'INSERT INTO companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany) 
-                VALUES (:logo, :name, :sector, :website, :masked)';
+        $sql = 'INSERT INTO companies 
+                    (companyLogo, companyName, companySector, companyWebsite, maskedCompany) 
+                VALUES 
+                    (:logo, :name, :sector, :website, :masked)';
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindValue(':logo', $newCompany->logo);
