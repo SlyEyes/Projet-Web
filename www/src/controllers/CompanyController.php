@@ -3,6 +3,7 @@
 namespace Linkedout\App\controllers;
 
 use Linkedout\App\models;
+use Linkedout\App\utils\TimeUtil;
 
 class CompanyController extends BaseController
 {
@@ -27,15 +28,24 @@ class CompanyController extends BaseController
         $company = $companyModel->getCompanyById($this->id);
 
         $internshipModel = new models\InternshipModel($this->database);
-        $internship = $internshipModel->getInternshipsByCompanyId($this->id);
+        $internships = $internshipModel->getInternshipsByCompanyId($this->id);
 
-        // TODO: display cities
-        $cities = 'cities';
+        $cities = array_map(fn($internship) => $internship->city->name, $internships);
+        $cities = array_unique($cities);
+        $cities = implode(', ', $cities);
+
+        $internships = array_map(fn($internship) => [
+            'id' => $internship->id,
+            'title' => $internship->title,
+            'city' => $internship->city,
+            'duration' => TimeUtil::calculateDuration($internship->beginDate, $internship->endDate),
+        ], $internships);
 
         return $this->blade->make('pages.company', [
             'person' => $person,
             'company' => $company,
-            'internship' => $internship,
-        ]); 
+            'internships' => $internships,
+            'cities' => $cities
+        ]);
     }
 }
