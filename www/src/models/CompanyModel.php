@@ -19,15 +19,12 @@ class CompanyModel extends BaseModel
                     companies.companySector,
                     companies.companyWebsite,
                     companies.maskedCompany,
-                    COUNT(internships.internshipId) as internshipCount,
                     MATCH(companyName) AGAINST(:search) as scoreCompanyName,
                     MATCH(companySector) AGAINST(:search) as scoreCompanySector
                 FROM companies
-                INNER JOIN internships ON internships.companyId = companies.companyId
                 WHERE
                     MATCH(companyName) AGAINST(:search) OR
                     MATCH(companySector) AGAINST(:search)
-                GROUP BY companies.companyId
                 ORDER BY scoreCompanyName DESC, scoreCompanySector DESC';
 
         $statement = $this->db->prepare($sql);
