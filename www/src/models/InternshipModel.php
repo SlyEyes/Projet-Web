@@ -11,6 +11,44 @@ use PDO;
  */
 class InternshipModel extends BaseModel
 {
+    /**
+     * This function is used to get an internship from the database
+     * @param $id int The id of the internship
+     * @return InternshipEntity|null The internship entity or null if not found
+     */
+    public function getInternshipById(int $id): ?InternshipEntity
+    {
+        $sql_request = 'SELECT internships.internshipId, 
+                            internships.internshipTitle,
+                            internships.internshipDescription, 
+                            internships.internshipSkills, 
+                            internships.internshipSalary, 
+                            internships.internshipOfferDate, 
+                            internships.internshipBeginDate, 
+                            internships.internshipEndDate, 
+                            internships.numberPlaces, 
+                            internships.maskedInternship,
+                            companies.companyId,
+                            companies.companyName,
+                            cities.cityId,
+                            cities.cityName,
+                            cities.zipcode
+                        FROM internships
+                        INNER JOIN cities ON internships.cityId = cities.cityId
+                        INNER JOIN companies ON internships.companyId = companies.companyId
+                        WHERE internshipId = :id';
+        $statement = $this->db->prepare($sql_request);
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        $result = $statement->fetch();
+        if (!$result)
+            return null;
+
+        return new InternshipEntity($result);
+    }
+
     public function getInternshipsBySearch(): array
     {
         $sql = ''; # TODO: add search sql request
