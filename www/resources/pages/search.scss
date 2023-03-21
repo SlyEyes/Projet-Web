@@ -1,22 +1,39 @@
 @import '../base';
 @import '../components/navbar';
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 1em;
+}
+
 #search-form {
-  text-align: center;
-  margin: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 
   label {
     display: none;
   }
 
   #search-form-input {
-    position: relative;
-    top: 100%;
-    margin: auto;
-    width: 75%;
+    width: 50rem;
   }
+}
 
-  #search-form-button {
-    margin: 1.5em 0;
-  }
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 50rem;
+
+    #filter-zone{
+      background-color: red;
+    }
+
+    #results-list {
+
+    }
 }

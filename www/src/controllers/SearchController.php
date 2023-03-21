@@ -13,22 +13,14 @@ class SearchController extends BaseController
         $internshipModel = new InternshipModel($this->database);
 
         $method = $_SERVER['REQUEST_METHOD'];
-        $search = $_POST['search'];
+        $search = $_GET['q'];
 
         if ($method == 'GET' && !empty($search))
         {
-            $companyById = $companyModel->getCompanyById($search);
-            $companyByName = $companyModel->getCompanyByName($search);
-            $companyBySector = $companyModel->getCompanyBySector($search);
-            $internshipById = $internshipModel->getInternshipById($search);
-            $internshipByTitle = $internshipModel->getInternshipByTitle($search);
+            $companies = $companyModel->getCompaniesBySearch($search);
 
             return $this->blade->render('pages.search', [
-                'companyById' => $companyById,
-                'companyByName' => $companyByName,
-                'companyBySector' => $companyBySector,
-                'internshipById' => $internshipById,
-                'internshipByTitle' => $internshipByTitle,
+                'companies' => $companies,
             ]);
         } else {
             return $this->blade->render('pages.search', [
