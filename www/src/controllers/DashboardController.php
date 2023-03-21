@@ -85,6 +85,11 @@ class DashboardController extends BaseController
                     $data = $internshipModel->getAllInternships();
                 elseif ($validCollectionID)
                     $data = $internshipModel->getInternshipById($this->destination);
+
+                if ($validCollectionID || $this->destination == 'new') {
+                    $companyModel = new models\CompanyModel($this->database);
+                    $companies = $companyModel->getAllCompanies();
+                }
                 break;
             case 'companies':
                 $companyModel = new models\CompanyModel($this->database);
@@ -106,6 +111,7 @@ class DashboardController extends BaseController
             'data' => $data ?? null,
             'destination' => $this->destination,
             'error' => $error ?? null,
+            'companies' => $companies ?? null,
         ]);
     }
 
@@ -140,10 +146,57 @@ class DashboardController extends BaseController
                 } catch (Exception $e) {
                     return 'Erreur lors de la création de l\'utilisateur : ' . $e->getMessage();
                 }
-                break;
+            break;
             case 'internships':
+                $internshipModel = new models\InternshipModel($this->database);
+
+                try {
+                    $newInternship = new entities\InternshipEntity();
+
+                    if ($this->destination != 'new')
+                        $newInternship->id = (int)$this->destination;
+                    $newInternship->title = $_POST['title'];
+                    $newInternship->description = $_POST['description'];
+                    $newInternship->skills = $_POST['skills'];
+                    $newInternship->salary = (int)$_POST['salary'];
+                    $newInternship->beginDate = $_POST['begin-date'];
+                    $newInternship->endDate = $_POST['end-date'];
+                    $newInternship->offerDate = date('Y-m-d');
+                    $newInternship->numberPlaces = (int)$_POST['places'];
+                    $newInternship->masked = !empty($_POST['masked']);
+                    $newInternship->city = new entities\CityEntity();
+                    $newInternship->city->id = (int)$_POST['cityId'];
+                    $newInternship->company = $_POST['companyId'];
+
+                    if ($this->destination == 'new')
+                        $internshipModel->createInternship($newInternship);
+                    else
+                        $internshipModel->updateInternship($newInternship);
+                } catch (Exception $e) {
+                    return 'Erreur lors de la création du stage : ' . $e->getMessage();
+                }
                 break;
             case 'companies':
+                $companyModel = new models\CompanyModel($this->database);
+
+                try {
+                    $newCompany = new entities\CompanyEntity();
+
+                    if ($this->destination != 'new')
+                        $newCompany->id = (int)$this->destination;
+                    $newCompany->name = $_POST['name'];
+                    $newCompany->logo = $_POST['logo'];
+                    $newCompany->sector = $_POST['sector'];
+                    $newCompany->website = $_POST['website'];
+                    $newCompany->masked = !empty($_POST['masked']);
+
+                    if ($this->destination == 'new')
+                        $companyModel->createCompany($newCompany);
+                    else
+                        $companyModel->updateCompany($newCompany);
+                } catch (Exception $e) {
+                    return 'Erreur lors de la création de l\'entreprise : ' . $e->getMessage();
+                }
                 break;
         }
 

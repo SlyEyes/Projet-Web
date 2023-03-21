@@ -13,8 +13,11 @@ class CompanyEntity
     public bool $masked;
 
     // This function is used to create a new CompanyEntity object
-    public function __construct(array $rawData)
+    public function __construct(?array $rawData = null)
     {
+        if ($rawData == null)
+            return;
+
         $this->id = $rawData['companyId'];
         $this->logo = $rawData['companyLogo'];
         $this->name = $rawData['companyName'];

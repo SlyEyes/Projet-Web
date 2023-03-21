@@ -12,6 +12,9 @@
 <label for="description">Description</label>
 <textarea class="input-field" name="description" id="description" required>{{ $data->description ?? null }}</textarea>
 
+<label for="skills">Compétences requises</label>
+<textarea class="input-field" name="skills" id="skills" required>{{ $data->skills ?? null }}</textarea>
+
 <div class="field-group">
     <div>
         <label for="begin-date">Date de début</label>
@@ -46,8 +49,48 @@
     <div>
         <label for="masked">Visibilité</label>
         <div class="checkbox">
-            <input type="checkbox" name="masked" id="masked" {{ ($data->checked ?? false) ? 'checked' : '' }}>
+            <input type="checkbox" name="masked" id="masked" {{ ($data->masked ?? false) ? 'checked' : '' }}>
             <label for="masked">Masqué</label>
         </div>
+    </div>
+</div>
+
+<div class="field-group">
+    <div>
+        <label for="zipcode">Code postal</label>
+        <input class="input-field"
+               type="number"
+               id="zipcode"
+               value="{{ $data->city->zipcode ?? null }}"
+               required>
+    </div>
+
+    <div>
+        <label for="city">Ville</label>
+        {{-- TODO: prevent form submission if the input is disabled due to loading or error --}}
+        <select class="input-field"
+                name="cityId"
+                id="city"
+                {{ !$data ? 'disabled' : '' }}
+                required>
+            <option value="" disabled hidden {{ !$data ? 'selected' : '' }}>Sélectionnez une ville</option>
+            @isset($data->city)
+                <option value="{{ $data->city->id ?? null }}">{{ $data->city->name ?? null }}</option>
+            @endisset
+        </select>
+    </div>
+</div>
+
+<div class="field-group">
+    <div>
+        <label for="company">Entreprise</label>
+        <select class="input-field" name="companyId" id="company" required>
+            <option value="" disabled hidden {{ !$data ? 'selected' : '' }}>Sélectionnez une entreprise</option>
+            @foreach($companies as $company)
+                <option value="{{ $company->id }}" {{ $data && $data->company === $company->id ? 'selected' : '' }}>
+                    {{ $company->name }}
+                </option>
+            @endforeach
+        </select>
     </div>
 </div>

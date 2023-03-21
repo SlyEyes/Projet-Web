@@ -3,6 +3,7 @@
 namespace Linkedout\App\models;
 
 use Linkedout\App\entities\InternshipEntity;
+use PDO;
 
 /**
  * Model for the internship entity
@@ -30,8 +31,8 @@ class InternshipModel extends BaseModel
                             companies.companyId,
                             companies.companyName AS company,
                             cities.cityId,
-                            cities.cityName AS city,
-                            cities.zipcode AS cityZipCode
+                            cities.cityName,
+                            cities.zipcode
                         FROM internships
                         INNER JOIN cities ON internships.cityId = cities.cityId
                         INNER JOIN companies ON internships.companyId = companies.companyId
@@ -64,8 +65,8 @@ class InternshipModel extends BaseModel
                             companies.companyId,
                             companies.companyName AS company,
                             cities.cityId,
-                            cities.cityName AS city,
-                            cities.zipcode AS cityZipCode
+                            cities.cityName,
+                            cities.zipcode
                         FROM internships
                         INNER JOIN cities ON internships.cityId = cities.cityId
                         INNER JOIN companies ON internships.companyId = companies.companyId
@@ -105,16 +106,16 @@ class InternshipModel extends BaseModel
                     companies.companyId,
                     companies.companyName AS company,
                     cities.cityId,
-                    cities.cityName AS city,
-                    cities.zipcode AS cityZipCode
+                    cities.cityName,
+                    cities.zipcode
                 FROM internships 
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
                 LIMIT :limit 
                 OFFSET :offset';
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
-        $stmt->bindValue('offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         $result = $stmt->fetchAll();
@@ -123,7 +124,10 @@ class InternshipModel extends BaseModel
 
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 69ee0bf55f50ac5d0994c5bfd1cd8b70edf3d811
 
     /**
      * This function is used to get an internship from the database
@@ -147,8 +151,8 @@ class InternshipModel extends BaseModel
                     companies.companyId,
                     companies.companyName AS company,
                     cities.cityId,
-                    cities.cityName AS city,
-                    cities.zipcode AS cityZipCode
+                    cities.cityName,
+                    cities.zipcode
                 FROM internships
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
@@ -158,6 +162,7 @@ class InternshipModel extends BaseModel
             'id' => $id,
         ]);
 
+<<<<<<< HEAD
         $result = $statement->fetchAll();
 
         if (!$result)
@@ -165,4 +170,96 @@ class InternshipModel extends BaseModel
 
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
+=======
+        $result = $statement->fetch();
+
+        return array_map(fn($internship) => new InternshipEntity($internship), $result);
+    }
+
+    /**
+     * Creates an internship in the database
+     * @param InternshipEntity $internship The internship to create
+     * @return int The id of the created internship
+     */
+    public function createInternship(InternshipEntity $internship): int
+    {
+        $sql = 'INSERT INTO internships (internshipTitle,
+                         internshipDescription,
+                         internshipSkills,
+                         internshipSalary,
+                         internshipOfferDate,
+                         internshipBeginDate,
+                         internshipEndDate,
+                         numberPlaces,
+                         maskedInternship,
+                         cityId,
+                         companyId)
+                VALUES (:internshipTitle, 
+                        :internshipDescription, 
+                        :internshipSkills, 
+                        :internshipSalary, 
+                        :internshipOfferDate,
+                        :internshipBeginDate, 
+                        :internshipEndDate, 
+                        :numberPlaces, 
+                        :maskedInternship, 
+                        :cityId, 
+                        :companyId)';
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindValue('internshipTitle', $internship->title);
+        $stmt->bindValue('internshipDescription', $internship->description);
+        $stmt->bindValue('internshipSkills', $internship->skills);
+        $stmt->bindValue('internshipSalary', $internship->salary, PDO::PARAM_INT);
+        $stmt->bindValue('internshipOfferDate', $internship->offerDate);
+        $stmt->bindValue('internshipBeginDate', $internship->beginDate);
+        $stmt->bindValue('internshipEndDate', $internship->endDate);
+        $stmt->bindValue('numberPlaces', $internship->numberPlaces, PDO::PARAM_INT);
+        $stmt->bindValue('maskedInternship', $internship->masked, PDO::PARAM_BOOL);
+        $stmt->bindValue('cityId', $internship->city->id, PDO::PARAM_INT);
+        $stmt->bindValue('companyId', $internship->company, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return (int)$this->db->lastInsertId();
+    }
+
+    /**
+     * Updates an internship in the database
+     * @param InternshipEntity $internship The internship to update
+     * @return bool True if the update was successful, false otherwise
+     */
+    public function updateInternship(InternshipEntity $internship): bool
+    {
+        $sql = 'UPDATE internships 
+                SET internshipTitle = :internshipTitle,
+                    internshipDescription = :internshipDescription,
+                    internshipSkills = :internshipSkills,
+                    internshipSalary = :internshipSalary,
+                    internshipOfferDate = :internshipOfferDate,
+                    internshipBeginDate = :internshipBeginDate,
+                    internshipEndDate = :internshipEndDate,
+                    numberPlaces = :numberPlaces,
+                    maskedInternship = :maskedInternship,
+                    cityId = :cityId,
+                    companyId = :companyId
+                WHERE internshipId = :internshipId';
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindValue('internshipTitle', $internship->title);
+        $stmt->bindValue('internshipDescription', $internship->description);
+        $stmt->bindValue('internshipSkills', $internship->skills);
+        $stmt->bindValue('internshipSalary', $internship->salary, PDO::PARAM_INT);
+        $stmt->bindValue('internshipOfferDate', $internship->offerDate);
+        $stmt->bindValue('internshipBeginDate', $internship->beginDate);
+        $stmt->bindValue('internshipEndDate', $internship->endDate);
+        $stmt->bindValue('numberPlaces', $internship->numberPlaces, PDO::PARAM_INT);
+        $stmt->bindValue('maskedInternship', $internship->masked, PDO::PARAM_BOOL);
+        $stmt->bindValue('cityId', $internship->city->id, PDO::PARAM_INT);
+        $stmt->bindValue('companyId', $internship->company, PDO::PARAM_INT);
+        $stmt->bindValue('internshipId', $internship->id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+>>>>>>> 69ee0bf55f50ac5d0994c5bfd1cd8b70edf3d811
 }

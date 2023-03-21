@@ -26,3 +26,58 @@ if (window.location.href.match(/\/companies\/(new|\d+)$/)) {
         logoInput.setCustomValidity('Image invalide');
     });
 }
+
+// Autocompletion of the city field in the internship edit page
+if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
+    const citySelect = document.getElementById('city');
+    const zipcodeInput = document.getElementById('zipcode');
+
+    async function applyZipcodeSearch(zipcode, unselect = true) {
+        if (unselect)
+            citySelect.selectedIndex = 0;
+        citySelect.disabled = true;
+
+        if (zipcode.length !== 5)
+            return;
+
+        let cities;
+        try {
+            const res = await fetch(`/api/city/${zipcode}`);
+            const { data } = await res.json();
+
+            cities = data?.cities;
+        } catch {
+            return;
+        }
+
+        if (!cities || cities.length === 0)
+            return;
+
+        renewSuggestions(cities, !unselect);
+
+        citySelect.disabled = false;
+        if (cities.length === 1)
+            citySelect.selectedIndex = 1;
+    }
+
+    function renewSuggestions(cities, keepSelection = false) {
+        let selectedId = citySelect.value;
+
+        [...citySelect.children].slice(1).forEach(option => {
+            option.remove();
+        });
+
+        cities.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.id;
+            option.textContent = city.name;
+            citySelect.appendChild(option);
+        });
+
+        if (keepSelection)
+            citySelect.value = selectedId;
+    }
+
+    zipcodeInput.addEventListener('input', e => applyZipcodeSearch(e.target.value));
+    window.addEventListener('load', () => applyZipcodeSearch(zipcodeInput.value, false));
+}

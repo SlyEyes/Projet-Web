@@ -42,7 +42,7 @@
                 <tr data-row-id="{{ $row->id }}">
                     <td>{{ $row->title }}</td>
                     <td>{{ $row->company }}</td>
-                    <td>{{ $row->city }}</td>
+                    <td>{{ $row->city->name }}</td>
                 </tr>
             @endforeach
             @break

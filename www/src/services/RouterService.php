@@ -5,6 +5,7 @@ namespace Linkedout\App\services;
 use Jenssegers\Blade\Blade;
 use Klein\Klein;
 use Linkedout\App\controllers;
+use Linkedout\App\controllers\api;
 use PDO;
 
 /**
@@ -63,6 +64,12 @@ class RouterService
 
         $this->klein->respond(array('GET'), '/search', function ($request) {
             $controller = new controllers\SearchController($this->blade, $this->database);
+            return $controller->render();
+        });
+
+        $this->klein->respond('GET', '/api/city/[i:zipcode]', function ($request) {
+            $controller = new api\CityController($this->database);
+            $controller->setRouteParams($request->zipcode);
             return $controller->render();
         });
     }
