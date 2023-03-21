@@ -124,10 +124,6 @@ class InternshipModel extends BaseModel
 
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 69ee0bf55f50ac5d0994c5bfd1cd8b70edf3d811
 
     /**
      * This function is used to get an internship from the database
@@ -162,16 +158,10 @@ class InternshipModel extends BaseModel
             'id' => $id,
         ]);
 
-<<<<<<< HEAD
         $result = $statement->fetchAll();
 
         if (!$result)
             return [];
-
-        return array_map(fn($internship) => new InternshipEntity($internship), $result);
-    }
-=======
-        $result = $statement->fetch();
 
         return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
@@ -261,5 +251,4 @@ class InternshipModel extends BaseModel
 
         return $stmt->execute();
     }
->>>>>>> 69ee0bf55f50ac5d0994c5bfd1cd8b70edf3d811
 }
