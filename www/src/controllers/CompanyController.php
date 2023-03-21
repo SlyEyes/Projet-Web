@@ -27,7 +27,10 @@ class CompanyController extends BaseController
         $company = $companyModel->getCompanyById($this->id);
 
         $internshipModel = new models\InternshipModel($this->database);
-        $internship = $internshipModel->getInternshipByCompanyId($this->id);
+        $internship = $internshipModel->getInternshipsByCompanyId($this->id);
+
+        // TODO: display cities
+        $cities = 'cities';
 
         return $this->blade->make('pages.company', [
             'person' => $person,

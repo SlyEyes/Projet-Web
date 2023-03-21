@@ -13,12 +13,12 @@ main {
 section {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 1rem;
     max-width: var(--grid-width-sm);
     width: 100%;
     padding: 1rem;
     background-color: var(--light-gray) ;
-    border-radius: 1rem;
+    border-radius:1rem;
 }
 article {
     display: flex;
@@ -65,9 +65,8 @@ h3{
 }
 
 .box {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px 2em;
+    display: inline-flex;
+
   }
 
 .croix {

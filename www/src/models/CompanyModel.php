@@ -23,9 +23,11 @@ class CompanyModel extends BaseModel
                             companies.companyName, 
                             companies.companySector, 
                             companies.companyWebsite, 
-                            companies.maskedCompany
+                            companies.maskedCompany,
+                            COUNT(internships.internshipId) AS internshipCount
                         FROM companies
-                        WHERE companyId = :id';
+                        INNER JOIN internships ON internships.companyId = companies.companyId
+                        WHERE companies.companyId = :id';
         $statement = $this->db->prepare($sql_request);
         $statement->execute([
             'id' => $id,
