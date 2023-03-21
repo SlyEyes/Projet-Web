@@ -106,3 +106,7 @@ button, .btn {
     color: var(--red);
     font-weight: 500;
 }
+
+.link, .link:link, .link:visited {
+    color: var(--violet);
+}

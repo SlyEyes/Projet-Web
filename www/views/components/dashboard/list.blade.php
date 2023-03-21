@@ -41,7 +41,7 @@
             @foreach ($data as $row)
                 <tr data-row-id="{{ $row->id }}">
                     <td>{{ $row->title }}</td>
-                    <td>{{ $row->company }}</td>
+                    <td>{{ $row->companyName }}</td>
                     <td>{{ $row->city->name }}</td>
                 </tr>
             @endforeach

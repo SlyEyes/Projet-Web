@@ -16,7 +16,8 @@ class InternshipEntity
     public string $endDate;
     public int $numberPlaces;
     public bool $masked;
-    public string $company;
+    public string $companyName;
+    public int $companyId;
     public CityEntity $city;
 
     // This function is used to create a new InternshipEntity object
@@ -35,7 +36,8 @@ class InternshipEntity
         $this->endDate = $rawData['internshipEndDate'];
         $this->numberPlaces = $rawData['numberPlaces'];
         $this->masked = $rawData['maskedInternship'];
-        $this->company = $rawData['company'];
+        $this->companyName = $rawData['companyName'];
+        $this->companyId = (int)$rawData['companyId'];
         $this->city = new CityEntity($rawData);
     }
 }

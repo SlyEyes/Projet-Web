@@ -16,7 +16,7 @@ class InternshipModel extends BaseModel
      * @param $id int The id of the internship
      * @return InternshipEntity|null The internship entity or null if not found
      */
-    public function getInternshipById (int $id): ?InternshipEntity
+    public function getInternshipById(int $id): ?InternshipEntity
     {
         $sql_request = 'SELECT internships.internshipId, 
                             internships.internshipTitle,
@@ -29,7 +29,7 @@ class InternshipModel extends BaseModel
                             internships.numberPlaces, 
                             internships.maskedInternship,
                             companies.companyId,
-                            companies.companyName AS company,
+                            companies.companyName,
                             cities.cityId,
                             cities.cityName,
                             cities.zipcode
@@ -43,45 +43,27 @@ class InternshipModel extends BaseModel
         ]);
 
         $result = $statement->fetch();
-        if (!$result) {
+        if (!$result)
             return null;
-        }
 
         return new InternshipEntity($result);
     }
 
-    public function getInternshipByTitle (string $title): ?InternshipEntity
+    public function getInternshipsBySearch(): array
     {
-        $sql_request = 'SELECT internships.internshipId, 
-                            internships.internshipTitle,
-                            internships.internshipDescription, 
-                            internships.internshipSkills, 
-                            internships.internshipSalary, 
-                            internships.internshipOfferDate, 
-                            internships.internshipBeginDate, 
-                            internships.internshipEndDate, 
-                            internships.numberPlaces, 
-                            internships.maskedInternship,
-                            companies.companyId,
-                            companies.companyName AS company,
-                            cities.cityId,
-                            cities.cityName,
-                            cities.zipcode
-                        FROM internships
-                        INNER JOIN cities ON internships.cityId = cities.cityId
-                        INNER JOIN companies ON internships.companyId = companies.companyId
-                        WHERE internshipTitle = :title';
-        $statement = $this->db->prepare($sql_request);
-        $statement->execute([
-            'title' => $title,
-        ]);
+        $sql = ''; # TODO: add search sql request
 
-        $result = $statement->fetch();
-        if (!$result) {
-            return null;
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+
+        if (!$result)
+        {
+            return [];
         }
 
-        return new InternshipEntity($result);
+        return array_map(fn($internship) => new InternshipEntity($internship), $result);
     }
 
     /**
@@ -133,16 +115,16 @@ class InternshipModel extends BaseModel
     public function getInternshipsByCompanyId(int $id): array
     {
         $sql_request = 'SELECT 
-                    internshipId, 
-                    internshipTitle, 
-                    internshipDescription,
-                    internshipSkills,
-                    internshipSalary,
-                    internshipBeginDate, 
-                    internshipEndDate,
-                    internshipOfferDate, 
-                    numberPlaces, 
-                    maskedInternship,
+                    internships.internshipId, 
+                    internships.internshipTitle, 
+                    internships.internshipDescription,
+                    internships.internshipSkills,
+                    internships.internshipSalary,
+                    internships.internshipBeginDate, 
+                    internships.internshipEndDate,
+                    internships.internshipOfferDate, 
+                    internships.numberPlaces, 
+                    internships.maskedInternship,
                     companies.companyId,
                     companies.companyId,
                     companies.companyName AS company,
@@ -207,7 +189,7 @@ class InternshipModel extends BaseModel
         $stmt->bindValue('numberPlaces', $internship->numberPlaces, PDO::PARAM_INT);
         $stmt->bindValue('maskedInternship', $internship->masked, PDO::PARAM_BOOL);
         $stmt->bindValue('cityId', $internship->city->id, PDO::PARAM_INT);
-        $stmt->bindValue('companyId', $internship->company, PDO::PARAM_INT);
+        $stmt->bindValue('companyId', $internship->companyId, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -246,7 +228,7 @@ class InternshipModel extends BaseModel
         $stmt->bindValue('numberPlaces', $internship->numberPlaces, PDO::PARAM_INT);
         $stmt->bindValue('maskedInternship', $internship->masked, PDO::PARAM_BOOL);
         $stmt->bindValue('cityId', $internship->city->id, PDO::PARAM_INT);
-        $stmt->bindValue('companyId', $internship->company, PDO::PARAM_INT);
+        $stmt->bindValue('companyId', $internship->companyId, PDO::PARAM_INT);
         $stmt->bindValue('internshipId', $internship->id, PDO::PARAM_INT);
 
         return $stmt->execute();
