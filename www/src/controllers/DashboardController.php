@@ -166,7 +166,7 @@ class DashboardController extends BaseController
                     $newInternship->masked = !empty($_POST['masked']);
                     $newInternship->city = new entities\CityEntity();
                     $newInternship->city->id = (int)$_POST['cityId'];
-                    $newInternship->companyName = $_POST['companyId'];
+                    $newInternship->companyId = $_POST['companyId'];
 
                     if ($this->destination == 'new')
                         $internshipModel->createInternship($newInternship);
