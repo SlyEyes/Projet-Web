@@ -56,6 +56,12 @@ class RouterService
             return $controller->render();
         });
 
+        $this->klein->respond('GET', '/internship/[i:id]', function ($request) {
+            $controller = new controllers\InternshipController($this->blade, $this->database);
+            $controller->setRouteParams($request->id);
+            return $controller->render();
+        });
+
         $this->klein->respond(array('GET', 'POST'), '/dashboard/[a:collection]?/[a:destination]?', function ($request) {
             $controller = new controllers\DashboardController($this->blade, $this->database);
             $controller->setRouteParams($request->collection, $request->destination);
