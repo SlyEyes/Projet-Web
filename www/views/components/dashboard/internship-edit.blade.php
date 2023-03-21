@@ -87,7 +87,7 @@
         <select class="input-field" name="companyId" id="company" required>
             <option value="" disabled hidden {{ !$data ? 'selected' : '' }}>Sélectionnez une entreprise</option>
             @foreach($companies as $company)
-                <option value="{{ $company->id }}" {{ $data && $data->company === $company->id ? 'selected' : '' }}>
+                <option value="{{ $company->id }}" {{ $data && $data->companyId === $company->id ? 'selected' : '' }}>
                     {{ $company->name }}
                 </option>
             @endforeach

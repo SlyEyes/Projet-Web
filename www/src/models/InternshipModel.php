@@ -29,7 +29,7 @@ class InternshipModel extends BaseModel
                             internships.numberPlaces, 
                             internships.maskedInternship,
                             companies.companyId,
-                            companies.companyName AS company,
+                            companies.companyName,
                             cities.cityId,
                             cities.cityName,
                             cities.zipcode
@@ -63,7 +63,7 @@ class InternshipModel extends BaseModel
                             internships.numberPlaces, 
                             internships.maskedInternship,
                             companies.companyId,
-                            companies.companyName AS company,
+                            companies.companyName,
                             cities.cityId,
                             cities.cityName,
                             cities.zipcode
@@ -104,7 +104,7 @@ class InternshipModel extends BaseModel
                     internships.numberPlaces, 
                     internships.maskedInternship, 
                     companies.companyId,
-                    companies.companyName AS company,
+                    companies.companyName,
                     cities.cityId,
                     cities.cityName,
                     cities.zipcode
@@ -144,8 +144,7 @@ class InternshipModel extends BaseModel
                     internships.numberPlaces, 
                     internships.maskedInternship,
                     companies.companyId,
-                    companies.companyId,
-                    companies.companyName AS company,
+                    companies.companyName,
                     cities.cityId,
                     cities.cityName,
                     cities.zipcode
@@ -207,7 +206,7 @@ class InternshipModel extends BaseModel
         $stmt->bindValue('numberPlaces', $internship->numberPlaces, PDO::PARAM_INT);
         $stmt->bindValue('maskedInternship', $internship->masked, PDO::PARAM_BOOL);
         $stmt->bindValue('cityId', $internship->city->id, PDO::PARAM_INT);
-        $stmt->bindValue('companyId', $internship->company, PDO::PARAM_INT);
+        $stmt->bindValue('companyId', $internship->companyId, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -246,7 +245,7 @@ class InternshipModel extends BaseModel
         $stmt->bindValue('numberPlaces', $internship->numberPlaces, PDO::PARAM_INT);
         $stmt->bindValue('maskedInternship', $internship->masked, PDO::PARAM_BOOL);
         $stmt->bindValue('cityId', $internship->city->id, PDO::PARAM_INT);
-        $stmt->bindValue('companyId', $internship->company, PDO::PARAM_INT);
+        $stmt->bindValue('companyId', $internship->companyId, PDO::PARAM_INT);
         $stmt->bindValue('internshipId', $internship->id, PDO::PARAM_INT);
 
         return $stmt->execute();
