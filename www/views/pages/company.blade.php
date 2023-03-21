@@ -12,28 +12,28 @@
             <img src="/public/icons/close-purple.svg" class="croix" alt=" " href="/">
 
             <div>
-        {{--<img src="{{ $company->logo }}" alt=" "><h1 class="test" >{{ $company->name }}</h1>--}}
+        <img src="{{ $company->logo }}" alt=" "><h1 class="test" >{{ $company->name }}</h1>
             </div>
 
-            <h2>Entreprise</h2>
+            <div class="details">{{ $company->internshipCount }} Stages disponibles- $cities -{{$company->website}} </div>
 
-            <article>
+            <div>
                 Note : 4.5/5
-            </article>
+</div>
 
             <h2>Stage Disponible</h2>
 
-            <article>
+            <div>
                 @foreach ($internship as $i)
                     <div class="box">
                         <div class="a">
                             {{ $i->title }}
                             <br>
-                            {{ $i->city }} {{ $i->endDate }} - {{ $i->beginDate }}
+                            {{ $i->city->name }} <br> du {{ $i->endDate }} aux {{ $i->beginDate }}
                         </div>
                     </div>
                 @endforeach
-            </article>
+</div>
 
         </section>
     </main>
