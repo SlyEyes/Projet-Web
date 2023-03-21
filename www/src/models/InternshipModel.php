@@ -86,7 +86,7 @@ class InternshipModel extends BaseModel
                     internships.numberPlaces, 
                     internships.maskedInternship, 
                     companies.companyId,
-                    companies.companyName AS company,
+                    companies.companyName,
                     cities.cityId,
                     cities.cityName,
                     cities.zipcode
@@ -127,7 +127,7 @@ class InternshipModel extends BaseModel
                     internships.maskedInternship,
                     companies.companyId,
                     companies.companyId,
-                    companies.companyName AS company,
+                    companies.companyName,
                     cities.cityId,
                     cities.cityName,
                     cities.zipcode
