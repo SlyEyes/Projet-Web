@@ -32,12 +32,16 @@ class InternshipController extends BaseController
 
         $formattedDuration = TimeUtil::calculateDuration($internship->beginDate, $internship->endDate);
 
+        $appliancesModel = new models\ApplianceModel($this->database);
+        $appliance = $appliancesModel->getApplianceById($person->id, $this->internshipId);
+
         return $this->blade->make('pages.internship', [
             'person' => $person,
             'title' => $internship->title . ' - LinkedOut',
             'internship' => $internship,
             'company' => $company,
             'formattedDuration' => $formattedDuration,
+            'appliance' => $appliance != null,
         ])->render();
     }
 }

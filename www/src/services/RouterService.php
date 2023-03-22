@@ -89,6 +89,12 @@ class RouterService
             $controller->setRouteParams($request->zipcode);
             return $controller->render();
         });
+
+        $this->klein->respond(array('POST', 'DELETE'), '/api/wishlist/[i:id]', function ($request) {
+            $controller = new api\WishlistController($this->database);
+            $controller->setRouteParams($request->id);
+            return $controller->render();
+        });
     }
 
     /**

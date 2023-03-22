@@ -3,6 +3,7 @@
 
 @section('head')
     @pagestyle('internship')
+    @pagescript('internship')
 @endsection
 
 
@@ -34,7 +35,12 @@
             </div>
 
             <div class="btn-row">
-                <button class="btn btn-primary">Ajouter à ma wishlist</button>
+                <button class="btn btn-primary {{ $appliance ? 'hidden' : '' }}" id="wishlist-add">
+                    Ajouter à ma wishlist
+                </button>
+                <button class="btn btn-error {{ !$appliance ? 'hidden' : '' }}" id="wishlist-remove">
+                    Retirer de ma wishlist
+                </button>
                 <a href="/internship/{{ $internship->id }}/apply">
                     <button class="btn btn-primary">Postuler</button>
                 </a>
