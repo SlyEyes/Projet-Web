@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            @if (count($wishlist) > 0)
+            @if (is_array($wishlist) &&count($wishlist) > 0)
                 <div class="profile-section">
                     <h3>Wishlist</h3>
 
@@ -65,7 +65,7 @@
                 </div>
             @endif
 
-            @if (count($appliances) > 0)
+            @if (is_array($appliances) && count($appliances) > 0)
                 <div class="profile-section">
                     <h3>Applications en cours</h3>
 
