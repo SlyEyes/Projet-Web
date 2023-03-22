@@ -4,7 +4,7 @@ document.querySelector('#search-bar-input').addEventListener('input', function(e
 
 let url = new URL(window.location.href);
 let target = url.searchParams.get('target');
-if (target === 'internships') {
+if (target === 'internships' || target === null) {
     let radio = document.getElementById('research-target-0');
     radio.checked = true;
     radio.value = 'internships';
