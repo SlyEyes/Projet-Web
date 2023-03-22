@@ -1,6 +1,18 @@
 @import '../base';
 @import '../components/navbar';
 
+@mixin flex($direction, $spacing: 1rem) {
+  display: flex;
+  flex-direction: $direction;
+  gap: $spacing;
+}
+
+@mixin back-border($color: var(--light-gray), $width: 10px, $radius: 10px) {
+  background-color: $color;
+  border: $color solid $width;
+  border-radius: $radius;
+}
+
 main {
   min-height: 100vh;
   display: grid;
@@ -12,41 +24,29 @@ main {
 }
 
 section {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+  @include flex(row);
   width: 50rem;
 
   #filter-zone {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: var(--light-gray);
-    border: var(--light-gray) solid 10px;
-    border-radius: 10px;
+    @include flex(column);
+    @include back-border();
     width: 25rem;
+    padding: 1rem 0 0 1rem;
 
     #filters {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      @include flex(column);
 
       .filters-research-type {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
+        @include flex(row, 0.5rem);
       }
     }
   }
 
   #search-zone {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    @include flex(column);
 
     #search-bar {
-      display: flex;
-      flex-direction: row;
+      @include flex(row, 0);
 
       #search-bar-input {
         width: 25rem;
@@ -55,19 +55,13 @@ section {
     }
 
     #results-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      @include flex(column);
       margin: 0;
       padding: 0;
 
       .result {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        background-color: var(--light-gray);
-        border: var(--light-gray) solid 10px;
-        border-radius: 10px;
+        @include flex(row);
+        @include back-border();
         list-style: none;
 
         img {
