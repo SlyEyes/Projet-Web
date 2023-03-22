@@ -76,7 +76,9 @@ class InternshipModel extends BaseModel
                             MATCH(internshipSkills) AGAINST(:search)';
 
         $statement = $this->db->prepare($sql);
-        $statement->execute();
+        $statement->execute([
+            'search' => $search,
+        ]);
 
         $result = $statement->fetchAll();
 
