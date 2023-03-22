@@ -24,6 +24,11 @@ class CompanyController extends BaseController
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
 
+        if ($person === null) {
+            header("Location: /login?r=/company/$this->id");
+            exit;
+        }
+
         $companyModel = new models\CompanyModel($this->database);
         $company = $companyModel->getCompanyById($this->id);
 
