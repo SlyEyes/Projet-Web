@@ -24,17 +24,17 @@
 CREATE TABLE `appliance` (
   `internshipId` int NOT NULL,
   `personId` int NOT NULL,
-  `ratingId` int NOT NULL,
+  `ratingId` int NULL,
   `wishDate` date DEFAULT NULL,
   `applianceDate` date DEFAULT NULL,
   `responseDate` date DEFAULT NULL,
   `validation` tinyint(1) NOT NULL,
-  PRIMARY KEY (`internshipId`,`personId`,`ratingId`),
-  KEY `apply_persons0_FK` (`personId`),
-  KEY `apply_rating1_FK` (`ratingId`),
+  PRIMARY KEY (`internshipId`,`personId`),
+  KEY `apply_persons_FK` (`personId`),
+  KEY `apply_rating_FK` (`ratingId`),
   CONSTRAINT `apply_internships_FK` FOREIGN KEY (`internshipId`) REFERENCES `internships` (`internshipId`),
-  CONSTRAINT `apply_persons0_FK` FOREIGN KEY (`personId`) REFERENCES `persons` (`personId`),
-  CONSTRAINT `apply_rating1_FK` FOREIGN KEY (`ratingId`) REFERENCES `rating` (`ratingId`)
+  CONSTRAINT `apply_persons_FK` FOREIGN KEY (`personId`) REFERENCES `persons` (`personId`),
+  CONSTRAINT `apply_rating_FK` FOREIGN KEY (`ratingId`) REFERENCES `rating` (`ratingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
