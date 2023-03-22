@@ -18,12 +18,12 @@
                     <input type="text"
                            id="filter-search-input"
                            name="q"
-                           value=""
+                           value="{{ $search ?? null }}"
                     >
 
                     <div class="filters-research-type">
                         <input id="research-target-0" name="target" type="radio" value="internships"
-                               @if (!isset($target) or $target == 'internships')
+                               @if (isset($target) and $target == 'internships')
                                    checked
                                @endif
                                required
@@ -63,11 +63,13 @@
                         @if ($target == 'internships')
                             @foreach ($results as $result)
                                 <li class="result">
-                                    <img src="{{ $result->logo }}" alt="Logo de {{ $result->name }}">
-
                                     <div>
-                                        <h3>{{ $result->name }}</h3>
-                                        <p>Secteur {{ $result->sector }}</p>
+                                        <h3>{{ $result->title }}</h3>
+                                        <p>Posté par: {{ $results->companyName }}</p>
+                                        <p>Le: {{ $results->offerDate }}</p>
+                                        <p>Durée: du {{ $results->beginDate }} au {{ $results->endDate }}</p>
+                                        <p>Skills: {{ $result->skills }}</p>
+                                        <p>Nombre de places: {{ $results->numberPlaces }}</p>
                                     </div>
                                 </li>
                             @endforeach
@@ -79,7 +81,7 @@
 
                                     <div>
                                         <h3>{{ $result->name }}</h3>
-                                        <p>Secteur {{ $result->sector }}</p>
+                                        <p>Secteur: {{ $result->sector }}</p>
                                     </div>
                                 </li>
                             @endforeach
