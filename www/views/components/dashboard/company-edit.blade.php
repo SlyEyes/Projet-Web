@@ -33,8 +33,8 @@
     </div>
 </div>
 
-<div>
 <div class="field-group">
+    <div>
         <label for="masked">Visibilité</label>
         <div class="checkbox">
             <input type="checkbox" name="masked" id="masked" {{ ($data->masked ?? false) ? 'checked' : '' }}>
