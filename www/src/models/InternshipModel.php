@@ -51,7 +51,29 @@ class InternshipModel extends BaseModel
 
     public function getInternshipsBySearch($search): array
     {
-        $sql = ''; # TODO: add search sql request
+        $sql = 'SELECT internships.internshipId, 
+                            internships.internshipTitle,
+                            internships.internshipDescription, 
+                            internships.internshipSkills, 
+                            internships.internshipSalary, 
+                            internships.internshipOfferDate, 
+                            internships.internshipBeginDate, 
+                            internships.internshipEndDate, 
+                            internships.numberPlaces, 
+                            internships.maskedInternship,
+                            companies.companyId,
+                            companies.companyName,
+                            cities.cityId,
+                            cities.cityName,
+                            cities.zipcode,
+                            MATCH(internshipTitle) AGAINST(:search) as scoreInternshipTitle,
+                            MATCH(internshipSkills) AGAINST(:search) as scoreInternshipSkills
+                        FROM internships
+                        INNER JOIN cities ON internships.cityId = cities.cityId
+                        INNER JOIN companies ON internships.companyId = companies.companyId
+                        WHERE 
+                            MATCH(internshipTitle) AGAINST(:search) OR
+                            MATCH(internshipSkills) AGAINST(:search)';
 
         $statement = $this->db->prepare($sql);
         $statement->execute();

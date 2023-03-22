@@ -9,8 +9,14 @@ class SearchController extends BaseController
     public function render(): string
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        $search = $_GET['q'];
-        $target = $_GET['target'];
+        if (isset($_GET['q']) && isset($_GET['target']))
+        {
+            $search = $_GET['q'];
+            $target = $_GET['target'];
+        } else {
+            $search = '';
+            $target = '';
+        }
 
         $companyModel = new models\CompanyModel($this->database);
         $internshipModel = new models\InternshipModel($this->database);
