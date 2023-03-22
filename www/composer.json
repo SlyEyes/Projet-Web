@@ -12,6 +12,7 @@
         "klein/klein": "^2.1",
         "jenssegers/blade": "^1.4",
         "ext-pdo": "*",
-        "firebase/php-jwt": "^6.4"
+        "firebase/php-jwt": "^6.4",
+        "nesbot/carbon": "^2.66"
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Linkedout\App\utils;
 
+use Carbon\Carbon;
 use DateTime;
 use Exception;
 
@@ -17,6 +18,16 @@ class TimeUtil
             return $months . ' mois';
         } catch (Exception) {
             return 'Durée invalide';
+        }
+    }
+
+    static function formatDate(string $date): string
+    {
+        try {
+            $date = Carbon::parse($date);
+            return $date->locale('fr_FR')->isoFormat('LL');
+        } catch (Exception) {
+            return 'Date invalide';
         }
     }
 }
