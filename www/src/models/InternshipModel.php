@@ -49,7 +49,7 @@ class InternshipModel extends BaseModel
         return new InternshipEntity($result);
     }
 
-    public function getInternshipsBySearch(): array
+    public function getInternshipsBySearch($search): array
     {
         $sql = ''; # TODO: add search sql request
 

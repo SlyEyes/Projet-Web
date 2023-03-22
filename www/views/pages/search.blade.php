@@ -22,12 +22,12 @@
                     >
 
                     <div class="filters-research-type">
-                        <input id="research-target-0" name="target" type="radio" value="internships">
+                        <input id="research-target-0" name="target" type="radio" value="internships" checked required>
                         <label for="research-target-0">Stages</label>
                     </div>
 
                     <div class="filters-research-type">
-                        <input id="research-target-1" name="target" type="radio" value="companies">
+                        <input id="research-target-1" name="target" type="radio" value="companies" required>
                         <label for="research-target-1">Entreprises</label>
                     </div>
                 </form>
@@ -40,22 +40,50 @@
                            id="search-bar-input"
                            class="input-field"
                            name="q"
+                           value="{{ $search ?? null }}"
                            placeholder="Tapez le nom d'un stage ou d'une entreprise ..."
                            required
                     >
+
                     <button type="submit" id="search-bar-button" class="btn-primary" form="filters">Rechercher</button>
                 </form>
 
                 <ul id="results-list">
-                    @foreach ($results as $result)
+                    @if ($results != [])
+                        @if ($target == 'internships')
+                            @foreach ($results as $result)
+                                <li class="result">
+                                    <img src="{{ $result->logo }}" alt="Logo de {{ $result->name }}">
+
+                                    <div>
+                                        <h3>{{ $result->name }}</h3>
+                                        <p>Secteur {{ $result->sector }}</p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @elseif ($target == 'companies')
+                            @foreach ($results as $result)
+                                <li class="result">
+                                    <img src="{{ $result->logo }}" alt="Logo de {{ $result->name }}">
+
+                                    <div>
+                                        <h3>{{ $result->name }}</h3>
+                                        <p>Secteur {{ $result->sector }}</p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
+                    @else
                         <li class="result">
-                            <img src="{{ $result->logo }}" alt="Logo de {{ $result->name }}">
+                            <img src="" alt="No result">
+
                             <div>
-                                <h3>{{ $result->name }}</h3>
-                                <p>Secteur {{ $result->sector }}</p>
+                                <h3>Aucun résultat</h3>
+                                <p>Vérifiez que vous avez bien tapé votre requête et que vous avez sélectionné
+                                    les bons filtres</p>
                             </div>
                         </li>
-                    @endforeach
+                    @endif
                 </ul>
             </div>
         </section>

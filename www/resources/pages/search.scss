@@ -51,6 +51,7 @@ section {
 
     #search-bar {
       @include flex(row, 0);
+      margin: 0;
 
       #search-bar-input {
         width: 25rem;

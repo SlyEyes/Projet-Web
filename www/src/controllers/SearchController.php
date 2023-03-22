@@ -13,21 +13,29 @@ class SearchController extends BaseController
 
         $method = $_SERVER['REQUEST_METHOD'];
         $search = $_GET['q'];
+        $target = $_GET['target'];
 
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
 
         if ($person === null) {
-            header("Location: /login?r=/search?q=$search");
+            header("Location: /login?r=/search?q=$search&target=internships");
             exit;
         }
 
         if ($method == 'GET' && !empty($search))
         {
-            $results = $companyModel->getCompaniesBySearch($search);
+            if ($target == 'internships')
+                $results = $internshipModel->getInternshipsBySearch($search);
+            else if ($target == 'companies')
+                $results = $companyModel->getCompaniesBySearch($search);
+            else
+                $results = [];
 
             return $this->blade->render('pages.search', [
                 'results' => $results,
+                'search' => $search,
+                'target' => $target,
                 'person' => $person,
             ]);
         } else {
