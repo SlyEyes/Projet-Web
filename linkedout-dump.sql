@@ -22,17 +22,17 @@
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `appliance` (
-  `intershipId` int NOT NULL,
+  `internshipId` int NOT NULL,
   `personId` int NOT NULL,
   `ratingId` int NOT NULL,
   `wishDate` date DEFAULT NULL,
   `applianceDate` date DEFAULT NULL,
   `responseDate` date DEFAULT NULL,
   `validation` tinyint(1) NOT NULL,
-  PRIMARY KEY (`intershipId`,`personId`,`ratingId`),
+  PRIMARY KEY (`internshipId`,`personId`,`ratingId`),
   KEY `apply_persons0_FK` (`personId`),
   KEY `apply_rating1_FK` (`ratingId`),
-  CONSTRAINT `apply_internships_FK` FOREIGN KEY (`intershipId`) REFERENCES `internships` (`internshipId`),
+  CONSTRAINT `apply_internships_FK` FOREIGN KEY (`internshipId`) REFERENCES `internships` (`internshipId`),
   CONSTRAINT `apply_persons0_FK` FOREIGN KEY (`personId`) REFERENCES `persons` (`personId`),
   CONSTRAINT `apply_rating1_FK` FOREIGN KEY (`ratingId`) REFERENCES `rating` (`ratingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
