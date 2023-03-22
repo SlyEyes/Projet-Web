@@ -50,6 +50,11 @@ class RouterService
             return $controller->render();
         });
 
+        $this->klein->respond('GET', '/profile', function () {
+            $controller = new controllers\ProfileController($this->blade, $this->database);
+            return $controller->render();
+        });
+
         $this->klein->respond('GET', '/company/[i:id]', function ($request) {
             $controller = new controllers\CompanyController($this->blade, $this->database);
             $controller->setRouteParams($request->id);

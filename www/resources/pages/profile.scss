@@ -1,0 +1,63 @@
+@import '../base';
+@import '../components/navbar';
+
+main {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+
+    @media (max-width: 32rem) {
+        min-height: calc(100vh - 4rem);
+    }
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 48rem;
+    background-color: var(--light-gray);
+    padding: 1.5rem;
+    gap: 1.5rem;
+    border-radius: 1rem;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.profile-subsection {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.identity {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.identity-logo {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--violet);
+    color: var(--white);
+}
+
+.identity-name {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+section p {
+    margin: 0;
+}
