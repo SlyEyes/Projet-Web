@@ -16,7 +16,7 @@ class InternshipEntity
     public string $endDate;
     public int $numberPlaces;
     public bool $masked;
-    public string $companyName;
+    public ?string $companyName;
     public int $companyId;
     public CityEntity $city;
 
@@ -36,8 +36,10 @@ class InternshipEntity
         $this->endDate = $rawData['internshipEndDate'];
         $this->numberPlaces = $rawData['numberPlaces'];
         $this->masked = $rawData['maskedInternship'];
-        $this->companyName = $rawData['companyName'];
-        $this->companyId = (int)$rawData['companyId'];
+        if (isset($rawData['companyName']))
+            $this->companyName = $rawData['companyName'];
+        if (isset($rawData['companyId']))
+            $this->companyId = (int)$rawData['companyId'];
         $this->city = new CityEntity($rawData);
     }
 }

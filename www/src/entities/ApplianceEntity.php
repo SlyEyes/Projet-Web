@@ -11,6 +11,7 @@ class ApplianceEntity
     public ?\DateTime $applianceDate = null;
     public ?\DateTime $responseDate = null;
     public bool $validation = false;
+    public ?InternshipEntity $internship = null;
 
     public function __construct(?array $rawData = null)
     {
@@ -27,5 +28,7 @@ class ApplianceEntity
         if ($rawData['responseDate'] !== null)
             $this->responseDate = new \DateTime($rawData['responseDate']);
         $this->validation = (bool)$rawData['validation'];
+        if (isset($rawData['internshipTitle']))
+            $this->internship = new InternshipEntity($rawData);
     }
 }

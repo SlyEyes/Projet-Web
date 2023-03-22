@@ -2,6 +2,7 @@
 
 namespace Linkedout\App\controllers;
 
+use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\models;
 
 class ProfileController extends BaseController
@@ -16,8 +17,16 @@ class ProfileController extends BaseController
             exit;
         }
 
+        if ($person->role == RoleEnum::STUDENT) {
+            $applianceModel = new models\ApplianceModel($this->database);
+            $wishlist = $applianceModel->getWishlistByPersonId($person->id);
+            $appliances = $applianceModel->getAppliancesByPersonId($person->id);
+        }
+
         return $this->blade->render('pages.profile', [
             'person' => $person,
+            'wishlist' => $wishlist ?? null,
+            'appliances' => $appliances ?? null,
         ]);
     }
 }

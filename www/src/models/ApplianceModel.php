@@ -32,15 +32,88 @@ class ApplianceModel extends BaseModel
     }
 
     /**
+     * Get the wishlist for a person
+     * @param int $personId
+     * @return ApplianceEntity[]
+     */
+    public function getWishlistByPersonId(int $personId): array
+    {
+        $sql = "SELECT appliance.internshipId,
+                        appliance.personId,
+                        appliance.ratingId,
+                        appliance.wishDate,
+                        appliance.applianceDate,
+                        appliance.responseDate,
+                        appliance.validation,
+                        internships.internshipId, 
+                        internships.internshipTitle,
+                        internships.internshipDescription, 
+                        internships.internshipSkills, 
+                        internships.internshipSalary, 
+                        internships.internshipOfferDate, 
+                        internships.internshipBeginDate, 
+                        internships.internshipEndDate, 
+                        internships.numberPlaces, 
+                        internships.maskedInternship,
+                        internships.cityId,
+                        companies.companyId,
+                        companies.companyName,
+                        cities.cityName,
+                        cities.zipcode
+                FROM appliance 
+                INNER JOIN internships ON appliance.internshipId = internships.internshipId
+                INNER JOIN companies on internships.companyId = companies.companyId
+                INNER JOIN cities ON cities.cityId = internships.cityId
+                WHERE appliance.personId = :userId 
+                    AND appliance.applianceDate IS NULL 
+                    AND wishDate IS NOT NULL 
+                    AND internships.maskedInternship = 0";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['userId' => $personId]);
+
+        $result = $stmt->fetchAll();
+        if ($result === false)
+            return [];
+
+        return array_map(fn($appliance) => new ApplianceEntity($appliance), $result);
+    }
+
+    /**
      * Get all appliances for a user
      * @param int $personId
      * @return ApplianceEntity[]
      */
-    public function getAppliancesForPerson(int $personId): array
+    public function getAppliancesByPersonId(int $personId): array
     {
-        $sql = "SELECT internshipId, personId, ratingId, wishDate, applianceDate, responseDate, validation 
+        $sql = "SELECT appliance.internshipId,
+                        appliance.personId,
+                        appliance.ratingId,
+                        appliance.wishDate,
+                        appliance.applianceDate,
+                        appliance.responseDate,
+                        appliance.validation,
+                        internships.internshipId, 
+                        internships.internshipTitle,
+                        internships.internshipDescription, 
+                        internships.internshipSkills, 
+                        internships.internshipSalary, 
+                        internships.internshipOfferDate, 
+                        internships.internshipBeginDate, 
+                        internships.internshipEndDate, 
+                        internships.numberPlaces, 
+                        internships.maskedInternship,
+                        internships.cityId,
+                        companies.companyId,
+                        companies.companyName,
+                        cities.cityName,
+                        cities.zipcode
                 FROM appliance 
-                WHERE personId = :userId";
+                INNER JOIN internships ON appliance.internshipId = internships.internshipId
+                INNER JOIN companies on internships.companyId = companies.companyId
+                INNER JOIN cities ON cities.cityId = internships.cityId
+                WHERE appliance.personId = :userId 
+                    AND appliance.applianceDate IS NOT NULL 
+                    AND internships.maskedInternship = 0";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['userId' => $personId]);
 

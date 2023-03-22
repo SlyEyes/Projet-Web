@@ -44,6 +44,46 @@
                     </p>
                 </div>
             </div>
+
+            @if (count($wishlist) > 0)
+                <div class="profile-section">
+                    <h3>Wishlist</h3>
+
+                    <div class="internships-section">
+                        @foreach ($wishlist as $wish)
+                            <a href="/internship/{{ $wish->internship->id }}" class="internship-card">
+                                <div>{{ $wish->internship->title }}</div>
+                                <div class="small">
+                                    {{ $wish->internship->companyName }},
+                                    {{ $wish->internship->city->name }}
+                                    <br/>
+                                    Ajouté le {{ $wish->wishDate->format('d/m') }}
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            @if (count($appliances) > 0)
+                <div class="profile-section">
+                    <h3>Applications en cours</h3>
+
+                    <div class="internships-section">
+                        @foreach ($appliances as $appliance)
+                            <a href="/internship/{{ $appliance->internship->id }}" class="internship-card">
+                                <div>{{ $appliance->internship->title }}</div>
+                                <div class="small">
+                                    {{ $appliance->internship->companyName }},
+                                    {{ $appliance->internship->city->name }}
+                                    <br/>
+                                    Postulé le {{ $appliance->applianceDate->format('d/m') }}
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </section>
     </main>
 @endsection

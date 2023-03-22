@@ -20,6 +20,10 @@ section {
     padding: 1.5rem;
     gap: 1.5rem;
     border-radius: 1rem;
+
+    @media screen and (max-width: 48rem) {
+        background-color: var(--white);
+    }
 }
 
 .profile-section {
@@ -60,4 +64,28 @@ section {
 
 section p {
     margin: 0;
+}
+
+.internships-section {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.internship-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 10rem;
+    height: fit-content;
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: .5rem;
+    color: inherit;
+    text-decoration: none;
+
+    @media screen and (max-width: 48rem) {
+        background-color: var(--light-gray);
+    }
 }
