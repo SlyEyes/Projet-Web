@@ -19,11 +19,12 @@
                            id="filter-search-input"
                            name="q"
                            value="{{ $search ?? null }}"
+                           required
                     >
 
                     <div class="filters-research-type">
                         <input id="research-target-0" name="target" type="radio" value="internships"
-                               checked
+                               @if ($target == 'internships') checked @endif
                                required
                         >
                         <label for="research-target-0">Stages</label>
@@ -31,6 +32,7 @@
 
                     <div class="filters-research-type">
                         <input id="research-target-1" name="target" type="radio" value="companies"
+                                 @if ($target == 'companies') checked @endif
                                required
                         >
                         <label for="research-target-1">Entreprises</label>

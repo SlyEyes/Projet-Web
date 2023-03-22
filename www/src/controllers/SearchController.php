@@ -10,13 +10,9 @@ class SearchController extends BaseController
     {
         $method = $_SERVER['REQUEST_METHOD'];
 
-        if (isset($_GET['q']) && isset($_GET['target'])) {
-            $search = $_GET['q'];
-            $target = $_GET['target'];
-        } else {
-            $search = null;
-            $target = null;
-        }
+        $search = $_GET['q'] ?? null;
+
+        $target = $_GET['target'] ?? 'internships';
 
         $companyModel = new models\CompanyModel($this->database);
         $internshipModel = new models\InternshipModel($this->database);
