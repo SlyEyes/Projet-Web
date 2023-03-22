@@ -17,10 +17,18 @@
             <img src="/public/icons/magnifying-black.svg" alt="Home">
             <span>Recherche</span>
         </a>
-        <a href="/about">
-            <img src="/public/icons/question-black.svg" alt="Home">
-            <span>À propos</span>
-        </a>
+
+        @if(empty($person) || $person->role->value == 'student')
+            <a href="/about">
+                <img src="/public/icons/question-black.svg" alt="Home">
+                <span>À propos</span>
+            </a>
+        @else
+            <a href="/dashboard">
+                <img src="/public/icons/adjustements-horizontal-black.svg" alt="Home">
+                <span>Dashboard</span>
+            </a>
+        @endif
 
         @isset($person)
             <a href="/profile" class="nav-profile">
