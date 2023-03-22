@@ -22,12 +22,22 @@
                     >
 
                     <div class="filters-research-type">
-                        <input id="research-target-0" name="target" type="radio" value="internships" checked required>
+                        <input id="research-target-0" name="target" type="radio" value="internships"
+                               @if (!isset($target) or $target == 'internships')
+                                   checked
+                               @endif
+                               required
+                        >
                         <label for="research-target-0">Stages</label>
                     </div>
 
                     <div class="filters-research-type">
-                        <input id="research-target-1" name="target" type="radio" value="companies" required>
+                        <input id="research-target-1" name="target" type="radio" value="companies"
+                               @if (isset($target) and $target == 'companies')
+                                   checked
+                               @endif
+                               required
+                        >
                         <label for="research-target-1">Entreprises</label>
                     </div>
                 </form>
@@ -49,7 +59,7 @@
                 </form>
 
                 <ul id="results-list">
-                    @if ($results != [])
+                    @if (isset($results) and $results != null)
                         @if ($target == 'internships')
                             @foreach ($results as $result)
                                 <li class="result">
@@ -61,6 +71,7 @@
                                     </div>
                                 </li>
                             @endforeach
+
                         @elseif ($target == 'companies')
                             @foreach ($results as $result)
                                 <li class="result">
@@ -73,10 +84,11 @@
                                 </li>
                             @endforeach
                         @endif
+
+                    @elseif (!isset($results))
+
                     @else
                         <li class="result">
-                            <img src="" alt="No result">
-
                             <div>
                                 <h3>Aucun résultat</h3>
                                 <p>Vérifiez que vous avez bien tapé votre requête et que vous avez sélectionné

@@ -8,12 +8,12 @@ class SearchController extends BaseController
 {
     public function render(): string
     {
-        $companyModel = new models\CompanyModel($this->database);
-        $internshipModel = new models\InternshipModel($this->database);
-
         $method = $_SERVER['REQUEST_METHOD'];
         $search = $_GET['q'];
         $target = $_GET['target'];
+
+        $companyModel = new models\CompanyModel($this->database);
+        $internshipModel = new models\InternshipModel($this->database);
 
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
@@ -30,7 +30,7 @@ class SearchController extends BaseController
             else if ($target == 'companies')
                 $results = $companyModel->getCompaniesBySearch($search);
             else
-                $results = [];
+                $results = null;
 
             return $this->blade->render('pages.search', [
                 'results' => $results,
