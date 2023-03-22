@@ -43,9 +43,10 @@ class CompanyController extends BaseController
 
         return $this->blade->make('pages.company', [
             'person' => $person,
+            'title' => $company->name . ' - LinkedOut',
             'company' => $company,
             'internships' => $internships,
-            'cities' => $cities
+            'cities' => $cities,
         ]);
     }
 }

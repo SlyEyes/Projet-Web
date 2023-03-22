@@ -34,9 +34,10 @@ class InternshipController extends BaseController
 
         return $this->blade->make('pages.internship', [
             'person' => $person,
+            'title' => $internship->title . ' - LinkedOut',
             'internship' => $internship,
             'company' => $company,
-            'formattedDuration' => $formattedDuration
+            'formattedDuration' => $formattedDuration,
         ])->render();
     }
 }
