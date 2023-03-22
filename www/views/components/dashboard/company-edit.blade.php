@@ -26,7 +26,15 @@
         <label for="website">Site web</label>
         <input class="input-field" type="url" name="website" id="website" value="{{ $data->website ?? null }}" required>
     </div>
+
     <div>
+        <label for="email">Email</label>
+        <input class="input-field" type="email" name="email" id="email" value="{{ $data->email ?? null }}" required>
+    </div>
+</div>
+
+<div>
+<div class="field-group">
         <label for="masked">Visibilité</label>
         <div class="checkbox">
             <input type="checkbox" name="masked" id="masked" {{ ($data->masked ?? false) ? 'checked' : '' }}>

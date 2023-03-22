@@ -188,6 +188,7 @@ class DashboardController extends BaseController
                     $newCompany->logo = $_POST['logo'];
                     $newCompany->sector = $_POST['sector'];
                     $newCompany->website = $_POST['website'];
+                    $newCompany->email = $_POST['email'];
                     $newCompany->masked = !empty($_POST['masked']);
 
                     if ($this->destination == 'new')
