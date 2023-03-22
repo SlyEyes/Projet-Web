@@ -38,6 +38,13 @@ class ApplianceController extends BaseController
         $internshipModel = new models\InternshipModel($this->database);
         $internship = $internshipModel->getInternshipById($this->id);
 
+        if ($internship === null || $internship->masked)
+            return $this->blade->make('pages.error', [
+                'person' => $person,
+                'title' => 'Stage introuvable - LinkedOut',
+                'message' => 'Impossible de trouver ce stage.'
+            ]);
+
         $companyModel = new models\CompanyModel($this->database);
         $company = $companyModel->getCompanyById($internship->companyId);
 

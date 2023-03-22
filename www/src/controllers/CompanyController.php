@@ -32,6 +32,13 @@ class CompanyController extends BaseController
         $companyModel = new models\CompanyModel($this->database);
         $company = $companyModel->getCompanyById($this->id);
 
+        if ($company === null || $company->masked)
+            return $this->blade->make('pages.error', [
+                'person' => $person,
+                'title' => 'Entreprise introuvable - LinkedOut',
+                'message' => 'Impossible de trouver cette entreprise.'
+            ]);
+
         $internshipModel = new models\InternshipModel($this->database);
         $internships = $internshipModel->getInternshipsByCompanyId($this->id);
 

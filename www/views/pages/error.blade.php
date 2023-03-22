@@ -2,15 +2,15 @@
 
 
 @section('head')
-    @pagestyle('404')
+    @pagestyle('error')
 @endsection
 
 
 @section('content')
     <main>
         <section>
-            <h1>404 Not Found 🥲</h1>
-            <p>Impossible de trouver la page recherchée ({{ $_SERVER['REQUEST_URI'] }})</p>
+            <h1>{{ $errorTitle ?? 'Erreur 🥲' }}</h1>
+            <p>{{ $message }}</p>
             <a class="btn btn-primary" href="/">
                 Retour à la page d'accueil
             </a>
