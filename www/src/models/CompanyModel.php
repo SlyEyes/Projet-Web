@@ -175,17 +175,17 @@ class CompanyModel extends BaseModel
     public function createCompany(CompanyEntity $newCompany): int
     {
         $sql = 'INSERT INTO companies 
-                    (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail) 
+                    (companyLogo, companyName, companySector, companyWebsite, companyEmail, maskedCompany) 
                 VALUES 
-                    (:logo, :name, :sector, :website, :masked)';
+                    (:logo, :name, :sector, :website, :email, :masked)';
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindValue(':logo', $newCompany->logo);
         $stmt->bindValue(':name', $newCompany->name);
         $stmt->bindValue(':sector', $newCompany->sector);
         $stmt->bindValue(':website', $newCompany->website);
-        $stmt->bindValue(':masked', $newCompany->masked, \PDO::PARAM_BOOL);
         $stmt->bindValue(':email', $newCompany->email);
+        $stmt->bindValue(':masked', $newCompany->masked, \PDO::PARAM_BOOL);
 
         $stmt->execute();
 
@@ -204,7 +204,7 @@ class CompanyModel extends BaseModel
                     companyName = :name, 
                     companySector = :sector, 
                     companyWebsite = :website, 
-                    maskedCompany = :masked
+                    maskedCompany = :masked,
                     companyEmail = :email
                 WHERE companyId = :id';
         $stmt = $this->db->prepare($sql);
