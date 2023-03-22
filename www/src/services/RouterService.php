@@ -90,6 +90,12 @@ class RouterService
             return $controller->render();
         });
 
+        $this->klein->respond('GET', '/api/promotion/[i:campusId]', function ($request) {
+            $controller = new api\PromotionController($this->database);
+            $controller->setRouteParams($request->campusId);
+            return $controller->render();
+        });
+
         $this->klein->respond(array('POST', 'DELETE'), '/api/wishlist/[i:id]', function ($request) {
             $controller = new api\WishlistController($this->database);
             $controller->setRouteParams($request->id);

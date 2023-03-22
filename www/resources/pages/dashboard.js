@@ -9,6 +9,53 @@ document.querySelectorAll('tbody tr').forEach(row => {
 });
 
 
+// Autocomplete the promotion field in the student edit page
+if (window.location.href.match(/\/students\/(new|\d+)$/)) {
+    const campusSelect = document.getElementById('campus');
+    const promotionSelect = document.getElementById('promotion');
+
+    async function applyPromotionSearch(promotion) {
+        promotionSelect.selectedIndex = 0;
+        promotionSelect.disabled = true;
+
+        let promotions;
+        try {
+            const res = await fetch(`/api/promotion/${promotion}`);
+            const { data } = await res.json();
+
+            promotions = data?.promotions;
+        } catch {
+            return;
+        }
+
+        renewSuggestions(promotions);
+
+        promotionSelect.disabled = false;
+        if (promotions.length === 1)
+            promotionSelect.selectedIndex = 1;
+    }
+
+    function renewSuggestions(promotions) {
+        let selectedId = promotionSelect.value;
+
+        [...promotionSelect.children].slice(1).forEach(option => {
+            option.remove();
+        });
+
+        promotions.forEach(promotion => {
+            const option = document.createElement('option');
+            option.value = promotion.id;
+            option.textContent = promotion.name;
+            promotionSelect.appendChild(option);
+        });
+
+        promotionSelect.value = selectedId;
+    }
+
+    campusSelect.addEventListener('change', e => applyPromotionSearch(e.target.value));
+}
+
+
 // Live preview of the logo in the company edit page
 if (window.location.href.match(/\/companies\/(new|\d+)$/)) {
     const img = document.querySelector('#logo-preview img');
@@ -26,6 +73,7 @@ if (window.location.href.match(/\/companies\/(new|\d+)$/)) {
         logoInput.setCustomValidity('Image invalide');
     });
 }
+
 
 // Autocompletion of the city field in the internship edit page
 if (window.location.href.match(/\/internships\/(new|\d+)$/)) {

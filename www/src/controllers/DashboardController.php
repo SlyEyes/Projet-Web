@@ -60,12 +60,20 @@ class DashboardController extends BaseController
         if (($validCollectionID || $this->destination == 'new') && $_SERVER['REQUEST_METHOD'] === 'POST')
             $error = $this->handlePost();
 
+        $campusModel = new models\CampusModel($this->database);
+        $promotionModel = new models\PromotionModel($this->database);
+
         switch ($this->collection) {
             case 'students':
                 if (empty($this->destination))
                     $data = $personModel->getAllPersons(roles: [RoleEnum::STUDENT]);
                 elseif ($validCollectionID)
                     $data = $personModel->getPersonById($this->destination);
+                $campuses = $campusModel->getAllCampuses();
+                if ($validCollectionID) {
+                    $personPromotion = $promotionModel->getPromotionForPersonId($this->destination);
+                    $promotions = $promotionModel->getPromotionForCampusId($personPromotion->campusId);
+                }
                 break;
             case 'tutors':
                 if (empty($this->destination))
@@ -112,6 +120,9 @@ class DashboardController extends BaseController
             'destination' => $this->destination,
             'error' => $error ?? null,
             'companies' => $companies ?? null,
+            'campuses' => $campuses ?? null,
+            'personPromotion' => $personPromotion ?? null,
+            'promotions' => $promotions ?? null,
         ]);
     }
 
@@ -125,7 +136,8 @@ class DashboardController extends BaseController
             case 'students':
             case 'tutors':
             case 'administrators':
-                $personModel = new models\PersonModel($this->database);
+            $personModel = new models\PersonModel($this->database);
+            $promotionModel = new models\PromotionModel($this->database);
 
                 try {
                     $newPerson = new entities\PersonEntity();
@@ -139,11 +151,26 @@ class DashboardController extends BaseController
                         $newPerson->password = $_POST['password'];
                     $newPerson->role = RoleEnum::fromValue(substr($this->collection, 0, -1));
 
-                    if ($this->destination == 'new')
-                        $personModel->createPerson($newPerson);
-                    else
+                    $this->database->beginTransaction();
+
+                    if ($this->destination == 'new') {
+                        $newPerson->id = $personModel->createPerson($newPerson);
+                        if ($this->collection == 'students')
+                            $promotionModel->setPromotionForPersonId($newPerson->id, (int)$_POST['promotion']);
+                    } else {
                         $personModel->updatePerson($newPerson);
+                        if ($this->collection == 'students') {
+                            $personPromotion = $promotionModel->getPromotionForPersonId($newPerson->id);
+                            if ($personPromotion->id != (int)$_POST['promotion']) {
+                                $promotionModel->removePromotionForPersonId($newPerson->id, $personPromotion->id);
+                                $promotionModel->setPromotionForPersonId($newPerson->id, (int)$_POST['promotion']);
+                            }
+                        }
+                    }
+
+                    $this->database->commit();
                 } catch (Exception $e) {
+                    $this->database->rollBack();
                     return 'Erreur lors de la création de l\'utilisateur : ' . $e->getMessage();
                 }
             break;
