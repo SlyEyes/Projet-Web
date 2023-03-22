@@ -12,7 +12,7 @@
             <div id="filter-zone">
                 <h3>Filtres</h3>
 
-                <form id="filters">
+                <form action="/search" method="GET" id="filters" title="Filtres">
                     <div class="filters-research-type">
                         <input id="research-type-0" name="research-type" type="radio" value="internships">
                         <label for="research-type-0">Stages</label>
@@ -35,6 +35,12 @@
                            placeholder="Tapez le nom d'un stage ou d'une entreprise ..."
                            required>
 
+                    <label for="filter-input"></label>
+                    <input type="text"
+                           id="filter-input"
+                           name="f"
+                           value=""
+                    >
                     <button type="submit" id="search-bar-button" class="btn-primary">Rechercher</button>
                 </form>
 
