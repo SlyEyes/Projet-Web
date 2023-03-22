@@ -23,9 +23,7 @@
 
                     <div class="filters-research-type">
                         <input id="research-target-0" name="target" type="radio" value="internships"
-                               @if (isset($target) and $target == 'internships')
-                                   checked
-                               @endif
+                               checked
                                required
                         >
                         <label for="research-target-0">Stages</label>
@@ -33,9 +31,6 @@
 
                     <div class="filters-research-type">
                         <input id="research-target-1" name="target" type="radio" value="companies"
-                               @if (isset($target) and $target == 'companies')
-                                   checked
-                               @endif
                                required
                         >
                         <label for="research-target-1">Entreprises</label>
