@@ -3,6 +3,7 @@
 namespace Linkedout\App\controllers;
 
 use Linkedout\App\models;
+use Linkedout\App\utils\TimeUtil;
 
 class ApplianceController extends BaseController
 {
@@ -23,16 +24,25 @@ class ApplianceController extends BaseController
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
 
-        $companyModel = new models\CompanyModel($this->database);
-        $company = $companyModel->getCompanyById($this->id);
 
         $internshipModel = new models\InternshipModel($this->database);
-        $internship = $internshipModel->getInternshipsByCompanyId($this->id);
+        $internship = $internshipModel->getInternshipById($this->id);
+
+        $companyModel = new models\CompanyModel($this->database);
+        $company = $companyModel->getCompanyById($internship->companyId);
+
+        $internship = [
+            'id' => $internship->id,
+            'title' => $internship->title,
+            'city' => $internship->city,
+            'duration' => TimeUtil::calculateDuration($internship->beginDate, $internship->endDate),
+        ];
 
         return $this->blade->make('pages.appliance', [
             'person' => $person,
             'company' => $company,
             'internship' => $internship,
-        ]); 
+            'cities' => $cities
+        ]);
     }
 }
