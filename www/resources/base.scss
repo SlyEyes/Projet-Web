@@ -7,6 +7,7 @@
     --gray: #D3D2DE;
     --dark-gray: #8A8897;
     --red: #F53D3D;
+    --dark-red: #db3737;
     --grid-width-xs: 22.5rem;
     --grid-width-sm: 30rem;
 }
@@ -84,6 +85,24 @@ button, .btn {
     }
 }
 
+.btn-error {
+    background-color: var(--red);
+    color: var(--white);
+    border: none;
+    outline: none;
+    padding: .5rem 1rem;
+    border-radius: 0.5rem;
+
+    &:hover {
+        background-color: var(--dark-red);
+    }
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    filter: brightness(0.8) contrast(0.9);
+}
+
 .input-field {
     display: block;
     padding: .75rem;
@@ -120,4 +139,8 @@ button, .btn {
 
 .link, .link:link, .link:visited {
     color: var(--violet);
+}
+
+.hidden {
+    display: none;
 }
