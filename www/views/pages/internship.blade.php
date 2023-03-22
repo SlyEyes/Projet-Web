@@ -35,7 +35,7 @@
 
             <div class="btn-row">
                 <button class="btn btn-primary">Ajouter à ma wishlist</button>
-                <a href="/internship/{{ $internship->id }}/postulate">
+                <a href="/internship/{{ $internship->id }}/apply">
                     <button class="btn btn-primary">Postuler</button>
                 </a>
             </div>

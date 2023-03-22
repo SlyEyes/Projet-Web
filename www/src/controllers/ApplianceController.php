@@ -2,6 +2,7 @@
 
 namespace Linkedout\App\controllers;
 
+use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\models;
 use Linkedout\App\utils\TimeUtil;
 
@@ -24,6 +25,15 @@ class ApplianceController extends BaseController
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
 
+        if ($person === null) {
+            header("Location: /login?r=/internship/$this->id/apply");
+            exit;
+        }
+
+        if ($person->role != RoleEnum::STUDENT) {
+            header("Location: /dashboard/internships/$this->id");
+            exit;
+        }
 
         $internshipModel = new models\InternshipModel($this->database);
         $internship = $internshipModel->getInternshipById($this->id);
@@ -41,8 +51,7 @@ class ApplianceController extends BaseController
         return $this->blade->make('pages.appliance', [
             'person' => $person,
             'company' => $company,
-            'internship' => $internship,
-            'cities' => $cities
+            'internship' => $internship
         ]);
     }
 }
