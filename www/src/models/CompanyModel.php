@@ -19,6 +19,7 @@ class CompanyModel extends BaseModel
                     companies.companySector,
                     companies.companyWebsite,
                     companies.maskedCompany,
+                    companies.companyEmail,
                     MATCH(companyName) AGAINST(:search) as scoreCompanyName,
                     MATCH(companySector) AGAINST(:search) as scoreCompanySector
                 FROM companies
@@ -56,6 +57,7 @@ class CompanyModel extends BaseModel
                             companies.companySector, 
                             companies.companyWebsite, 
                             companies.maskedCompany,
+                            companies.companyEmail,
                             (SELECT COUNT(*) FROM internships WHERE internships.companyId = companies.companyId) AS internshipCount
                         FROM companies
                         WHERE companies.companyId = :id';
@@ -85,7 +87,8 @@ class CompanyModel extends BaseModel
                             companies.companyLogo, 
                             companies.companyName, 
                             companies.companySector, 
-                            companies.companyWebsite, 
+                            companies.companyWebsite,
+                            companies.companyEmail,
                             companies.maskedCompany
                         FROM companies
                         WHERE companyName = :name';
@@ -115,7 +118,8 @@ class CompanyModel extends BaseModel
                             companies.companyLogo, 
                             companies.companyName, 
                             companies.companySector, 
-                            companies.companyWebsite, 
+                            companies.companyWebsite,
+                            companies.companyEmail, 
                             companies.maskedCompany
                         FROM companies
                         WHERE companySector = :sector';
@@ -145,7 +149,8 @@ class CompanyModel extends BaseModel
                     companies.companyLogo, 
                     companies.companyName, 
                     companies.companySector, 
-                    companies.companyWebsite, 
+                    companies.companyWebsite,
+                    companies.companyEmail,
                     companies.maskedCompany
                 FROM companies
                 LIMIT :limit 
@@ -170,7 +175,7 @@ class CompanyModel extends BaseModel
     public function createCompany(CompanyEntity $newCompany): int
     {
         $sql = 'INSERT INTO companies 
-                    (companyLogo, companyName, companySector, companyWebsite, maskedCompany) 
+                    (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail) 
                 VALUES 
                     (:logo, :name, :sector, :website, :masked)';
         $stmt = $this->db->prepare($sql);
@@ -180,6 +185,7 @@ class CompanyModel extends BaseModel
         $stmt->bindValue(':sector', $newCompany->sector);
         $stmt->bindValue(':website', $newCompany->website);
         $stmt->bindValue(':masked', $newCompany->masked, \PDO::PARAM_BOOL);
+        $stmt->bindValue(':email', $newCompany->email);
 
         $stmt->execute();
 
@@ -199,6 +205,7 @@ class CompanyModel extends BaseModel
                     companySector = :sector, 
                     companyWebsite = :website, 
                     maskedCompany = :masked
+                    companyEmail = :email
                 WHERE companyId = :id';
         $stmt = $this->db->prepare($sql);
 
@@ -208,6 +215,7 @@ class CompanyModel extends BaseModel
         $stmt->bindValue(':sector', $company->sector);
         $stmt->bindValue(':website', $company->website);
         $stmt->bindValue(':masked', $company->masked, \PDO::PARAM_BOOL);
+        $stmt->bindValue(':email', $company->email);
 
         return $stmt->execute();
     }
