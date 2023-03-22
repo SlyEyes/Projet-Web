@@ -24,7 +24,6 @@
 
                     <div class="filters-research-type">
                         <input id="research-target-0" name="target" type="radio" value="internships"
-                               @if ($target == 'internships') checked @endif
                                required
                         >
                         <label for="research-target-0">Stages</label>
@@ -32,7 +31,6 @@
 
                     <div class="filters-research-type">
                         <input id="research-target-1" name="target" type="radio" value="companies"
-                                 @if ($target == 'companies') checked @endif
                                required
                         >
                         <label for="research-target-1">Entreprises</label>
@@ -85,7 +83,13 @@
                         @endif
 
                     @elseif (!isset($results))
-
+                        <li class="result">
+                            <div>
+                                <h3>Recherchez un stage ou une entreprise</h3>
+                                <p>Vous pouvez rechercher un stage ou une entreprise en utilisant la barre de
+                                    recherche ci-dessus</p>
+                            </div>
+                        </li>
                     @else
                         <li class="result">
                             <div>
