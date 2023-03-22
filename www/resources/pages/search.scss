@@ -28,7 +28,7 @@ section {
   width: 50rem;
 
   #filter-zone {
-    @include flex(column);
+    @include flex(column, 0);
     @include back-border();
     width: 25rem;
     padding: 1rem 0 0 1rem;
@@ -38,6 +38,10 @@ section {
 
       .filters-research-type {
         @include flex(row, 0.5rem);
+      }
+
+      #filter-search-input {
+        display: none;
       }
     }
   }
@@ -51,10 +55,6 @@ section {
       #search-bar-input {
         width: 25rem;
         margin-right: 1rem;
-      }
-
-      #filter-input {
-        //display: none;
       }
     }
 
