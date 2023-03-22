@@ -79,6 +79,36 @@ section p {
     }
 }
 
+.internship-misc-information {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .25rem;
+
+    p:nth-child(1) {
+        order: 1;
+    }
+
+    p:nth-child(2) {
+        order: 3;
+    }
+
+    p:nth-child(3) {
+        order: 2;
+    }
+
+    p:nth-child(4) {
+        order: 4;
+    }
+
+    @media screen and (max-width: 32rem) {
+        grid-template-columns: 1fr;
+
+        p:nth-child(2) {
+            order: 2;
+        }
+    }
+}
+
 .btn-row {
     display: flex;
     flex-wrap: wrap;

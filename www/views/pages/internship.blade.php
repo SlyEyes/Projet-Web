@@ -1,3 +1,7 @@
+@php
+    use Linkedout\App\utils\TimeUtil;
+@endphp
+
 @extends('layouts.app')
 
 
@@ -21,6 +25,16 @@
                         {{ $internship->city->name }} -
                         <a class="link" href="/company/{{ $company->id }}">{{ $company->name }}</a>
                     </div>
+                </div>
+            </div>
+
+            <div class="internship-description">
+                <span class="bold">Informations du stage</span>
+                <div class="internship-misc-information">
+                    <p>Salaire mensuel : {{ $internship->salary }} €</p>
+                    <p>Places disponibles : {{ $internship->numberPlaces }}</p>
+                    <p>Date de début : {{ TimeUtil::formatDate($internship->beginDate) }}</p>
+                    <p>Date de fin : {{ TimeUtil::formatDate($internship->endDate) }}</p>
                 </div>
             </div>
 
