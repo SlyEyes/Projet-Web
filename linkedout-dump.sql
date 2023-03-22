@@ -169,6 +169,7 @@ CREATE TABLE `internship_studentYear` (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `internships` (
   `internshipId` int NOT NULL AUTO_INCREMENT,
+  `internshipTitle` varchar(63) DEFAULT NULL,
   `internshipDescription` text NOT NULL,
   `internshipSkills` text NOT NULL,
   `internshipSalary` int NOT NULL,
@@ -179,7 +180,6 @@ CREATE TABLE `internships` (
   `maskedInternship` tinyint(1) NOT NULL,
   `companyId` int NOT NULL,
   `cityId` int NOT NULL,
-  `internshipTitle` varchar(63) DEFAULT NULL,
   PRIMARY KEY (`internshipId`),
   KEY `internships_companies_FK` (`companyId`),
   KEY `internships_cities0_FK` (`cityId`),
@@ -187,6 +187,13 @@ CREATE TABLE `internships` (
   CONSTRAINT `internships_companies_FK` FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Altering table `internships` to add FULLTEXT index
+--
+
+ALTER TABLE internships ADD FULLTEXT ft_internshipTitle (internshipTitle);
+ALTER TABLE internships ADD FULLTEXT ft_internshipsSkills (internshipSkills);
 
 --
 -- Table structure for table `person_promotion` which links persons and promotions
