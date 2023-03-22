@@ -34,17 +34,19 @@
                 <p>{{ $internship->skills }}</p>
             </div>
 
-            <div class="btn-row">
-                <button class="btn btn-primary {{ $appliance ? 'hidden' : '' }}" id="wishlist-add">
-                    Ajouter à ma wishlist
-                </button>
-                <button class="btn btn-error {{ !$appliance ? 'hidden' : '' }}" id="wishlist-remove">
-                    Retirer de ma wishlist
-                </button>
-                <a href="/internship/{{ $internship->id }}/apply">
-                    <button class="btn btn-primary">Postuler</button>
-                </a>
-            </div>
+            @if ($person->role->value == 'student')
+                <div class="btn-row">
+                    <button class="btn btn-primary {{ $appliance ? 'hidden' : '' }}" id="wishlist-add">
+                        Ajouter à ma wishlist
+                    </button>
+                    <button class="btn btn-error {{ !$appliance ? 'hidden' : '' }}" id="wishlist-remove">
+                        Retirer de ma wishlist
+                    </button>
+                    <a href="/internship/{{ $internship->id }}/apply">
+                        <button class="btn btn-primary">Postuler</button>
+                    </a>
+                </div>
+            @endif
         </section>
     </main>
 @endsection
