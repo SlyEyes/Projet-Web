@@ -129,3 +129,15 @@ if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
     zipcodeInput.addEventListener('input', e => applyZipcodeSearch(e.target.value));
     window.addEventListener('load', () => applyZipcodeSearch(zipcodeInput.value, false));
 }
+
+
+// Student years toggle for the internship edit page
+if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
+    document.querySelectorAll('.student-year').forEach(year => {
+        year.addEventListener('click', e => {
+            const input = e.target.querySelector('input');
+            input.checked = !input.checked;
+            year.classList.toggle('active');
+        });
+    });
+}

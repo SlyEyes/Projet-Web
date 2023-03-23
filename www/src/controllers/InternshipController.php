@@ -42,12 +42,18 @@ class InternshipController extends BaseController
         $appliancesModel = new models\ApplianceModel($this->database);
         $appliance = $appliancesModel->getApplianceById($person->id, $this->internshipId);
 
+        $studentYearModel = new models\StudentYearModel($this->database);
+        $studentsYears = $studentYearModel->getStudentYearsForInternship($internship->id);
+        $studentsYears = array_map(fn($studentYear) => $studentYear->year, $studentsYears);
+        $studentsYears = implode(', ', $studentsYears);
+
         return $this->blade->make('pages.internship', [
             'person' => $person,
             'title' => $internship->title . ' - LinkedOut',
             'internship' => $internship,
             'company' => $company,
             'formattedDuration' => $formattedDuration,
+            'studentsYears' => $studentsYears,
             'appliance' => $appliance != null,
         ])->render();
     }

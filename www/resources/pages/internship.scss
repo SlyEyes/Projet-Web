@@ -100,7 +100,11 @@ section p {
         order: 4;
     }
 
-    @media screen and (max-width: 32rem) {
+    p:nth-child(5) {
+        order: 5;
+    }
+
+    @media screen and (max-width: 48rem) {
         grid-template-columns: 1fr;
 
         p:nth-child(2) {

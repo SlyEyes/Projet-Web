@@ -35,6 +35,7 @@
                     <p>Places disponibles : {{ $internship->numberPlaces }}</p>
                     <p>Date de début : {{ TimeUtil::formatDate($internship->beginDate) }}</p>
                     <p>Date de fin : {{ TimeUtil::formatDate($internship->endDate) }}</p>
+                    <p>Années demandées : {{ $studentsYears }}</p>
                 </div>
             </div>
 

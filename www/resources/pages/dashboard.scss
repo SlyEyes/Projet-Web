@@ -67,3 +67,35 @@ form input:not([type="checkbox"]):not([type="radio"]), form select {
 .checkbox {
     height: 2.5rem;
 }
+
+.student-years {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.student-year {
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    border: 1px solid var(--violet);
+
+    input {
+        display: none;
+    }
+
+    &:hover {
+        border-color: var(--dark-violet);
+        background-color: var(--gray);
+    }
+
+    &.active {
+        background-color: var(--violet);
+        color: var(--white);
+
+        &:hover {
+            background-color: var(--dark-violet);
+        }
+    }
+}

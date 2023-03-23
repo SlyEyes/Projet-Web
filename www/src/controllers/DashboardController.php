@@ -62,6 +62,7 @@ class DashboardController extends BaseController
 
         $campusModel = new models\CampusModel($this->database);
         $promotionModel = new models\PromotionModel($this->database);
+        $studentYearModel = new models\StudentYearModel($this->database);
 
         switch ($this->collection) {
             case 'students':
@@ -69,7 +70,8 @@ class DashboardController extends BaseController
                     $data = $personModel->getAllPersons(roles: [RoleEnum::STUDENT]);
                 elseif ($validCollectionID)
                     $data = $personModel->getPersonById($this->destination);
-                $campuses = $campusModel->getAllCampuses();
+                if ($validCollectionID || $this->destination == 'new')
+                    $campuses = $campusModel->getAllCampuses();
                 if ($validCollectionID) {
                     $personPromotion = $promotionModel->getPromotionForPersonId($this->destination);
                     $promotions = $promotionModel->getPromotionForCampusId($personPromotion->campusId);
@@ -97,6 +99,13 @@ class DashboardController extends BaseController
                 if ($validCollectionID || $this->destination == 'new') {
                     $companyModel = new models\CompanyModel($this->database);
                     $companies = $companyModel->getAllCompanies();
+                    $studentYears = $studentYearModel->getStudentYears();
+                }
+
+                if ($validCollectionID) {
+                    $internshipStudentYears = $studentYearModel->getStudentYearsForInternship($this->destination);
+                    if (!empty($internshipStudentYears))
+                        $internshipStudentYearsIds = array_map(fn($studentYear) => $studentYear->id, $internshipStudentYears);
                 }
                 break;
             case 'companies':
@@ -123,6 +132,8 @@ class DashboardController extends BaseController
             'campuses' => $campuses ?? null,
             'personPromotion' => $personPromotion ?? null,
             'promotions' => $promotions ?? null,
+            'studentYears' => $studentYears ?? null,
+            'internshipStudentYearsIds' => $internshipStudentYearsIds ?? null,
         ]);
     }
 
@@ -176,6 +187,7 @@ class DashboardController extends BaseController
             break;
             case 'internships':
                 $internshipModel = new models\InternshipModel($this->database);
+                $studentYearModel = new models\StudentYearModel($this->database);
 
                 try {
                     $newInternship = new entities\InternshipEntity();
@@ -195,11 +207,21 @@ class DashboardController extends BaseController
                     $newInternship->city->id = (int)$_POST['cityId'];
                     $newInternship->companyId = $_POST['companyId'];
 
-                    if ($this->destination == 'new')
-                        $internshipModel->createInternship($newInternship);
-                    else
+                    $this->database->beginTransaction();
+
+                    if ($this->destination == 'new') {
+                        $newInternship->id = $internshipModel->createInternship($newInternship);
+                    } else {
                         $internshipModel->updateInternship($newInternship);
+                        $studentYearModel->removeStudentYearsForInternship($newInternship->id);
+                    }
+
+                    for ($i = 0; $i < count($_POST['student-years'] ?? []); $i++)
+                        $studentYearModel->addStudentYearForInternship($newInternship->id, (int)$_POST['student-years'][$i]);
+
+                    $this->database->commit();
                 } catch (Exception $e) {
+                    $this->database->rollBack();
                     return 'Erreur lors de la création du stage : ' . $e->getMessage();
                 }
                 break;
