@@ -5,7 +5,13 @@
     </div>
     <div>
         <label for="salary">Salaire mensuel (€)</label>
-        <input class="input-field" type="number" name="salary" id="salary" value="{{ $data->salary ?? null }}" required>
+        <input class="input-field"
+               type="number"
+               min="0"
+               name="salary"
+               id="salary"
+               value="{{ $data->salary ?? null }}"
+               required>
     </div>
 </div>
 
@@ -41,6 +47,7 @@
         <label for="places">Places disponibles</label>
         <input class="input-field"
                type="number"
+               min="1"
                name="places"
                id="places"
                value="{{ $data->numberPlaces ?? null }}"
