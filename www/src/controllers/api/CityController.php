@@ -16,6 +16,9 @@ class CityController extends ApiController
 
     public function fetch(): array
     {
+        if (strlen($this->zipcode) == 4)
+            $this->zipcode = '0' . $this->zipcode;
+
         if (strlen($this->zipcode) !== 5) {
             $this->responseCode = 400;
             throw new Exception('Invalid zipcode');
