@@ -105,13 +105,13 @@
 @if(!empty($studentYears))
     <div>
         <label>Années acceptées</label>
-        <div class="student-years">
+        <div class="pills-container">
             @foreach($studentYears as $year)
                 @php
                     $active = !empty($internshipStudentYearsIds) && is_numeric(array_search($year->id, $internshipStudentYearsIds));
                 @endphp
 
-                <div class="student-year {{ $active ? 'active' : '' }}">
+                <div class="pill {{ $active ? 'active' : '' }}">
                     {{ $year->year }}
                     <input type="checkbox"
                            name="student-years[]"

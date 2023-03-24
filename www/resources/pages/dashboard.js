@@ -147,7 +147,7 @@ if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
 
 // Student years toggle for the internship edit page
 if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
-    document.querySelectorAll('.student-year').forEach(year => {
+    document.querySelectorAll('.pill').forEach(year => {
         year.addEventListener('click', e => {
             const input = e.target.querySelector('input');
             input.checked = !input.checked;
