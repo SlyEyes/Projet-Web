@@ -49,7 +49,7 @@ class InternshipModel extends BaseModel
         return new InternshipEntity($result);
     }
 
-    public function getInternshipsBySearch($search): array
+    public function getInternshipsBySearch($search, $limit,$firstResult): array
     {
         $sql = 'SELECT internships.internshipId, 
                             internships.internshipTitle,
@@ -75,12 +75,15 @@ class InternshipModel extends BaseModel
                             maskedInternship = 0 AND
                             maskedCompany = 0 AND
                             MATCH(internshipTitle) AGAINST(:search) OR
-                            MATCH(internshipSkills) AGAINST(:search)';
+                            MATCH(internshipSkills) AGAINST(:search)
+                        LIMIT :limit
+                        OFFSET :firstResult';
 
         $statement = $this->db->prepare($sql);
-        $statement->execute([
-            'search' => $search,
-        ]);
+        $statement->bindValue('search', $search);
+        $statement->bindValue('limit', $limit, \PDO::PARAM_INT);
+        $statement->bindValue('firstResult', $firstResult, \PDO::PARAM_INT);
+        $statement->execute();
 
         $result = $statement->fetchAll();
 

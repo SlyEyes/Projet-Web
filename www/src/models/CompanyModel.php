@@ -10,7 +10,7 @@ use Linkedout\App\entities\CompanyEntity;
  */
 class CompanyModel extends BaseModel
 {
-    public function getCompaniesBySearch($search): array
+    public function getCompaniesBySearch($search, $limit, $firstResult): array
     {
         $sql = 'SELECT 
                     companies.companyId,
@@ -27,12 +27,15 @@ class CompanyModel extends BaseModel
                     maskedCompany = 0 AND
                     MATCH(companyName) AGAINST(:search) OR
                     MATCH(companySector) AGAINST(:search)
-                ORDER BY scoreCompanyName DESC, scoreCompanySector DESC';
+                ORDER BY scoreCompanyName DESC, scoreCompanySector DESC
+                LIMIT :limit
+                OFFSET :firstResult';
 
         $statement = $this->db->prepare($sql);
-        $statement->execute([
-            'search' => $search,
-        ]);
+        $statement->bindValue('search', $search);
+        $statement->bindValue('limit', $limit, \PDO::PARAM_INT);
+        $statement->bindValue('firstResult', $firstResult, \PDO::PARAM_INT);
+        $statement->execute();
 
         $result = $statement->fetchAll();
 

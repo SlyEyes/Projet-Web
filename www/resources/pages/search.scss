@@ -92,4 +92,8 @@ section {
       }
     }
   }
+
+  #page-zone {
+    @include flex(column);
+  }
 }

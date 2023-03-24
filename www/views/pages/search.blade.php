@@ -127,6 +127,11 @@
                     @endif
                 </ul>
             </div>
+
+            <div id="page-zone">
+                <a href="{{ $url }}&page={{ $page - 1 }}">-1</a>
+                <a href="{{ $url }}&page={{ $page + 1 }}">+1</a>
+            </div>
         </section>
     </main>
 @endsection
