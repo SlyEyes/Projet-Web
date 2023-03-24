@@ -7,8 +7,8 @@
 
 
 @section('content')
-    <main>
-        <form action="/login" method="POST">
+    <main class="main">
+        <form class="section section-xsm" action="/login" method="POST">
             <h3>Connexion</h3>
 
             @isset($error)

@@ -144,3 +144,62 @@ button, .btn {
 .hidden {
     display: none;
 }
+
+main.main {
+    min-height: calc(100vh - 5rem); // 5rem = header height
+    display: grid;
+    place-items: center;
+    margin-top: 5rem;
+    padding: 2rem;
+
+    @media (max-width: 48rem) {
+        min-height: calc(100vh - 4rem); // 4rem = tablet & mobile header height
+        margin-top: 4rem;
+        padding: 0;
+    }
+
+    @media (max-width: 32rem) {
+        margin: 0 0 4rem 0;
+    }
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1.5rem;
+    background-color: var(--light-gray);
+    border-radius: 1rem;
+    position: relative;
+}
+
+.section-md {
+    max-width: 48rem;
+
+    @media screen and (max-width: 48rem) {
+        background-color: var(--white);
+    }
+
+    @media screen and (max-width: 32rem) {
+        padding: 1rem;
+    }
+}
+
+.section-sm {
+    max-width: 32rem;
+
+    @media screen and (max-width: 32rem) {
+        background-color: var(--white);
+        padding: 1rem;
+    }
+}
+
+.section-xsm {
+    max-width: 24rem;
+
+    @media screen and (max-width: 24rem) {
+        background-color: var(--white);
+        padding: 1rem;
+    }
+}

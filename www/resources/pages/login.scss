@@ -1,28 +1,6 @@
 @import '../base';
 @import '../components/navbar';
 
-main {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-
-    @media (max-width: 32rem) {
-        min-height: calc(100vh - 4rem);
-    }
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 0 auto;
-    width: 100%;
-    max-width: var(--grid-width-xs);
-    padding: 1.5rem;
-    border-radius: 1rem;
-    background-color: var(--light-gray);
-}
-
 label {
     display: block;
     margin-bottom: .75rem;

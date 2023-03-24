@@ -7,7 +7,7 @@
 
 
 @section('content')
-    <main>
+    <main class="main">
         <section>
             <h1>Le <span>meilleur</span> moyen de trouver son <span>stage</span> à CESI</h1>
             <form action="/search"  method="GET">

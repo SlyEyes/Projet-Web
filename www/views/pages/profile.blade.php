@@ -7,8 +7,8 @@
 
 
 @section('content')
-    <main>
-        <section>
+    <main class="main">
+        <section class="section section-md">
             <h2>Profile</h2>
 
             <div class="profile-section">
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            @if (is_array($wishlist) &&count($wishlist) > 0)
+            @if (is_array($wishlist) && count($wishlist) > 0)
                 <div class="profile-section">
                     <h3>Wishlist</h3>
 

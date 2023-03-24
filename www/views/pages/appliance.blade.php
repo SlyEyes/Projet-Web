@@ -7,8 +7,8 @@
 
 
 @section('content')
-    <main>
-        <section>
+    <main class="main">
+        <section class="section section-sm">
             <img src="/public/icons/close-purple.svg" class="cross" alt="x" onclick="window.history.back()">
             <div class="appliance-header">
                 <img src="{{ $company->logo }}" alt=" {{ $company->name }} logo">

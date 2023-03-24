@@ -7,8 +7,8 @@
 
 
 @section('content')
-    <main>
-        <section>
+    <main class="main">
+        <section class="section section-md">
             <img src="/public/icons/close-purple.svg" class="close-btn" alt="x" onclick="window.history.back()">
 
             <div class="company-header">

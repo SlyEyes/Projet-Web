@@ -1,36 +1,6 @@
 @import '../base';
 @import '../components/navbar';
 
-main {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-
-    @media (max-width: 32rem) {
-        min-height: calc(100vh - 4rem);
-    }
-}
-
-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 48rem;
-    padding: 1.5rem;
-    background-color: var(--light-gray);
-    border-radius: 1rem;
-    position: relative;
-
-    @media screen and (max-width: 48rem) {
-        background-color: var(--white);
-    }
-
-    @media screen and (max-width: 32rem) {
-        padding: 1rem;
-    }
-}
-
 .close-btn {
     display: flex;
     justify-content: flex-end;

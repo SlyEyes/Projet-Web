@@ -7,7 +7,7 @@
 
 
 @section('content')
-    <main>
+    <main class="main">
         <section>
             <h1>{{ $errorTitle ?? 'Erreur 🥲' }}</h1>
             <p>{{ $message }}</p>

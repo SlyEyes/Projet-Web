@@ -1,16 +1,6 @@
 @import '../base';
 @import '../components/navbar';
 
-main {
-    display: grid;
-    place-content: center;
-    min-height: 100vh;
-
-    @media (max-width: 32rem) {
-        min-height: calc(100vh - 4rem);
-    }
-}
-
 section {
     display: flex;
     flex-direction: column;
