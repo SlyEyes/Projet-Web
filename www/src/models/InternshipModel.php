@@ -72,6 +72,8 @@ class InternshipModel extends BaseModel
                         INNER JOIN cities ON internships.cityId = cities.cityId
                         INNER JOIN companies ON internships.companyId = companies.companyId
                         WHERE 
+                            maskedInternship = 0 AND
+                            maskedCompany = 0 AND
                             MATCH(internshipTitle) AGAINST(:search) OR
                             MATCH(internshipSkills) AGAINST(:search)';
 

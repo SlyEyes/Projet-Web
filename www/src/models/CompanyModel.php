@@ -24,6 +24,7 @@ class CompanyModel extends BaseModel
                     MATCH(companySector) AGAINST(:search) as scoreCompanySector
                 FROM companies
                 WHERE
+                    maskedCompany = 0 AND
                     MATCH(companyName) AGAINST(:search) OR
                     MATCH(companySector) AGAINST(:search)
                 ORDER BY scoreCompanyName DESC, scoreCompanySector DESC';
