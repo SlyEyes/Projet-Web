@@ -7,7 +7,7 @@ use Linkedout\App\entities\PromotionEntity;
 class PromotionModel extends BaseModel
 {
     /**
-     * Get the associated promotion for a specific person. Also fills the campus info
+     * Get the associated promotion for a student. Also fills the campus info
      * @param int $personId
      * @return PromotionEntity|null
      */
@@ -34,18 +34,32 @@ class PromotionModel extends BaseModel
         return new PromotionEntity($results);
     }
 
-    public function setPromotionForPersonId(int $personId, int $promotionId): void
+    /**
+     * Set the promotion for a student
+     * @param int $personId
+     * @param int $promotionId
+     * @return bool True if the promotion was set, false otherwise
+     */
+    public function setPromotionForPersonId(int $personId, int $promotionId): bool
     {
         $sql = "INSERT INTO person_promotion (personId, promotionId) VALUES (:personId, :promotionId)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['personId' => $personId, 'promotionId' => $promotionId]);
+        return $stmt->rowCount() > 0;
     }
 
-    public function removePromotionForPersonId(int $personId, int $promotionId): void
+    /**
+     * Remove the promotion for a student
+     * @param int $personId
+     * @param int $promotionId
+     * @return bool True if the promotion was removed, false otherwise
+     */
+    public function removePromotionForPersonId(int $personId, int $promotionId): bool
     {
         $sql = "DELETE FROM person_promotion WHERE personId = :personId AND promotionId = :promotionId";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['personId' => $personId, 'promotionId' => $promotionId]);
+        return $stmt->rowCount() > 0;
     }
 
     /**
