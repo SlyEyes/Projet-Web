@@ -94,6 +94,11 @@ section {
   }
 
   #page-zone {
-    @include flex(column);
+    @include flex(row);
+    margin-top: 1rem;
+
+    a {
+      text-decoration: none;
+    }
   }
 }

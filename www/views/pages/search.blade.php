@@ -62,75 +62,78 @@
                 </form>
             </div>
 
-            <div id="search-zone">
-                <form id="search-bar" title="Barre de recherche">
-                    <label for="search-bar-input"></label>
-                    <input type="text"
-                           id="search-bar-input"
-                           class="input-field"
-                           name="q"
-                           value="{{ $search ?? null }}"
-                           placeholder="Tapez le nom d'un stage ou d'une entreprise ..."
-                           required
-                    >
+            <div>
+                <div id="search-zone">
+                    <form id="search-bar" title="Barre de recherche">
+                        <label for="search-bar-input"></label>
+                        <input type="text"
+                               id="search-bar-input"
+                               class="input-field"
+                               name="q"
+                               value="{{ $search ?? null }}"
+                               placeholder="Tapez le nom d'un stage ou d'une entreprise ..."
+                               required
+                        >
 
-                    <button type="submit" id="search-bar-button" class="btn-primary" form="filters">Rechercher</button>
-                </form>
+                        <button type="submit" id="search-bar-button" class="btn-primary" form="filters">Rechercher
+                        </button>
+                    </form>
 
-                <ul id="results-list">
-                    @if (isset($results) and $results != null)
-                        @if ($target == 'internships')
-                            @foreach ($results as $result)
-                                <li class="result">
-                                    <a href="/internship/{{ $result->id }}" id="internship">
-                                        <h3>{{ $result->title }}</h3>
-                                        <p>Posté par: {{ $result->companyName }}</p>
-                                        <p>Le: {{ $result->offerDate }}</p>
-                                        <p>Durée: du {{ $result->beginDate }} au {{ $result->endDate }}</p>
-                                        <p>Skills: {{ $result->skills }}</p>
-                                        <p>Nombre de places: {{ $result->numberPlaces }}</p>
-                                    </a>
-                                </li>
-                            @endforeach
+                    <ul id="results-list">
+                        @if (isset($results) and $results != null)
+                            @if ($target == 'internships')
+                                @foreach ($results as $result)
+                                    <li class="result">
+                                        <a href="/internship/{{ $result->id }}" id="internship">
+                                            <h3>{{ $result->title }}</h3>
+                                            <p>Posté par: {{ $result->companyName }}</p>
+                                            <p>Le: {{ $result->offerDate }}</p>
+                                            <p>Durée: du {{ $result->beginDate }} au {{ $result->endDate }}</p>
+                                            <p>Skills: {{ $result->skills }}</p>
+                                            <p>Nombre de places: {{ $result->numberPlaces }}</p>
+                                        </a>
+                                    </li>
+                                @endforeach
 
-                        @elseif ($target == 'companies')
-                            @foreach ($results as $result)
-                                <li class="result">
-                                    <a href="/company/{{ $result->id }}" id="company">
-                                        <img src="{{ $result->logo }}" alt="{{ $result->name }} logo">
+                            @elseif ($target == 'companies')
+                                @foreach ($results as $result)
+                                    <li class="result">
+                                        <a href="/company/{{ $result->id }}" id="company">
+                                            <img src="{{ $result->logo }}" alt="{{ $result->name }} logo">
 
-                                        <div>
-                                            <h3>{{ $result->name }}</h3>
-                                            <p>Secteur: {{ $result->sector }}</p>
-                                        </div>
-                                    </a>
-                                </li>
-                            @endforeach
+                                            <div>
+                                                <h3>{{ $result->name }}</h3>
+                                                <p>Secteur: {{ $result->sector }}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+
+                        @elseif (!isset($results))
+                            <li class="result">
+                                <div>
+                                    <h3>Recherchez un stage ou une entreprise</h3>
+                                    <p>Vous pouvez rechercher un stage ou une entreprise en utilisant la barre de
+                                        recherche ci-dessus</p>
+                                </div>
+                            </li>
+                        @else
+                            <li class="result">
+                                <div>
+                                    <h3>Aucun résultat</h3>
+                                    <p>Vérifiez que vous avez bien tapé votre requête et que vous avez sélectionné
+                                        les bons filtres</p>
+                                </div>
+                            </li>
                         @endif
+                    </ul>
+                </div>
 
-                    @elseif (!isset($results))
-                        <li class="result">
-                            <div>
-                                <h3>Recherchez un stage ou une entreprise</h3>
-                                <p>Vous pouvez rechercher un stage ou une entreprise en utilisant la barre de
-                                    recherche ci-dessus</p>
-                            </div>
-                        </li>
-                    @else
-                        <li class="result">
-                            <div>
-                                <h3>Aucun résultat</h3>
-                                <p>Vérifiez que vous avez bien tapé votre requête et que vous avez sélectionné
-                                    les bons filtres</p>
-                            </div>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-
-            <div id="page-zone">
-                <a href="{{ $url }}&page={{ $page - 1 }}">-1</a>
-                <a href="{{ $url }}&page={{ $page + 1 }}">+1</a>
+                <div id="page-zone">
+                    <a class="btn-primary" href="{{ $url }}&page={{ $page - 1 }}">Page précédente</a>
+                    <a class="btn-primary" href="{{ $url }}&page={{ $page + 1 }}">Page suivante</a>
+                </div>
             </div>
         </section>
     </main>
