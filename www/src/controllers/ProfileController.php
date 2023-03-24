@@ -21,12 +21,16 @@ class ProfileController extends BaseController
             $applianceModel = new models\ApplianceModel($this->database);
             $wishlist = $applianceModel->getWishlistByPersonId($person->id);
             $appliances = $applianceModel->getAppliancesByPersonId($person->id);
+
+            $promotionModel = new models\PromotionModel($this->database);
+            $promotion = $promotionModel->getPromotionForPersonId($person->id);
         }
 
         return $this->blade->render('pages.profile', [
             'person' => $person,
             'wishlist' => $wishlist ?? null,
             'appliances' => $appliances ?? null,
+            'promotion' => $promotion ?? null,
         ]);
     }
 }

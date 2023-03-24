@@ -9,7 +9,7 @@
 @section('content')
     <main class="main">
         <section class="section section-md">
-            <h2>Profile</h2>
+            <h2>Profil</h2>
 
             <div class="profile-section">
                 <h3 class="identity">
@@ -30,7 +30,7 @@
                     <p>
                         @switch($person->role->value)
                             @case('student')
-                                Étudiant
+                                Étudiant au campus de {{ $promotion->campus->name }}, promotion {{ $promotion->name }}
                                 @break
                             @case('tutor')
                                 Tuteur
