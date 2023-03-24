@@ -80,8 +80,18 @@ class DashboardController extends BaseController
             case 'tutors':
                 if (empty($this->destination))
                     $data = $personModel->getAllPersons(roles: [RoleEnum::TUTOR]);
-                elseif ($validCollectionID)
+                elseif ($validCollectionID) {
                     $data = $personModel->getPersonById($this->destination);
+                    $personCampus = $campusModel->getCampusForPersonId($this->destination);
+                    if ($personCampus != null) {
+                        $promotions = $promotionModel->getPromotionForCampusId($personCampus->id);
+                        $personPromotion = $promotionModel->getPromotionsForTutorId($this->destination);
+                        $personPromotion = array_map(fn($promotion) => $promotion->id, $personPromotion);
+                    }
+                }
+                if ($validCollectionID || $this->destination == 'new') {
+                    $campuses = $campusModel->getAllCampuses();
+                }
                 break;
             case 'administrators':
                 if (empty($this->destination))
@@ -130,6 +140,7 @@ class DashboardController extends BaseController
             'error' => $error ?? null,
             'companies' => $companies ?? null,
             'campuses' => $campuses ?? null,
+            'personCampus' => $personCampus ?? null,
             'personPromotion' => $personPromotion ?? null,
             'promotions' => $promotions ?? null,
             'studentYears' => $studentYears ?? null,
@@ -168,6 +179,9 @@ class DashboardController extends BaseController
                         $newPerson->id = $personModel->createPerson($newPerson);
                         if ($this->collection == 'students')
                             $promotionModel->setPromotionForStudentId($newPerson->id, (int)$_POST['promotion']);
+                        elseif ($this->collection == 'tutors')
+                            foreach ($_POST['promotions'] as $promotionId)
+                                $promotionModel->addPromotionForTutorId($newPerson->id, (int)$promotionId);
                     } else {
                         $personModel->updatePerson($newPerson);
                         if ($this->collection == 'students') {
@@ -176,6 +190,10 @@ class DashboardController extends BaseController
                                 $promotionModel->removePromotionForStudentId($newPerson->id, $personPromotion->id);
                                 $promotionModel->setPromotionForStudentId($newPerson->id, (int)$_POST['promotion']);
                             }
+                        } elseif ($this->collection == 'tutors') {
+                            $promotionModel->removePromotionsForTutorId($newPerson->id);
+                            foreach ($_POST['promotions'] as $promotionId)
+                                $promotionModel->addPromotionForTutorId($newPerson->id, (int)$promotionId);
                         }
                     }
 

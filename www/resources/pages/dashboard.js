@@ -155,3 +155,57 @@ if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
         });
     });
 }
+
+
+// Tutor promotions toggle and promotions fetching for the tutor edit page
+if (window.location.href.match(/\/tutors\/(new|\d+)$/)) {
+    const campusSelect = document.getElementById('campus');
+    const promotionsList = document.getElementById('tutor-promotions');
+    const promotionsField = document.getElementById('tutor-promotions-field');
+
+    async function applyPromotionSearch(promotion) {
+        let promotions;
+        try {
+            const res = await fetch(`/api/promotion/${promotion}`);
+            const { data } = await res.json();
+
+            if (data?.error)
+                throw new Error(data.error);
+
+            promotions = data?.promotions;
+        } catch (e) {
+            alert(`Une erreur est survenue: ${e.message}`);
+            return;
+        }
+
+        promotionsField.classList.remove('hidden');
+        document.querySelectorAll('#tutor-promotions .pill').forEach(pill => pill.remove());
+
+        promotions.forEach(promotion => {
+            const pill = document.createElement('div');
+            pill.textContent = promotion.name;
+            pill.classList.add('pill');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'promotions[]';
+            checkbox.value = promotion.id;
+            pill.appendChild(checkbox);
+            promotionsList.appendChild(pill);
+        });
+
+        applyPillsListener();
+    }
+
+    function applyPillsListener() {
+        document.querySelectorAll('#tutor-promotions .pill').forEach(pill => {
+            pill.addEventListener('click', e => {
+                const input = e.target.querySelector('input');
+                input.checked = !input.checked;
+                pill.classList.toggle('active');
+            });
+        });
+    }
+
+    campusSelect.addEventListener('change', e => applyPromotionSearch(e.target.value));
+    window.addEventListener('load', applyPillsListener);
+}

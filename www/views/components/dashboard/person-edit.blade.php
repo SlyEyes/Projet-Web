@@ -66,3 +66,40 @@
         </div>
     </div>
 @endif
+
+@if($collection == 'tutors')
+    <div class="field-group">
+        <div>
+            <label for="campus">Campus</label>
+            <select class="input-field" id="campus" required>
+                <option value="" disabled selected>Choisissez un campus</option>
+                @foreach($campuses as $campus)
+                    <option value="{{ $campus->id }}"
+                            {{ !empty($personCampus) && $campus->id == $personCampus->id ? 'selected' : '' }}>
+                        {{ $campus->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="{{ empty($promotions) ? 'hidden' : '' }}" id="tutor-promotions-field">
+        <label for="promotions">Promotions</label>
+        <div class="pills-container" id="tutor-promotions">
+            @if(!empty($promotions))
+                @foreach($promotions as $promotion)
+                    @php
+                        $active = !empty($personPromotion) && in_array($promotion->id, $personPromotion);
+                    @endphp
+
+                    <div class="pill {{ $active ? 'active' : '' }}">
+                        {{ $promotion->name }}
+                        <input type="checkbox"
+                               name="promotions[]"
+                               value="{{ $promotion->id }}" {{ $active ? 'checked' : '' }}>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+@endif
