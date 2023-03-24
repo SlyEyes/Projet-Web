@@ -11,7 +11,7 @@ class SearchController extends BaseController
         $url = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
 
-        $page = (int) $_GET['page'] ?? 1;
+        $page = (int) ($_GET['page'] ?? 1);
         $limit = 5;
         $firstResult = ($page - 1) * $limit;
 
@@ -23,6 +23,9 @@ class SearchController extends BaseController
 
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
+
+        if ($page < 1)
+            $page = 1;
 
         if ($person === null) {
             header("Location: /login?r=/search?q=$search&target=internships");

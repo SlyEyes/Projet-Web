@@ -132,6 +132,7 @@
 
                 <div id="page-zone">
                     <a class="btn-primary" href="{{ $url }}&page={{ $page - 1 }}">Page précédente</a>
+                    <p>{{ $page }}</p>
                     <a class="btn-primary" href="{{ $url }}&page={{ $page + 1 }}">Page suivante</a>
                 </div>
             </div>
