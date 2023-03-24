@@ -22,6 +22,8 @@
                            required
                     >
 
+                    <h4>Cible</h4>
+
                     <div class="filters-research-type">
                         <input id="research-target-0" name="target" type="radio" value="internships"
                                required
@@ -34,6 +36,28 @@
                                required
                         >
                         <label for="research-target-1">Entreprises</label>
+                    </div>
+
+                    <h4>Durée</h4>
+
+                    <div>
+                        <input id="filter-duration-0" type="checkbox" value="one-to-three">
+                        <label for="filter-duration-0">De 1 à 3 mois</label>
+                    </div>
+
+                    <div>
+                        <input id="filter-duration-1" type="checkbox" value="three-to-six">
+                        <label for="filter-duration-1">De 3 à 6 mois</label>
+                    </div>
+
+                    <div>
+                        <input id="filter-duration-2" type="checkbox" value="six-to-nine">
+                        <label for="filter-duration-2">De 6 à 9 mois</label>
+                    </div>
+
+                    <div>
+                        <input id="filter-duration-3" type="checkbox" value="nine-to-twelve">
+                        <label for="filter-duration-3">De 9 à 12 mois</label>
                     </div>
                 </form>
             </div>
