@@ -54,7 +54,7 @@ class InternshipController extends BaseController
             'company' => $company,
             'formattedDuration' => $formattedDuration,
             'studentsYears' => $studentsYears,
-            'appliance' => $appliance != null,
+            'appliance' => $appliance,
         ])->render();
     }
 }

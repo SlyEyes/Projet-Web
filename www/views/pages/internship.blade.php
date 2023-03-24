@@ -51,14 +51,22 @@
 
             @if ($person->role->value == 'student')
                 <div class="btn-row">
-                    <button class="btn btn-primary {{ $appliance ? 'hidden' : '' }}" id="wishlist-add">
-                        Ajouter à ma wishlist
-                    </button>
-                    <button class="btn btn-error {{ !$appliance ? 'hidden' : '' }}" id="wishlist-remove">
-                        Retirer de ma wishlist
-                    </button>
+                    @if(!$appliance->applianceDate)
+                        <button class="btn btn-primary {{ $appliance ? 'hidden' : '' }}" id="wishlist-add">
+                            Ajouter à ma wishlist
+                        </button>
+                        <button class="btn btn-error {{ !$appliance ? 'hidden' : '' }}" id="wishlist-remove">
+                            Retirer de ma wishlist
+                        </button>
+                    @endif
                     <a href="/internship/{{ $internship->id }}/apply">
-                        <button class="btn btn-primary">Postuler</button>
+                        <button class="btn btn-primary">
+                            @if ($appliance->applianceDate)
+                                Voir ma candidature
+                            @else
+                                Postuler
+                            @endif
+                        </button>
                     </a>
                 </div>
             @endif

@@ -67,7 +67,7 @@ class RouterService
             return $controller->render();
         });
 
-        $this->klein->respond('GET', '/internship/[i:id]/apply', function ($request) {
+        $this->klein->respond(array('GET', 'POST'), '/internship/[i:id]/apply', function ($request) {
             $controller = new controllers\ApplianceController($this->blade, $this->database);
             $controller->setRouteParams($request->id);
             return $controller->render();

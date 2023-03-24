@@ -30,4 +30,14 @@ class TimeUtil
             return 'Date invalide';
         }
     }
+
+    static function formatDateObject(DateTime $date): string
+    {
+        try {
+            $date = Carbon::instance($date);
+            return $date->locale('fr_FR')->isoFormat('LL');
+        } catch (Exception) {
+            return 'Date invalide';
+        }
+    }
 }
