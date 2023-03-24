@@ -73,7 +73,7 @@
                             @foreach ($results as $result)
                                 <li class="result">
                                     <a href="/company/{{ $result->id }}" id="company">
-                                        <img src="{{ $result->logo }}" alt="Logo de {{ $result->name }}">
+                                        <img src="{{ $result->logo }}" alt="{{ $result->name }} logo">
 
                                         <div>
                                             <h3>{{ $result->name }}</h3>
