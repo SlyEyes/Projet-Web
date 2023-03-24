@@ -90,6 +90,11 @@ class RouterService
             return $controller->render();
         });
 
+        $this->klein->respond('GET', '/legal-notice', function () {
+            $controller = new controllers\LegalnoticeController($this->blade, $this->database);
+            return $controller->render();
+        });
+
         $this->klein->respond('GET', '/api/city/[i:zipcode]', function ($request) {
             $controller = new api\CityController($this->database);
             $controller->setRouteParams($request->zipcode);
