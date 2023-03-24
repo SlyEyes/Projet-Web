@@ -102,24 +102,22 @@
     </div>
 </div>
 
-<div>
-    @if(!empty($studentYears))
-        <div>
-            <label>Années acceptées</label>
-            <div class="student-years">
-                @foreach($studentYears as $year)
-                    @php
-                        $active = !empty($internshipStudentYearsIds) && is_numeric(array_search($year->id, $internshipStudentYearsIds));
-                    @endphp
+@if(!empty($studentYears))
+    <div>
+        <label>Années acceptées</label>
+        <div class="student-years">
+            @foreach($studentYears as $year)
+                @php
+                    $active = !empty($internshipStudentYearsIds) && is_numeric(array_search($year->id, $internshipStudentYearsIds));
+                @endphp
 
-                    <div class="student-year {{ $active ? 'active' : '' }}">
-                        {{ $year->year }}
-                        <input type="checkbox"
-                               name="student-years[]"
-                               value="{{ $year->id }}" {{ $active ? 'checked' : '' }}>
-                    </div>
-                @endforeach
-            </div>
+                <div class="student-year {{ $active ? 'active' : '' }}">
+                    {{ $year->year }}
+                    <input type="checkbox"
+                           name="student-years[]"
+                           value="{{ $year->id }}" {{ $active ? 'checked' : '' }}>
+                </div>
+            @endforeach
         </div>
-    @endif
-</div>
+    </div>
+@endif
