@@ -50,7 +50,7 @@ class RouterService
             return $controller->render();
         });
 
-        $this->klein->respond('GET', '/profile', function () {
+        $this->klein->respond(array('GET', 'POST'), '/profile', function () {
             $controller = new controllers\ProfileController($this->blade, $this->database);
             return $controller->render();
         });

@@ -84,6 +84,15 @@
                     </div>
                 </div>
             @endif
+
+            <div class="profile-section">
+                <h3>Déconnexion</h3>
+
+                <form method="post">
+                    <input type="hidden" name="action" value="disconnect">
+                    <button type="submit" class="btn btn-primary">Se déconnecter</button>
+                </form>
+            </div>
         </section>
     </main>
 @endsection

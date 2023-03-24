@@ -17,6 +17,12 @@ class ProfileController extends BaseController
             exit;
         }
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'disconnect') {
+            setcookie('TOKEN', '', time() - 3600, '/');
+            header("Location: /");
+            exit;
+        }
+
         if ($person->role == RoleEnum::STUDENT) {
             $applianceModel = new models\ApplianceModel($this->database);
             $wishlist = $applianceModel->getWishlistByPersonId($person->id);
