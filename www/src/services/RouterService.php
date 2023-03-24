@@ -84,6 +84,12 @@ class RouterService
             return $controller->render();
         });
 
+        
+        $this->klein->respond('GET', '/about', function () {
+            $controller = new controllers\AboutController($this->blade, $this->database);
+            return $controller->render();
+        });
+
         $this->klein->respond('GET', '/api/city/[i:zipcode]', function ($request) {
             $controller = new api\CityController($this->database);
             $controller->setRouteParams($request->zipcode);
