@@ -11,7 +11,7 @@ class PromotionModel extends BaseModel
      * @param int $personId
      * @return PromotionEntity|null
      */
-    public function getPromotionForPersonId(int $personId): ?PromotionEntity
+    public function getPromotionForStudentId(int $personId): ?PromotionEntity
     {
         $sql = "SELECT promotions.promotionId, 
                         promotions.promotionName,
@@ -40,7 +40,7 @@ class PromotionModel extends BaseModel
      * @param int $promotionId
      * @return bool True if the promotion was set, false otherwise
      */
-    public function setPromotionForPersonId(int $personId, int $promotionId): bool
+    public function setPromotionForStudentId(int $personId, int $promotionId): bool
     {
         $sql = "INSERT INTO person_promotion (personId, promotionId) VALUES (:personId, :promotionId)";
         $stmt = $this->db->prepare($sql);
@@ -54,7 +54,7 @@ class PromotionModel extends BaseModel
      * @param int $promotionId
      * @return bool True if the promotion was removed, false otherwise
      */
-    public function removePromotionForPersonId(int $personId, int $promotionId): bool
+    public function removePromotionForStudentId(int $personId, int $promotionId): bool
     {
         $sql = "DELETE FROM person_promotion WHERE personId = :personId AND promotionId = :promotionId";
         $stmt = $this->db->prepare($sql);

@@ -73,7 +73,7 @@ class DashboardController extends BaseController
                 if ($validCollectionID || $this->destination == 'new')
                     $campuses = $campusModel->getAllCampuses();
                 if ($validCollectionID) {
-                    $personPromotion = $promotionModel->getPromotionForPersonId($this->destination);
+                    $personPromotion = $promotionModel->getPromotionForStudentId($this->destination);
                     $promotions = $promotionModel->getPromotionForCampusId($personPromotion->campusId);
                 }
                 break;
@@ -167,14 +167,14 @@ class DashboardController extends BaseController
                     if ($this->destination == 'new') {
                         $newPerson->id = $personModel->createPerson($newPerson);
                         if ($this->collection == 'students')
-                            $promotionModel->setPromotionForPersonId($newPerson->id, (int)$_POST['promotion']);
+                            $promotionModel->setPromotionForStudentId($newPerson->id, (int)$_POST['promotion']);
                     } else {
                         $personModel->updatePerson($newPerson);
                         if ($this->collection == 'students') {
-                            $personPromotion = $promotionModel->getPromotionForPersonId($newPerson->id);
+                            $personPromotion = $promotionModel->getPromotionForStudentId($newPerson->id);
                             if ($personPromotion->id != (int)$_POST['promotion']) {
-                                $promotionModel->removePromotionForPersonId($newPerson->id, $personPromotion->id);
-                                $promotionModel->setPromotionForPersonId($newPerson->id, (int)$_POST['promotion']);
+                                $promotionModel->removePromotionForStudentId($newPerson->id, $personPromotion->id);
+                                $promotionModel->setPromotionForStudentId($newPerson->id, (int)$_POST['promotion']);
                             }
                         }
                     }

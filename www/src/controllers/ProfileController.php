@@ -29,7 +29,7 @@ class ProfileController extends BaseController
             $appliances = $applianceModel->getAppliancesByPersonId($person->id);
 
             $promotionModel = new models\PromotionModel($this->database);
-            $promotion = $promotionModel->getPromotionForPersonId($person->id);
+            $promotion = $promotionModel->getPromotionForStudentId($person->id);
         }
 
         return $this->blade->render('pages.profile', [
