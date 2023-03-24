@@ -125,18 +125,18 @@ INSERT INTO linkedout.companies (companyLogo, companyName, companySector, compan
             'Google', 'Informatique', 'https://careers.google.com/jobs/results/', 0, 'contact@google.com');
 INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
     VALUES ('https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?202303160802',
-            'Apple', 'Infromatique', 'https://jobs.apple.com/fr-fr/search?location=france-FRAC', 0, 'contact@apple.com');
+            'Apple', 'Informatique', 'https://jobs.apple.com/fr-fr/search?location=france-FRAC', 0, 'contact@apple.com');
 INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
     VALUES ('https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Facebook-icon-1.png/640px-Facebook-icon-1.png',
-            'Facebook', 'Infromatique',
+            'Facebook', 'Informatique',
             'https://www.metacareers.com/areas-of-work/Facebook%20App/?p[divisions][0]=Facebook&divisions[0]=Facebook',
             'contact@facebook.com', 0);
 INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
     VALUES ('https://s3-symbol-logo.tradingview.com/amazon--600.png',
-            'Amazon', 'Infromatique', 'https://www.amazon.jobs/fr', 0, 'contact@amazon.com');
+            'Amazon', 'Informatique', 'https://www.amazon.jobs/fr', 0, 'contact@amazon.com');
 INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
     VALUES ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAADgCAMAAAAt85rTAAAARVBMVEXzUyWBvAYFpvD/ugj/////+ff//fbzTBf4nIX7/fa113j2/P8Ao/D/uAD/1Xl4yvb8/vryRAB4uAD7w7TS56ys3vn/5q1vYD6GAAABKElEQVR4nO3PSQrCUABEwa9mVpM43v+obiSia2lIqAe9bqqUVG1XV+/64bpLFfMBAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgL+E9imuvwCMytdrNsCnO9DrFLnqpbmPlapNh7g2gNce4Brb/vAY67P69zEKlOsxyKcn2Oscoo1LcBmPMcq+1TfwEMqQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEDANQJfDICe0X+So2cAAAAASUVORK5CYII=',
-            'Microsoft', 'Infromatique', 'https://careers.microsoft.com/us/en', 0, 'contact@microsoft.com');
+            'Microsoft', 'Informatique', 'https://careers.microsoft.com/us/en', 0, 'contact@microsoft.com');
 
 --
 -- Altering table `companies` to add FULLTEXT index
