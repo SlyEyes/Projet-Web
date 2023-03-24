@@ -65,7 +65,6 @@ section {
       padding: 0;
       width: 100%;
       height: 500px;
-      overflow-y: scroll;
 
       .result {
         @include flex(column);
@@ -78,13 +77,17 @@ section {
         }
 
         img {
-          width: 75px;
-          height: 75px;
+          width: 67.5px;
+          height: 67.5px;
           border-radius: 10px;
         }
 
         #company {
           @include flex(row);
+        }
+
+        p {
+          margin: 0;
         }
       }
     }
