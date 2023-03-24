@@ -9,6 +9,20 @@ document.querySelectorAll('tbody tr').forEach(row => {
 });
 
 
+// Toggle the visibility of the navigation popup on mobile
+const collectionMenu = document.getElementById('collections-menu');
+const aside = document.querySelector('aside');
+
+collectionMenu.addEventListener('click', () => {
+    aside.classList.toggle('active');
+});
+
+aside.addEventListener('click', e => {
+    if (e.target === aside)
+        aside.classList.remove('active');
+});
+
+
 // Autocomplete the promotion field in the student edit page
 if (window.location.href.match(/\/students\/(new|\d+)$/)) {
     const campusSelect = document.getElementById('campus');

@@ -13,7 +13,7 @@
             <tr>
                 <th>Titre</th>
                 <th>Entreprise</th>
-                <th>Ville</th>
+                <th class="sm-hide">Ville</th>
             </tr>
             @break
         @case('companies')
@@ -42,7 +42,7 @@
                 <tr data-row-id="{{ $row->id }}">
                     <td>{{ $row->title }}</td>
                     <td>{{ $row->companyName }}</td>
-                    <td>{{ $row->city->name }}</td>
+                    <td class="sm-hide">{{ $row->city->name }}</td>
                 </tr>
             @endforeach
             @break

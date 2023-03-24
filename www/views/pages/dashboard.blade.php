@@ -8,17 +8,18 @@
 
 
 @section('content')
-    <main>
-        @include('components.dashboard.aside')
+    <main class="main">
+        <div class="dashboard-container">
+            @include('components.dashboard.aside')
 
-        <section>
-            <div class="dashboard-header">
-                <h3>{{ $pageTitle }}</h3>
-                @if (empty($destination))
-                    <a href="/dashboard/{{ $collection }}/new" class="icon-btn">
-                        <img src="/public/icons/plus-white.svg" alt="+">
-                    </a>
-                @else
+            <section>
+                <div class="dashboard-header">
+                    <h3>{{ $pageTitle }}</h3>
+                    @if (empty($destination))
+                        <a href="/dashboard/{{ $collection }}/new" class="icon-btn">
+                            <img src="/public/icons/plus-white.svg" alt="+">
+                        </a>
+                    @else
                     <button form="content-edit" class="icon-btn">
                         <img src="/public/icons/check-white.svg" alt="<">
                     </button>
@@ -42,6 +43,7 @@
                     @includeWhen($collection == 'companies', 'components.dashboard.company-edit')
                 </form>
             @endif
-        </section>
+            </section>
+        </div>
     </main>
 @endsection
