@@ -30,6 +30,8 @@ class ProfileController extends BaseController
 
             $promotionModel = new models\PromotionModel($this->database);
             $promotion = $promotionModel->getPromotionForStudentId($person->id);
+
+            $tutor = $personModel->getTutorByPromotionId($promotion->id);
         }
 
         return $this->blade->render('pages.profile', [
@@ -37,6 +39,7 @@ class ProfileController extends BaseController
             'wishlist' => $wishlist ?? null,
             'appliances' => $appliances ?? null,
             'promotion' => $promotion ?? null,
+            'tutor' => $tutor ?? null,
         ]);
     }
 }

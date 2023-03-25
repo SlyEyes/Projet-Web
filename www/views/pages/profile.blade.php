@@ -27,21 +27,25 @@
                         Email : {{ $person->email }}
                     </p>
 
-                    <p>
-                        @switch($person->role->value)
-                            @case('student')
+                    @switch($person->role->value)
+                        @case('student')
+                            <p>
                                 Étudiant au campus de {{ $promotion->campus->name }}, promotion {{ $promotion->name }}
-                                @break
-                            @case('tutor')
-                                Tuteur
-                                @break
-                            @case('administrator')
-                                Administrateur
-                                @break
-                            @default
-                                Inconnu
-                        @endswitch
-                    </p>
+                            </p>
+                            <p>
+                                Tuteur : {{ $tutor->firstName }} {{ $tutor->lastName }}
+                                (<a href="mailto:{{ $tutor->email }}" class="link">{{ $tutor->email }}</a>)
+                            </p>
+                            @break
+                        @case('tutor')
+                            <p>Tuteur</p>
+                            @break
+                        @case('administrator')
+                            <p>Administrateur</p>
+                            @break
+                        @default
+                            <p>Inconnu</p>
+                    @endswitch
                 </div>
             </div>
 

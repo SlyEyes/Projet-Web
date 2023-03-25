@@ -65,6 +65,28 @@ class PersonModel extends BaseModel
         return new PersonEntity($result);
     }
 
+    function getTutorByPromotionId(int $promotionId): ?PersonEntity
+    {
+        $sql = 'SELECT 
+                    persons.personId, 
+                    persons.email,
+                    persons.password,
+                    persons.firstName,
+                    persons.lastName,
+                    roles.roleName
+                FROM persons 
+                INNER JOIN roles ON persons.roleId = roles.roleId AND roleName = \'tutor\'
+                INNER JOIN person_promotion ON persons.personId = person_promotion.personId
+                WHERE person_promotion.promotionId = :promotionId';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['promotionId' => $promotionId]);
+
+        $result = $stmt->fetch();
+        if (!$result)
+            return null;
+        return new PersonEntity($result);
+    }
+
     /**
      * This function is used to get the current logged in person based on the jwt token.
      * The token is stored in a cookie named TOKEN, and contains the id of the person.
