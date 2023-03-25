@@ -2,6 +2,7 @@
 
 namespace Linkedout\App\services;
 
+use Exception;
 use Jenssegers\Blade\Blade;
 use Klein\Klein;
 use Linkedout\App\controllers;
@@ -72,9 +73,19 @@ class RouterService
             $controller->setRouteParams($request->id);
             return $controller->render();
         });
-        
-        $this->klein->respond(array('GET', 'POST'), '/dashboard/[a:collection]?/[a:destination]?', function ($request) {
-            $controller = new controllers\DashboardController($this->blade, $this->database);
+
+        // Redirect to /dashboard/students if no collection is specified
+        $this->klein->respond(array('GET', 'POST'), '/dashboard', function ($request, $response) {
+            $response->redirect('/dashboard/students');
+        });
+
+        $this->klein->respond(array('GET', 'POST'), '/dashboard/[students|tutors|administrators|internships|companies:collection]/[a:destination]?', function ($request) {
+            $controller = match ($request->collection) {
+                'students', 'tutors', 'administrators' => new controllers\dashboard\PersonDashboardController($this->blade, $this->database),
+                'internships' => new controllers\dashboard\InternshipDashboardController($this->blade, $this->database),
+                'companies' => new controllers\dashboard\CompanyDashboardController($this->blade, $this->database),
+                default => throw new Exception("Invalid collection $request->collection"),
+            };
             $controller->setRouteParams($request->collection, $request->destination);
             return $controller->render();
         });
@@ -84,7 +95,7 @@ class RouterService
             return $controller->render();
         });
 
-        
+
         $this->klein->respond('GET', '/about', function () {
             $controller = new controllers\AboutController($this->blade, $this->database);
             return $controller->render();
