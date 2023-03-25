@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <title>{{ $title ?? 'Linkedout' }}</title>
+    <meta name="description" content="LinkedOut, la meilleure plateforme de recherche de stage pour les étudiants CESI !">
     @yield('head')
 </head>
 <body>

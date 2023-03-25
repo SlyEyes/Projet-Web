@@ -1,13 +1,22 @@
 {
+    "id": "fr.linkedout.app",
     "name": "LinkedOut",
     "short_name": "LinkedOut",
+    "description": "LinkedOut, la meilleure plateforme de recherche de stage pour les étudiants CESI !",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "theme_color": "#765FF7",
+    "background_color": "#F8F7FD",
     "start_url": "/",
     "lang": "fr-FR",
+    "dir": "ltr",
     "icons": [
         {
             "src": "/public/pwa/android-chrome-192x192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/public/pwa/maskable-icon-192x192.png",
@@ -18,7 +27,8 @@
         {
             "src": "/public/pwa/android-chrome-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
             "src": "/public/pwa/maskable-icon-512x512.png",
@@ -26,8 +36,5 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-    ],
-    "theme_color": "#765FF7",
-    "background_color": "#f8f7fd",
-    "display": "standalone"
+    ]
 }
