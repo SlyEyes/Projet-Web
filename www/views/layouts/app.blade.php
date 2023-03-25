@@ -19,5 +19,16 @@
 <body>
 @include('components.navbar')
 @yield('content')
+
+<script>
+    // Enable service worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js');
+        });
+    }
+
+    const USER_LOGGED_IN = {{ $person ? 'true' : 'false' }};
+</script>
 </body>
 </html>
