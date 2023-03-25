@@ -163,10 +163,12 @@ if (window.location.href.match(/\/tutors\/(new|\d+)$/)) {
     const promotionsList = document.getElementById('tutor-promotions');
     const promotionsField = document.getElementById('tutor-promotions-field');
 
+    const tutorId = window.location.href.match(/\/tutors\/(\d+)$/)?.[1];
+
     async function applyPromotionSearch(promotion) {
         let promotions;
         try {
-            const res = await fetch(`/api/promotion/${promotion}`);
+            const res = await fetch(`/api/promotion/${promotion}?tutor=${tutorId || 'true'}`);
             const { data } = await res.json();
 
             if (data?.error)

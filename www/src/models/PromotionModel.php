@@ -143,4 +143,40 @@ class PromotionModel extends BaseModel
 
         return array_map(fn($promotion) => new PromotionEntity($promotion), $results);
     }
+
+    /**
+     * Select the promotions of a campus that are not currently managed another tutor.
+     * It returns the promotions that not managed by any tutor, and the promotions that are managed by the provided tutor
+     * @param int $campusId The id of the campus to select the promotions from
+     * @param int $tutorId The id of the tutor. If not provided, it will return the promotions that are not managed by any tutor
+     * @return PromotionEntity[]|null
+     */
+    public function getAvailablePromotionsForTutor(int $campusId, int $tutorId = -1): ?array
+    {
+        $sql = "SELECT promotions.promotionId, 
+                        promotions.promotionName,
+                        promotions.promotionId, 
+                        promotions.promotionName, 
+                        promotions.campusId,
+                        campus.campusName
+                FROM promotions 
+                INNER JOIN campus ON promotions.campusId = campus.campusId
+                WHERE campus.campusId = :campusId
+                AND promotions.promotionId NOT IN (
+                    SELECT person_promotion.promotionId
+                    FROM person_promotion
+                    INNER JOIN persons ON person_promotion.personId = persons.personId
+                    WHERE persons.roleId = (SELECT roleId FROM roles WHERE roleName = 'tutor' LIMIT 1)
+                    AND persons.personId != :tutorId
+                )";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['campusId' => $campusId, 'tutorId' => $tutorId]);
+
+        $results = $stmt->fetchAll();
+
+        if (empty($results))
+            return null;
+
+        return array_map(fn($promotion) => new PromotionEntity($promotion), $results);
+    }
 }

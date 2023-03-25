@@ -84,7 +84,7 @@ class DashboardController extends BaseController
                     $data = $personModel->getPersonById($this->destination);
                     $personCampus = $campusModel->getCampusForPersonId($this->destination);
                     if ($personCampus != null) {
-                        $promotions = $promotionModel->getPromotionForCampusId($personCampus->id);
+                        $promotions = $promotionModel->getAvailablePromotionsForTutor($personCampus->id, $this->destination);
                         $personPromotion = $promotionModel->getPromotionsForTutorId($this->destination);
                         $personPromotion = array_map(fn($promotion) => $promotion->id, $personPromotion);
                     }

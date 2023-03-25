@@ -16,7 +16,12 @@ class PromotionController extends ApiController
     protected function fetch(): array
     {
         $promotionModel = new models\PromotionModel($this->database);
-        $promotions = $promotionModel->getPromotionForCampusId($this->campusId);
+
+        if (empty($_GET['tutor']))
+            $promotions = $promotionModel->getPromotionForCampusId($this->campusId);
+        else
+            $promotions = $promotionModel->getAvailablePromotionsForTutor($this->campusId, (int)$_GET['tutor']);
+
         return [
             'promotions' => $promotions ?? []
         ];
