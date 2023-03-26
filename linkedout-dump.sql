@@ -223,6 +223,7 @@ CREATE TABLE `persons` (
   `password` varchar(127) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
+  `personPasswordChanged` tinyint(1) default 0 not null,
   `roleId` int NOT NULL,
   PRIMARY KEY (`personId`),
   KEY `persons_roles_FK` (`roleId`),
