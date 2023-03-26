@@ -114,7 +114,10 @@ class PersonDashboardController extends BaseDashboardController
         $promotionModel = new models\PromotionModel($this->database);
 
         try {
-            $newPerson = new entities\PersonEntity();
+            if ($this->layout == DashboardLayoutEnum::EDIT)
+                $newPerson = $personModel->getPersonById($this->elementId);
+            else
+                $newPerson = new entities\PersonEntity();
 
             if ($this->layout == DashboardLayoutEnum::EDIT)
                 $newPerson->id = $this->elementId;

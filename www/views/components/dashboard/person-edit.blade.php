@@ -25,9 +25,9 @@
         <input class="input-field" type="email" name="email" id="email" value="{{ $data->email ?? null }}" required>
     </div>
 
-    @if($destination == 'new')
+    @if($layout == 'create')
         <div>
-            <label for="password">Mot de passe</label>
+            <label for="password">Mot de passe provisoire</label>
             <input class="input-field" type="password" name="password" id="password" required>
         </div>
     @endif

@@ -15,6 +15,7 @@ class PersonEntity
     public string $password;
     public string $firstName;
     public string $lastName;
+    public bool $passwordChanged = false;
     public enums\RoleEnum $role;
 
     // This function is used to create a new PersonEntity object
@@ -28,6 +29,7 @@ class PersonEntity
         $this->password = $rawData['password'];
         $this->firstName = $rawData['firstName'];
         $this->lastName = $rawData['lastName'];
+        $this->passwordChanged = (bool)$rawData['personPasswordChanged'];
         $this->role = enums\RoleEnum::fromValue($rawData['roleName']);
     }
 }

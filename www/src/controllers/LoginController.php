@@ -40,8 +40,9 @@ class LoginController extends BaseController
 
         if (!empty($_POST['redirect']) && str_starts_with($_POST['redirect'], '/'))
             $redirect = $_POST['redirect'];
-        else
-            $redirect = '/profile';
+
+        if (!$person->passwordChanged)
+            $redirect = '/password-change' . (!empty($redirect) ? '?r=' . $redirect : '');
 
         $jwtService = new services\JwtService();
         $token = $jwtService->generateToken(['id' => $person->id]);
@@ -49,7 +50,7 @@ class LoginController extends BaseController
         setcookie('TOKEN', $token, time() + 3600 * 24 * 7, '/', '', true, true);
 
         http_response_code(302);
-        header("Location: {$redirect}");
+        header('Location: ' . ($redirect ?? '/profile'));
         die();
     }
 }

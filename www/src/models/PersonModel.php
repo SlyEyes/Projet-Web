@@ -5,6 +5,7 @@ namespace Linkedout\App\models;
 use Linkedout\App\entities\PersonEntity;
 use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\services;
+use PDO;
 
 
 /**
@@ -26,6 +27,7 @@ class PersonModel extends BaseModel
                     persons.password, 
                     persons.firstName, 
                     persons.lastName,
+                    persons.personPasswordChanged,
                     roles.roleName
                 FROM persons 
                 INNER JOIN roles ON persons.roleId = roles.roleId
@@ -52,6 +54,7 @@ class PersonModel extends BaseModel
                     persons.password,
                     persons.firstName,
                     persons.lastName,
+                    persons.personPasswordChanged,
                     roles.roleName
                 FROM persons 
                 INNER JOIN roles ON persons.roleId = roles.roleId
@@ -73,6 +76,7 @@ class PersonModel extends BaseModel
                     persons.password,
                     persons.firstName,
                     persons.lastName,
+                    persons.personPasswordChanged,
                     roles.roleName
                 FROM persons 
                 INNER JOIN roles ON persons.roleId = roles.roleId AND roleName = \'tutor\'
@@ -124,14 +128,15 @@ class PersonModel extends BaseModel
                     persons.password, 
                     persons.firstName, 
                     persons.lastName,
+                    persons.personPasswordChanged,
                     roles.roleName
                 FROM persons 
                 INNER JOIN roles ON persons.roleId = roles.roleId
                 WHERE roles.roleName IN (:roles)
                 LIMIT :limit OFFSET :offset';
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
-        $stmt->bindValue('offset', $offset, \PDO::PARAM_INT);
+        $stmt->bindValue('limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $stmt->bindValue('roles', implode(',', $roles));
         $stmt->execute();
 
@@ -172,15 +177,21 @@ class PersonModel extends BaseModel
 
     public function updatePerson(PersonEntity $newPerson)
     {
+        $hashedPassword = password_hash($newPerson->password, PASSWORD_ARGON2ID);
+
         $sql = 'UPDATE persons 
                 SET email = :email, 
                     firstName = :firstName, 
-                    lastName = :lastName 
+                    lastName = :lastName,
+                    password = :password,
+                    personPasswordChanged = :personPasswordChanged
                 WHERE personId = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue('email', $newPerson->email);
         $stmt->bindValue('firstName', $newPerson->firstName);
         $stmt->bindValue('lastName', $newPerson->lastName);
+        $stmt->bindValue('password', $hashedPassword);
+        $stmt->bindValue('personPasswordChanged', $newPerson->passwordChanged, PDO::PARAM_BOOL);
         $stmt->bindValue('id', $newPerson->id);
         $stmt->execute();
     }
