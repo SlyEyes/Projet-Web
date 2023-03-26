@@ -132,14 +132,24 @@ class RouterService
     public function addErrorHandling(): void
     {
         $this->klein->onHttpError(function ($code, $router) {
+            $errorController = new controllers\ErrorController($this->blade, $this->database);
+
             switch ($code) {
                 case 404:
-                    $notFoundController = new controllers\NotFoundController($this->blade, $this->database);
-                    $router->response()->body($notFoundController->render());
+                    $errorController->setRouteParams($code, '404 Not Found 🥲', 'Impossible de trouver la page recherchée.');
+                    $router->response()->body($errorController->render());
                     break;
                 default:
-                    $router->response()->body('An error has occurred');
+                    $errorController->setRouteParams($code);
+                    $router->response()->body($errorController->render());
+                    break;
             }
+        });
+
+        $this->klein->onError(function ($router, $error, $instance, $trace) {
+            $errorController = new controllers\ErrorController($this->blade, $this->database);
+            $errorController->setRouteParams(500, '500 Internal Server Error 🥲', $error, $trace);
+            $router->response()->body($errorController->render());
         });
     }
 

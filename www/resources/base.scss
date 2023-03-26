@@ -16,7 +16,7 @@
     box-sizing: border-box;
 }
 
-*:not(pre) {
+*:not(pre):not(code) {
     font-family: 'Inter', sans-serif;
 }
 

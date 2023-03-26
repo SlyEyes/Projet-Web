@@ -16,3 +16,15 @@ section {
 h1, p {
     margin: 0;
 }
+
+pre {
+    background-color: var(--light-gray);
+    border-radius: .5rem;
+    padding: 1rem;
+    max-width: calc(100vw - 2rem);
+    overflow: auto;
+
+    &, code {
+        text-align: left;
+    }
+}
