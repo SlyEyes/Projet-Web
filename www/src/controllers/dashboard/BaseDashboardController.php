@@ -6,6 +6,7 @@ use Linkedout\App\controllers\BaseController;
 use Linkedout\App\entities\PersonEntity;
 use Linkedout\App\enums\DashboardCollectionEnum;
 use Linkedout\App\enums\DashboardLayoutEnum;
+use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\models\PersonModel;
 
 abstract class BaseDashboardController extends BaseController
@@ -20,7 +21,19 @@ abstract class BaseDashboardController extends BaseController
         parent::__construct($blade, $database);
 
         $personModel = new PersonModel($this->database);
-        $this->person = $personModel->getPersonFromJwt();
+        $person = $personModel->getPersonFromJwt();
+
+        if ($person === null) {
+            header('Location: /login');
+            exit;
+        }
+
+        if ($person->role != RoleEnum::TUTOR && $person->role != RoleEnum::ADMINISTRATOR) {
+            header('Location: /');
+            exit;
+        }
+
+        $this->person = $person;
     }
 
     public function setRouteParams(string $collection, ?string $destination): void
