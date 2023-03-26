@@ -51,7 +51,7 @@
 
             @if ($person->role->value == 'student')
                 <div class="btn-row">
-                    @if(!$appliance->applianceDate)
+                    @if(empty($appliance->applianceDate))
                         <button class="btn btn-primary {{ $appliance ? 'hidden' : '' }}" id="wishlist-add">
                             Ajouter à ma wishlist
                         </button>
@@ -61,7 +61,7 @@
                     @endif
                     <a href="/internship/{{ $internship->id }}/apply">
                         <button class="btn btn-primary">
-                            @if ($appliance->applianceDate)
+                            @if (!empty($appliance->applianceDate))
                                 Voir ma candidature
                             @else
                                 Postuler
