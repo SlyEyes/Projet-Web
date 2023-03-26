@@ -237,3 +237,29 @@ if (window.location.href.match(/\/internships\/\d+$/)) {
             deleteButton.form.submit();
     });
 }
+
+
+// Check if the start date is before the end date and there is more than 1 month between them
+if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
+    const beginDateInput = document.querySelector('input[name="begin-date"]');
+    const endDateInput = document.querySelector('input[name="end-date"]');
+
+    const checkDates = () => {
+        const beginDate = new Date(beginDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        if (beginDate > endDate) {
+            beginDateInput.setCustomValidity('La date de début doit être avant la date de fin');
+            endDateInput.setCustomValidity('La date de fin doit être après la date de début');
+        } else if (endDate - beginDate < 10 * 24 * 3600 * 1000) {
+            beginDateInput.setCustomValidity('Le stage doit durer au moins deux semaines');
+            endDateInput.setCustomValidity('Le stage doit durer au moins deux semaines');
+        } else {
+            beginDateInput.setCustomValidity('');
+            endDateInput.setCustomValidity('');
+        }
+    };
+
+    beginDateInput.addEventListener('input', checkDates);
+    endDateInput.addEventListener('input', checkDates);
+}
