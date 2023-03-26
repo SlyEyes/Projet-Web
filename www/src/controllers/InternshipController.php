@@ -44,8 +44,10 @@ class InternshipController extends BaseController
 
         $studentYearModel = new models\StudentYearModel($this->database);
         $studentsYears = $studentYearModel->getStudentYearsForInternship($internship->id);
-        $studentsYears = array_map(fn($studentYear) => $studentYear->year, $studentsYears);
-        $studentsYears = implode(', ', $studentsYears);
+        if (!empty($studentsYears)) {
+            $studentsYears = array_map(fn($studentYear) => $studentYear->year, $studentsYears);
+            $studentsYears = implode(', ', $studentsYears);
+        }
 
         return $this->blade->make('pages.internship', [
             'person' => $person,
@@ -53,7 +55,7 @@ class InternshipController extends BaseController
             'internship' => $internship,
             'company' => $company,
             'formattedDuration' => $formattedDuration,
-            'studentsYears' => $studentsYears,
+            'studentsYears' => $studentsYears ?? 'toutes',
             'appliance' => $appliance,
         ])->render();
     }
