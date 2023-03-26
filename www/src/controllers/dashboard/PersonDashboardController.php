@@ -33,13 +33,27 @@ class PersonDashboardController extends BaseDashboardController
         $promotionModel = new models\PromotionModel($this->database);
         $personModel = new models\PersonModel($this->database);
 
+        if ($this->layout == DashboardLayoutEnum::EDIT) {
+            $data = $personModel->getPersonById($this->elementId);
+
+            if ($data == null)
+                return $this->blade->render('pages.error', [
+                    'person' => $this->person,
+                    'message' => 'La personne demandée n\'existe pas.'
+                ]);
+
+            if ($data->role != RoleEnum::fromValue(substr($this->collection->value, 0, -1))) {
+                header("Location: /dashboard/{$data->role->value}s/$this->elementId");
+                exit;
+            }
+        }
+
         switch ($this->collection) {
             case DashboardCollectionEnum::STUDENTS:
                 if ($this->layout == DashboardLayoutEnum::LIST)
                     $data = $personModel->getAllPersons(roles: [RoleEnum::STUDENT]);
 
                 if ($this->layout == DashboardLayoutEnum::EDIT) {
-                    $data = $personModel->getPersonById($this->elementId);
                     $personPromotion = $promotionModel->getPromotionForStudentId($this->elementId);
                     $promotions = $promotionModel->getPromotionForCampusId($personPromotion->campusId);
                 }
@@ -53,7 +67,6 @@ class PersonDashboardController extends BaseDashboardController
                     $data = $personModel->getAllPersons(roles: [RoleEnum::TUTOR]);
 
                 if ($this->layout == DashboardLayoutEnum::EDIT) {
-                    $data = $personModel->getPersonById($this->elementId);
                     $personCampus = $campusModel->getCampusForPersonId($this->elementId);
                     if ($personCampus != null) {
                         $promotions = $promotionModel->getAvailablePromotionsForTutor($personCampus->id, $this->elementId);
@@ -70,9 +83,6 @@ class PersonDashboardController extends BaseDashboardController
             case DashboardCollectionEnum::ADMINISTRATORS:
                 if ($this->layout == DashboardLayoutEnum::LIST)
                     $data = $personModel->getAllPersons(roles: [RoleEnum::ADMINISTRATOR]);
-
-                if ($this->layout == DashboardLayoutEnum::EDIT)
-                    $data = $personModel->getPersonById($this->elementId);
                 break;
         }
 
