@@ -87,8 +87,7 @@ class InternshipModel extends BaseModel
 
         $result = $statement->fetchAll();
 
-        if (!$result)
-        {
+        if (!$result) {
             return [];
         }
 
@@ -261,5 +260,21 @@ class InternshipModel extends BaseModel
         $stmt->bindValue('internshipId', $internship->id, PDO::PARAM_INT);
 
         return $stmt->execute();
+    }
+
+    /**
+     * Deletes an internship from the database
+     * @param $id int The id of the internship to delete
+     * @return bool True if the deletion was successful, false otherwise
+     */
+    public function deleteInternship(int $id): bool
+    {
+        $sql = 'DELETE FROM internships WHERE internshipId = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
     }
 }

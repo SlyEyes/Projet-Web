@@ -2,6 +2,7 @@
 
 
 @section('head')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" async></script>
     @pagestyle('dashboard')
     @pagescript('dashboard')
 @endsection
@@ -20,9 +21,20 @@
                             <img src="/public/icons/plus-white.svg" alt="+">
                         </a>
                     @else
-                        <button form="content-edit" class="icon-btn">
-                            <img src="/public/icons/check-white.svg" alt="v">
-                        </button>
+                        <div class="icon-btn-group">
+                            @if ($layout == 'edit' && $collection == 'internships')
+                                <form method="post">
+                                    <input type="hidden" name="delete" value="true">
+                                    <button class="icon-btn red-icon-btn" id="delete-btn">
+                                        <img src="/public/icons/trash-white.svg" alt="x">
+                                    </button>
+                                </form>
+                            @endif
+
+                            <button form="content-edit" class="icon-btn">
+                                <img src="/public/icons/check-white.svg" alt="v">
+                            </button>
+                        </div>
                     @endif
                 </div>
 

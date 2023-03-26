@@ -93,4 +93,29 @@ class InternshipDashboardController extends BaseDashboardController
 
         return null;
     }
+
+    protected function handleDelete(): ?string
+    {
+        $internshipModel = new models\InternshipModel($this->database);
+        $studentYearModel = new models\StudentYearModel($this->database);
+        $applianceModel = new models\ApplianceModel($this->database);
+
+        if ($applianceModel->getAppliancesForInternship($this->elementId) != null)
+            return 'Impossible de supprimer un stage qui a des candidatures.';
+
+        try {
+            $this->database->beginTransaction();
+
+            $studentYearModel->removeStudentYearsForInternship($this->elementId);
+            $applianceModel->removeInternshipFromWishlists($this->elementId);
+            $internshipModel->deleteInternship($this->elementId);
+
+            $this->database->commit();
+        } catch (Exception $e) {
+            $this->database->rollBack();
+            return 'Erreur lors de la suppression du stage : ' . $e->getMessage();
+        }
+
+        return null;
+    }
 }

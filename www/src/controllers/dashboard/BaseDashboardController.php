@@ -52,7 +52,11 @@ abstract class BaseDashboardController extends BaseController
     public function render(): string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $error = $this->handlePost();
+            if (empty($_POST['delete']))
+                $error = $this->handlePost();
+            else
+                $error = $this->handleDelete();
+
             if ($error == null) {
                 header('Location: /dashboard/' . $this->collection->value);
                 exit;
@@ -65,6 +69,8 @@ abstract class BaseDashboardController extends BaseController
     abstract protected function handlePost(): ?string;
 
     abstract protected function handleGet(?string $error = null): string;
+
+    abstract protected function handleDelete(): ?string;
 
     protected function getPageTitle(?string $element = null): string
     {

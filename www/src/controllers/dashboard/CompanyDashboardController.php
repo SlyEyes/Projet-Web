@@ -61,4 +61,9 @@ class CompanyDashboardController extends BaseDashboardController
 
         return null;
     }
+
+    protected function handleDelete(): ?string
+    {
+        return 'Not implemented yet';
+    }
 }

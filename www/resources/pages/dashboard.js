@@ -211,3 +211,29 @@ if (window.location.href.match(/\/tutors\/(new|\d+)$/)) {
     campusSelect.addEventListener('change', e => applyPromotionSearch(e.target.value));
     window.addEventListener('load', applyPillsListener);
 }
+
+
+// Prompt for delete for internship
+if (window.location.href.match(/\/internships\/\d+$/)) {
+    const deleteButton = document.getElementById('delete-btn');
+
+    deleteButton.addEventListener('click', async e => {
+        e.preventDefault();
+
+        const { isConfirmed } = await Swal.fire({
+            title: 'Êtes-vous sûr de vouloir supprimer ce stage ?',
+            text: 'Cette action est irréversible. Il sera supprimé de toutes les wishlists.',
+            icon: 'warning',
+            iconColor: 'var(--red)',
+            showCancelButton: true,
+            confirmButtonColor: 'var(--red)',
+            cancelButtonColor: 'var(--dark-gray)',
+            confirmButtonText: 'Supprimer',
+            cancelButtonText: 'Annuler',
+            focusCancel: true,
+        });
+
+        if (isConfirmed)
+            deleteButton.form.submit();
+    });
+}

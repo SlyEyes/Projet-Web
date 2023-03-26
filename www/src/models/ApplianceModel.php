@@ -3,6 +3,7 @@
 namespace Linkedout\App\models;
 
 use Linkedout\App\entities\ApplianceEntity;
+use PDO;
 
 /**
  * The base model class
@@ -212,6 +213,45 @@ class ApplianceModel extends BaseModel
         $stmt->execute([
             'internshipId' => $internshipId,
             'personId' => $personId,
+        ]);
+
+        return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Get all the appliances for a specified internship. Do not return wishlisted internships
+     * @param int $internshipId
+     * @return ApplianceEntity[]|null
+     */
+    public function getAppliancesForInternship(int $internshipId): ?array
+    {
+        $sql = 'SELECT internshipId, personId, ratingId, wishDate, applianceDate, responseDate, validation 
+                FROM appliance 
+                WHERE internshipId = :internshipId AND applianceDate IS NOT NULL';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue('internshipId', $internshipId, PDO::PARAM_INT);
+
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if (!$result)
+            return null;
+
+        return array_map(fn($appliance) => new ApplianceEntity($appliance), $result);
+    }
+
+    /**
+     * Remove an internship from the wishlists of all students
+     * @param int $internshipId
+     * @return bool True if the internship has been removed from all wishlists
+     */
+    public function removeInternshipFromWishlists(int $internshipId): bool
+    {
+        $sql = "DELETE FROM appliance WHERE internshipId = :internshipId";
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->execute([
+            'internshipId' => $internshipId,
         ]);
 
         return $stmt->rowCount() > 0;
