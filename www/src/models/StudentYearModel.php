@@ -34,7 +34,7 @@ class StudentYearModel extends BaseModel
                         studentsYears.studentYear 
                 FROM internship_studentYear 
                 INNER JOIN studentsYears ON internship_studentYear.studentYearId = studentsYears.studentYearId
-                WHERE intershipId = :internshipId";
+                WHERE internshipId = :internshipId";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['internshipId' => $internshipId]);
         $result = $stmt->fetchAll();
@@ -53,7 +53,7 @@ class StudentYearModel extends BaseModel
      */
     public function addStudentYearForInternship(int $internshipId, int $studentYearId): bool
     {
-        $sql = "INSERT INTO internship_studentYear (intershipId, studentYearId) VALUES (:internshipId, :studentYearId)";
+        $sql = "INSERT INTO internship_studentYear (internshipId, studentYearId) VALUES (:internshipId, :studentYearId)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['internshipId' => $internshipId, 'studentYearId' => $studentYearId]);
         return $stmt->rowCount() > 0;
@@ -66,7 +66,7 @@ class StudentYearModel extends BaseModel
      */
     public function removeStudentYearsForInternship(int $internshipId): int
     {
-        $sql = "DELETE FROM internship_studentYear WHERE intershipId = :internshipId";
+        $sql = "DELETE FROM internship_studentYear WHERE internshipId = :internshipId";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['internshipId' => $internshipId]);
         return $stmt->rowCount();
