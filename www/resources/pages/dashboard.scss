@@ -7,15 +7,18 @@
 main.main {
     @media screen and (max-width: 67rem) {
         margin-bottom: 3rem; // Space for the bottom navigation button
+        min-height: calc(100vh - 5rem - 3rem); // 5rem = header height
     }
 
     @media screen and (max-width: 48rem) {
         margin-bottom: 4rem; // Smaller navbar
         place-items: baseline;
+        min-height: calc(100vh - 4rem - 4rem); // 4rem = header height
     }
 
     @media screen and (max-width: 32rem) {
         margin-bottom: 8rem; // Bottom navbar
+        min-height: calc(100vh - 4rem - 8rem); // 4rem = header height
     }
 }
 
