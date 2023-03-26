@@ -26,7 +26,7 @@ class InternshipDashboardController extends BaseDashboardController
                 $internshipStudentYearsIds = array_map(fn($studentYear) => $studentYear->id, $internshipStudentYears);
         }
 
-        if ($this->layout == DashboardLayoutEnum::LIST || $this->layout == DashboardLayoutEnum::EDIT) {
+        if ($this->layout == DashboardLayoutEnum::CREATE || $this->layout == DashboardLayoutEnum::EDIT) {
             $companyModel = new models\CompanyModel($this->database);
             $companies = $companyModel->getAllCompanies();
             $studentYears = $studentYearModel->getStudentYears();
