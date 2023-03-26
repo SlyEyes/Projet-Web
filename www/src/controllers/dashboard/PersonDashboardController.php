@@ -11,8 +11,24 @@ use Linkedout\App\models;
 
 class PersonDashboardController extends BaseDashboardController
 {
+    /**
+     * Redirects to the dashboard if a tutor is trying to view or edit tutors or administrators
+     * @return void
+     */
+    private function redirectIfNotAuthorized(): void
+    {
+        if ($this->person->role != RoleEnum::ADMINISTRATOR
+            && ($this->collection == DashboardCollectionEnum::TUTORS
+                || $this->collection == DashboardCollectionEnum::ADMINISTRATORS)) {
+            header('Location: /dashboard');
+            exit;
+        }
+    }
+
     function handleGet(?string $error = null): string
     {
+        $this->redirectIfNotAuthorized();
+
         $campusModel = new models\CampusModel($this->database);
         $promotionModel = new models\PromotionModel($this->database);
         $personModel = new models\PersonModel($this->database);
@@ -82,6 +98,8 @@ class PersonDashboardController extends BaseDashboardController
 
     function handlePost(): ?string
     {
+        $this->redirectIfNotAuthorized();
+
         $personModel = new models\PersonModel($this->database);
         $promotionModel = new models\PromotionModel($this->database);
 
