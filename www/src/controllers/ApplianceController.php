@@ -5,11 +5,15 @@ namespace Linkedout\App\controllers;
 use Linkedout\App\entities;
 use Linkedout\App\enums\RoleEnum;
 use Linkedout\App\models;
-use Linkedout\App\utils\TimeUtil;
 
 class ApplianceController extends BaseController
 {
-    protected ?string $id = null;
+    protected ?string $applianceId = null;
+
+    protected ?entities\InternshipEntity $internship = null;
+    protected ?entities\ApplianceEntity $appliance = null;
+    protected ?entities\CompanyEntity $company = null;
+    protected ?entities\PersonEntity $person = null;
 
     /**
      * The setter for the route parameters
@@ -18,75 +22,114 @@ class ApplianceController extends BaseController
      */
     public function setRouteParams(?string $id): void
     {
-        $this->id = $id;
+        $this->applianceId = $id;
     }
 
     public function render(): string
     {
         $personModel = new models\PersonModel($this->database);
-        $person = $personModel->getPersonFromJwt();
+        $this->person = $personModel->getPersonFromJwt();
 
-        if ($person === null) {
-            header("Location: /login?r=/internship/$this->id/apply");
+        if ($this->person == null) {
+            header("Location: /login?r=/internship/$this->applianceId/apply");
             exit;
         }
 
-        if ($person->role != RoleEnum::STUDENT) {
-            header("Location: /dashboard/internships/$this->id");
+        if ($this->person->role != RoleEnum::STUDENT) {
+            header("Location: /dashboard/internships/$this->applianceId");
             exit;
         }
 
         $internshipModel = new models\InternshipModel($this->database);
-        $internship = $internshipModel->getInternshipById($this->id);
+        $this->internship = $internshipModel->getInternshipById($this->applianceId);
 
-        if ($internship === null || $internship->masked)
+        if ($this->internship == null || $this->internship->masked)
             return $this->blade->make('pages.error', [
-                'person' => $person,
+                'person' => $this->person,
                 'title' => 'Stage introuvable - LinkedOut',
                 'message' => 'Impossible de trouver ce stage.'
             ]);
 
         $companyModel = new models\CompanyModel($this->database);
-        $company = $companyModel->getCompanyById($internship->companyId);
+        $this->company = $companyModel->getCompanyById($this->internship->companyId);
 
         $applianceModel = new models\ApplianceModel($this->database);
-        $appliance = $applianceModel->getApplianceById($person->id, $internship->id);
+        $this->appliance = $applianceModel->getApplianceById($this->person->id, $this->internship->id);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $appliance !== null)
-            return $this->blade->make('pages.error', [
-                'person' => $person,
-                'title' => 'Stage introuvable - LinkedOut',
-                'message' => 'Vous avez déjà postulé à ce stage.'
-            ]);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postulate = !empty($_POST['postulate']) && $_POST['postulate'] == 'on';
+            $response = !empty($_POST['response']) && $_POST['response'] == 'on';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && (empty($_POST['accept']) || $_POST['accept'] !== 'on'))
-            return $this->blade->make('pages.error', [
-                'person' => $person,
-                'title' => 'Stage introuvable - LinkedOut',
-                'message' => 'Vous devez accepter les conditions d\'utilisation pour postuler à ce stage.'
-            ]);
+            if (!$postulate && !$response)
+                $error = 'Aucune action spécifiée.';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $appliance = new entities\ApplianceEntity();
-            $appliance->personId = $person->id;
-            $appliance->internshipId = $internship->id;
-            $appliance->wishDate = new \DateTime();
-            $appliance->applianceDate = new \DateTime();
-            $applianceModel->createAppliance($appliance);
+            if ($postulate && $response)
+                $error = 'Vous ne pouvez pas postuler et signaler une réponse à la fois.';
+
+            if (empty($error) && $postulate)
+                $error = $this->handleAppliance();
+
+            if (empty($error) && $response)
+                $error = $this->handleResponse();
         }
 
-        $internship = [
-            'id' => $internship->id,
-            'title' => $internship->title,
-            'city' => $internship->city,
-            'duration' => TimeUtil::calculateDuration($internship->beginDate, $internship->endDate),
-        ];
-
         return $this->blade->make('pages.appliance', [
-            'person' => $person,
-            'company' => $company,
-            'internship' => $internship,
-            'appliance' => $appliance
+            'person' => $this->person,
+            'company' => $this->company,
+            'internship' => $this->internship,
+            'appliance' => $this->appliance,
+            'error' => $error ?? null,
         ]);
+    }
+
+    /**
+     * Handles the creation of the appliance. If an appliance was already created due to a wish, it will be updated
+     * @return string|null The error message, or null if no error
+     */
+    private function handleAppliance(): ?string
+    {
+        // Check if user already postulated
+        if ($this->appliance != null && $this->appliance->applianceDate != null)
+            return 'Vous avez déjà postulé à ce stage.';
+
+        // Create or update appliance
+        $applianceModel = new models\ApplianceModel($this->database);
+
+        $newAppliance = $this->appliance == null;
+        if ($newAppliance)
+            $this->appliance = new entities\ApplianceEntity();
+        $this->appliance->personId = $this->person->id;
+        $this->appliance->internshipId = $this->internship->id;
+        $this->appliance->wishDate = new \DateTime();
+        $this->appliance->applianceDate = new \DateTime();
+        if ($newAppliance)
+            $applianceModel->createAppliance($this->appliance);
+        else
+            $applianceModel->updateAppliance($this->appliance);
+
+        return null;
+    }
+
+    /**
+     * Handles the response reporting of the appliance
+     * @return string|null The error message, or null if no error
+     */
+    private function handleResponse(): ?string
+    {
+        // Check if user already postulated
+        if ($this->appliance == null || $this->appliance->applianceDate == null)
+            return 'Vous n\'avez pas postulé à ce stage.';
+
+        // Check if user already signaled a response
+        if ($this->appliance->responseDate != null)
+            return 'Vous avez déjà signalé une réponse de ce stage.';
+
+        // Create or update appliance
+        $applianceModel = new models\ApplianceModel($this->database);
+
+        $this->appliance->responseDate = new \DateTime();
+        $applianceModel->updateAppliance($this->appliance);
+
+        return null;
     }
 }

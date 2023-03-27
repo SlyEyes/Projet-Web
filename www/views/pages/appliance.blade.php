@@ -17,15 +17,47 @@
             <div class="appliance-header">
                 <img src="{{ $company->logo }}" alt=" {{ $company->name }} logo">
                 <div class="appliance-title">
-                    <h3>{{ $internship['title'] }}</h3>
+                    <h3>{{ $internship->title }}</h3>
                     <div>
-                        {{ $internship['duration'] }} - {{ $internship['city']->name }} - {{ $company->name }}
+                        {{ TimeUtil::calculateDuration($internship->beginDate, $internship->endDate) }}
+                        -
+                        {{ $internship->city->name }}
+                        -
+                        {{ $company->name }}
                     </div>
                 </div>
             </div>
 
-            @if ($appliance)
-                Vous avez postulé cette offre le {{ TimeUtil::formatDateObject($appliance->applianceDate) }}.
+            @if($error)
+                <div class="error">
+                    {{ $error }}
+                </div>
+            @endif
+
+            @if ($appliance && $appliance->applianceDate)
+                <h3>Candidature</h3>
+
+                <div>
+                    Vous avez postulé cette offre le {{ TimeUtil::formatDateObject($appliance->applianceDate) }}.
+                </div>
+
+                @if ($appliance->responseDate)
+                    <div>
+                        Vous avez reçu une réponse de la part de l'entreprise
+                        le {{ TimeUtil::formatDateObject($appliance->responseDate) }}.
+                    </div>
+                @else
+                    <h3>Réponse de l'entreprise</h3>
+
+                    <form id="response-form" class="checkbox" method="post">
+                        <input type="checkbox" class="checkbox" id="response" name="response" required>
+                        <label for="response">
+                            J'ai reçu une réponse de la part de l'entreprise, qu'elle soit positive ou négative
+                        </label>
+                    </form>
+
+                    <button form="response-form" class="btn-primary">Valider la réponse</button>
+                @endif
             @else
                 <div>
                     <article>
@@ -35,8 +67,8 @@
                 </div>
 
                 <form id="validate-form" class="checkbox" method="post">
-                    <input type="checkbox" class="checkbox" id="accept" name="accept" required>
-                    <label for="accept">
+                    <input type="checkbox" class="checkbox" id="postulate" name="postulate" required>
+                    <label for="postulate">
                         Avant de postuler, j'atteste que j'ai bien envoyé le mail de candidature à l'entreprise.
                     </label>
                 </form>
