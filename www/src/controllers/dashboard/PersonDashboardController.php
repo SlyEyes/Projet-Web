@@ -32,6 +32,7 @@ class PersonDashboardController extends BaseDashboardController
         $campusModel = new models\CampusModel($this->database);
         $promotionModel = new models\PromotionModel($this->database);
         $personModel = new models\PersonModel($this->database);
+        $applianceModel = new models\ApplianceModel($this->database);
 
         if ($this->layout == DashboardLayoutEnum::EDIT) {
             $data = $personModel->getPersonById($this->elementId);
@@ -56,6 +57,7 @@ class PersonDashboardController extends BaseDashboardController
                 if ($this->layout == DashboardLayoutEnum::EDIT) {
                     $personPromotion = $promotionModel->getPromotionForStudentId($this->elementId);
                     $promotions = $promotionModel->getPromotionForCampusId($personPromotion->campusId);
+                    $appliances = $applianceModel->getAppliancesByPersonId($this->elementId);
                 }
 
                 if ($this->layout == DashboardLayoutEnum::CREATE || $this->layout == DashboardLayoutEnum::EDIT)
@@ -102,6 +104,7 @@ class PersonDashboardController extends BaseDashboardController
             'personCampus' => $personCampus ?? null,
             'personPromotion' => $personPromotion ?? null,
             'promotions' => $promotions ?? null,
+            'appliances' => $appliances ?? null,
         ]);
     }
 

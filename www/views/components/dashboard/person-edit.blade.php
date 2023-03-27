@@ -1,3 +1,8 @@
+@php
+    use Linkedout\App\utils\TimeUtil;
+@endphp
+
+
 <div class="field-group">
     <div>
         <label for="lastname">Nom</label>
@@ -65,6 +70,35 @@
             </select>
         </div>
     </div>
+
+    @if($appliances)
+        <label>Applications en cours</label>
+
+        <div class="student-appliances-list">
+            @foreach($appliances as $appliance)
+                <div class="student-appliance">
+                    <div>
+                        <div class="student-appliance-internship">
+                            {{ $appliance->internship->title }} ({{ $appliance->internship->companyName }})
+                        </div>
+                        <div>
+                            Date d'application : {{ TimeUtil::formatDateObject($appliance->applianceDate) }}
+                        </div>
+                        <div>
+                            @if($appliance->responseDate)
+                                Date de réponse de l'entreprise : {{ TimeUtil::formatDateObject($appliance->responseDate) }}
+                            @else
+                                Pas de réponse de l'entreprise
+                            @endif
+                        </div>
+                    </div>
+                    @if(!$appliance->validation)
+                        <button class="btn btn-primary student-appliance-validate">Valider le stage</button>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    @endif
 @endif
 
 @if($collection == 'tutors')
