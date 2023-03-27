@@ -263,3 +263,51 @@ if (window.location.href.match(/\/internships\/(new|\d+)$/)) {
     beginDateInput.addEventListener('input', checkDates);
     endDateInput.addEventListener('input', checkDates);
 }
+
+
+// Validate the appliances of the students
+if (window.location.href.match(/\/students\/\d+$/)) {
+    document.querySelectorAll('.student-appliance-validate').forEach(button => {
+        button.addEventListener('click', async () => {
+            const studentName = document.getElementById('firstname').value;
+            Swal.fire({
+                title: 'Êtes-vous sûr de vouloir valider ce stage ?',
+                text: `Vous validez le fait que ${studentName} a bien été accepté pour ce stage. Il pourra alors le noter.`,
+                icon: 'warning',
+                iconColor: 'var(--red)',
+                showCancelButton: true,
+                confirmButtonColor: 'var(--violet)',
+                cancelButtonColor: 'var(--dark-gray)',
+                confirmButtonText: 'Valider',
+                cancelButtonText: 'Annuler',
+                focusCancel: true,
+                showLoaderOnConfirm: true,
+                allowOutsideClick: () => !Swal.isLoading(),
+                async preConfirm() {
+                    button.disabled = true;
+
+                    const form = new FormData();
+                    form.append('student', window.location.href.match(/\/students\/(\d+)$/)[1]);
+                    form.append('internship', button.attributes['data-internship'].value);
+
+                    const res = await fetch('/api/validate-appliance', {
+                        method: 'POST',
+                        body: form,
+                    });
+                    const body = await res.json();
+
+                    if (body.error)
+                        return Swal.fire({
+                            title: 'Une erreur est survenue',
+                            text: body.error,
+                            icon: 'error',
+                            iconColor: 'var(--red)',
+                        });
+
+                    window.location.reload();
+                    await new Promise(resolve => setTimeout(resolve, 10000));
+                },
+            });
+        });
+    });
+}

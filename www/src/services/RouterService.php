@@ -128,6 +128,11 @@ class RouterService
             $controller->setRouteParams($request->id);
             return $controller->render();
         });
+
+        $this->klein->respond('POST', '/api/validate-appliance', function () {
+            $controller = new api\ApplianceValidationController($this->database);
+            return $controller->render();
+        });
     }
 
     /**

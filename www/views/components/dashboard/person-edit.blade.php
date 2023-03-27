@@ -86,14 +86,19 @@
                         </div>
                         <div>
                             @if($appliance->responseDate)
-                                Date de réponse de l'entreprise : {{ TimeUtil::formatDateObject($appliance->responseDate) }}
+                                Date de réponse de l'entreprise :
+                                {{ TimeUtil::formatDateObject($appliance->responseDate) }}
                             @else
                                 Pas de réponse de l'entreprise
                             @endif
                         </div>
                     </div>
                     @if(!$appliance->validation)
-                        <button class="btn btn-primary student-appliance-validate">Valider le stage</button>
+                        <button class="btn btn-primary student-appliance-validate"
+                                type="button"
+                                data-internship="{{ $appliance->internship->id }}">
+                            Valider le stage
+                        </button>
                     @endif
                 </div>
             @endforeach
