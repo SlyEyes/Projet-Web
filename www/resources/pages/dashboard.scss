@@ -125,3 +125,12 @@ form input:not([type="checkbox"]):not([type="radio"]), form select {
 .checkbox {
     height: 2.5rem;
 }
+
+.swal2-popup {
+    background-color: var(--white) !important;
+    color: var(--black) !important;
+}
+
+.swal2-container.swal2-backdrop-show {
+    background-color: rgba(0, 0, 0, .5) !important;
+}
