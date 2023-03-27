@@ -81,10 +81,12 @@ class ApplianceModel extends BaseModel
 
     /**
      * Get all appliances for a user
-     * @param int $personId
+     * @param int $personId The id of the person
+     * @param bool $validated If it returns only validated or not validated appliances.
+     * If not set, it returns not validated appliances
      * @return ApplianceEntity[]
      */
-    public function getAppliancesByPersonId(int $personId): array
+    public function getAppliancesByPersonId(int $personId, bool $validated = false): array
     {
         $sql = "SELECT appliance.internshipId,
                         appliance.personId,
@@ -114,9 +116,12 @@ class ApplianceModel extends BaseModel
                 INNER JOIN cities ON cities.cityId = internships.cityId
                 WHERE appliance.personId = :userId 
                     AND appliance.applianceDate IS NOT NULL 
-                    AND internships.maskedInternship = 0";
+                    AND internships.maskedInternship = 0
+                    AND appliance.validation = :validation";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['userId' => $personId]);
+        $stmt->bindValue('userId', $personId, PDO::PARAM_INT);
+        $stmt->bindValue('validation', $validated, PDO::PARAM_BOOL);
+        $stmt->execute();
 
         $result = $stmt->fetchAll();
         if ($result === false)

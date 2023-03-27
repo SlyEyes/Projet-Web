@@ -89,6 +89,24 @@
                 </div>
             @endif
 
+            @if (is_array($validatedAppliances) && count($validatedAppliances) > 0)
+                <div class="profile-section">
+                    <h3>Stages validés</h3>
+
+                    <div class="internships-section">
+                        @foreach ($validatedAppliances as $appliance)
+                            <a href="/internship/{{ $appliance->internship->id }}/apply" class="internship-card">
+                                <div>{{ $appliance->internship->title }}</div>
+                                <div class="small">
+                                    {{ $appliance->internship->companyName }},
+                                    {{ $appliance->internship->city->name }}
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <div class="profile-section">
                 <h3>Déconnexion</h3>
 

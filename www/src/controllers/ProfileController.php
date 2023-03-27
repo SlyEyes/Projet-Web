@@ -27,6 +27,7 @@ class ProfileController extends BaseController
             $applianceModel = new models\ApplianceModel($this->database);
             $wishlist = $applianceModel->getWishlistByPersonId($person->id);
             $appliances = $applianceModel->getAppliancesByPersonId($person->id);
+            $validatedAppliances = $applianceModel->getAppliancesByPersonId($person->id, true);
 
             $promotionModel = new models\PromotionModel($this->database);
             $promotion = $promotionModel->getPromotionForStudentId($person->id);
@@ -38,6 +39,7 @@ class ProfileController extends BaseController
             'person' => $person,
             'wishlist' => $wishlist ?? null,
             'appliances' => $appliances ?? null,
+            'validatedAppliances' => $validatedAppliances ?? null,
             'promotion' => $promotion ?? null,
             'tutor' => $tutor ?? null,
         ]);
