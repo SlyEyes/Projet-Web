@@ -17,14 +17,28 @@
                 <div class="company-details">
                     <h3>{{ $company->name }}</h3>
                     <div>
-                        {{ $company->internshipCount }}
+                        {{ $company->internshipCount ?? 'Aucun' }}
                         @if($company->internshipCount > 1)
                             stages disponibles
                         @else
                             stage disponible
                         @endif
-                        -
-                        {{ $cities }}
+
+                        @if ($cities)
+                            -
+                            {{ $cities }}
+                        @endif
+
+                        @if($company->cesiStudents && $company->cesiStudents > 0)
+                            -
+                            {{ $company->cesiStudents }}
+                            @if($company->cesiStudents > 1)
+                                étudiants déjà accueillis
+                            @else
+                                étudiant déjà accueilli
+                            @endif
+                        @endif
+
                         <br/>
                         <a class="link" href="{{ $company->website }}">
                             {{ $company->website }}

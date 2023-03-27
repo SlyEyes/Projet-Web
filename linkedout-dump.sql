@@ -107,8 +107,9 @@ CREATE TABLE `companies` (
   `companyName` varchar(50) NOT NULL,
   `companySector` varchar(50) NOT NULL,
   `companyWebsite` varchar(50) NOT NULL,
-  `maskedCompany` tinyint(1) NOT NULL,
   `companyEmail` varchar(127) NOT NULL,
+  `acceptedCesiStudents` int DEFAULT 0 NOT NULL,
+  `maskedCompany` tinyint(1) NOT NULL,
   PRIMARY KEY (`companyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

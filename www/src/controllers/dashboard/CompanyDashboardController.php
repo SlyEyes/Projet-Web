@@ -48,6 +48,7 @@ class CompanyDashboardController extends BaseDashboardController
             $newCompany->sector = $_POST['sector'];
             $newCompany->website = $_POST['website'];
             $newCompany->email = $_POST['email'];
+            $newCompany->cesiStudents = $_POST['cesi-students'];
             $newCompany->masked = !empty($_POST['masked']);
 
             if ($this->layout === DashboardLayoutEnum::CREATE)

@@ -35,6 +35,17 @@
 
 <div class="field-group">
     <div>
+        <label for="cesi-students">Étudiants CESI acceptés</label>
+        <input class="input-field"
+               type="number"
+               min="0"
+               name="cesi-students"
+               id="cesi-students"
+               value="{{ $data->cesiStudents ?? null }}"
+               required>
+    </div>
+
+    <div>
         <label for="masked">Visibilité</label>
         <div class="checkbox">
             <input type="checkbox" name="masked" id="masked" {{ ($data->masked ?? false) ? 'checked' : '' }}>
