@@ -24,6 +24,8 @@ class SearchController extends BaseController
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
 
+        $url = str_replace("&page=$page", '', $url);
+
         if ($page < 1)
             $page = 1;
 
