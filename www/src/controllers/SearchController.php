@@ -52,10 +52,13 @@ class SearchController extends BaseController
                 'person' => $person,
             ]);
         } else {
+            $results = $internshipModel->getAllInternships($limit);
+
             return $this->blade->render('pages.search', [
                 'url' => $url,
                 'page' => $page,
-                'results' => null,
+                'target' => $target,
+                'results' => $results,
                 'person' => $person,
             ]);
         }
