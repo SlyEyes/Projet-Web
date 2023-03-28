@@ -76,12 +76,12 @@ class InternshipModel extends BaseModel
                         INNER JOIN cities ON internships.cityId = cities.cityId
                         INNER JOIN companies ON internships.companyId = companies.companyId
                         WHERE 
+                            :internshipDuration >= :f0 AND
+                            :internshipDuration <= :f1 AND
                             maskedInternship = 0 AND
                             maskedCompany = 0 AND
                             MATCH(internshipTitle) AGAINST(:search) OR
-                            MATCH(internshipSkills) AGAINST(:search) AND
-                            :internshipDuration >= :f0 AND
-                            :internshipDuration <= :f1
+                            MATCH(internshipSkills) AGAINST(:search)
                         ORDER BY scoreInternshipTitle DESC, scoreInternshipSkills DESC
                         LIMIT :limit
                         OFFSET :firstResult";
