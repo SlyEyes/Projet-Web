@@ -57,6 +57,11 @@ section {
     background-color: var(--light-gray);
     height: fit-content;
     width: 12rem;
+
+    @media screen and (max-width: 48rem) {
+        max-width: 14rem;
+        width: 100%;
+    }
 }
 
 .filter-category {

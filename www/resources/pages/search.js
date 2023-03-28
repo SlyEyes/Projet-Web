@@ -50,8 +50,9 @@ document.querySelector('#search-bar-input').addEventListener('input', function (
 // This is used to toggle the filter form on mobile
 let filterZone = document.querySelector('#filter-zone');
 
-filterZone.addEventListener('click', function () {
-    filterZone.classList.remove('active');
+filterZone.addEventListener('click', function (ev) {
+    if (ev.target === filterZone)
+        filterZone.classList.remove('active');
 });
 
 document.querySelector('#btn-filter').addEventListener('click', function () {
