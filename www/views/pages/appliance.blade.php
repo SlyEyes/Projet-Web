@@ -1,5 +1,5 @@
 @php
-    use Linkedout\App\Utils\TimeUtil;
+    use Linkedout\App\utils\TimeUtil;
 @endphp
 
 @extends('layouts.app')
