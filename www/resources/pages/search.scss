@@ -1,16 +1,15 @@
 @import '../base';
 @import '../components/navbar';
 
-@mixin flex($direction, $spacing: 1rem) {
-    display: flex;
-    flex-direction: $direction;
-    gap: $spacing;
-}
+main.main {
+    @media screen and (max-width: 48rem) {
+        place-items: start;
+        padding: 2rem 0 5rem;
+    }
 
-@mixin back-border($color: var(--light-gray), $width: 10px, $radius: 10px) {
-    background-color: $color;
-    border: $color solid $width;
-    border-radius: $radius;
+    @media screen and (max-width: 32rem) {
+        padding: 0 0 3rem;
+    }
 }
 
 section {
@@ -22,6 +21,30 @@ section {
     @media screen and (max-width: 48rem) {
         width: 32rem;
         display: grid;
+        margin: 0 auto;
+    }
+
+    @media screen and (max-width: 32rem) {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+#filter-zone {
+    @media screen and (max-width: 48rem) {
+        display: none;
+
+        &.active {
+            display: grid;
+            place-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 20;
+            background-color: rgba(0, 0, 0, .5);
+        }
     }
 }
 
@@ -58,6 +81,40 @@ section {
 
 #search-bar-input {
     width: 100%;
+}
+
+#search-bar-button {
+    @media screen and (max-width: 48rem) {
+        display: none;
+    }
+}
+
+#search-bar-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 2.625rem;
+    width: 2.625rem;
+    min-width: 2.625rem;
+    border-radius: .5rem;
+    background-color: var(--violet);
+    color: var(--white);
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--dark-violet);
+    }
+
+    @media screen and (max-width: 48rem) {
+        display: flex;
+    }
+
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
 }
 
 #results-list {
@@ -122,5 +179,21 @@ section {
     a {
         color: var(--white);
         text-decoration: none;
+    }
+}
+
+#btn-filter {
+    display: none;
+
+    @media screen and (max-width: 48rem) {
+        display: block;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 1rem;
+    }
+
+    @media screen and (max-width: 32rem) {
+        bottom: 5rem;
     }
 }

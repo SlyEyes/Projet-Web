@@ -22,23 +22,13 @@ document.querySelector('#search-bar-input').addEventListener('input', function (
 });
 
 
-// This is used to update the search button to a magnifying glass on mobile
-let rem = 48;
-let mobileWidth = rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-let searchButton = document.querySelector('#search-bar-button');
-
-if (window.innerWidth <= mobileWidth) {
-    searchButton.innerHTML = '🔍';
-}
-
-
 // This is used to toggle the filter form on mobile
 let filterZone = document.querySelector('#filter-zone');
 
+filterZone.addEventListener('click', function () {
+    filterZone.classList.remove('active');
+});
+
 document.querySelector('#btn-filter').addEventListener('click', function () {
-    if (filterZone.classList.contains('active')) {
-        filterZone.classList.remove('active');
-    } else {
-        filterZone.classList.add('active');
-    }
+    filterZone.classList.toggle('active');
 });

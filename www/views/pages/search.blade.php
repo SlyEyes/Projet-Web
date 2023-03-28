@@ -54,6 +54,10 @@
                             <label for="filter-duration-2">De 6 mois à +</label>
                         </div>
                     </div>
+
+                    <button type="submit" class="btn-primary">
+                        Appliquer
+                    </button>
                 </form>
             </div>
 
@@ -69,6 +73,9 @@
 
                     <button type="submit" id="search-bar-button" class="btn-primary" form="filters">
                         Rechercher
+                    </button>
+                    <button type="submit" id="search-bar-icon" form="filters">
+                        <img src="/public/icons/magnifying-white.svg" alt="Rechercher">
                     </button>
                 </form>
 
