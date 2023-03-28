@@ -114,23 +114,21 @@
                         @endif
 
                     @elseif (!isset($results))
-                        <li class="result">
-                            <div>
-                                <h3>Recherchez un stage ou une entreprise</h3>
-                                <p>Vous pouvez rechercher un stage ou une entreprise en utilisant la barre de
-                                    recherche ci-dessus</p>
-                            </div>
-                        </li>
+                        <div class="result">
+                            <h3>Recherchez un stage ou une entreprise</h3>
+                            <p>
+                                Vous pouvez rechercher un stage ou une entreprise en utilisant la barre de recherche
+                                ci-dessus
+                            </p>
+                        </div>
                     @else
-                        <li class="result">
-                            <div>
-                                <h3>Aucun résultat</h3>
-                                <p>
-                                    Vérifiez que vous avez bien tapé votre requête et que vous avez sélectionné les
-                                    bons filtres
-                                </p>
-                            </div>
-                        </li>
+                        <div class="result">
+                            <h3>Aucun résultat</h3>
+                            <p>
+                                Vérifiez que vous avez bien tapé votre requête et que vous avez sélectionné les
+                                bons filtres
+                            </p>
+                        </div>
                     @endif
                 </div>
 
