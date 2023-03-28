@@ -128,8 +128,13 @@ section {
     align-items: center;
     margin-top: 1rem;
 
+    .btn-primary {
+      width: 110px;
+    }
+
     a {
       text-decoration: none;
+      text-align: center;
     }
   }
 
