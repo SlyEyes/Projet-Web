@@ -88,20 +88,21 @@
                         @if ($target == 'internships')
                             @foreach ($results as $result)
                                 <a href="/internship/{{ $result->id }}" class="internship-result">
-                                    <div>
-                                        <img src="{{ $result->companyLogo }}" alt="{{ $result->name }} logo">
-
-                                        <div class="bold">{{ $result->title }}</div>
-                                        <div class="small">
-                                            {{ TimeUtil::calculateDuration($result->beginDate, $result->endDate) }}
-                                            -
-                                            {{ $result->city->name }}
-                                            -
-                                            {{ $result->companyName }}
+                                    <img src="{{ $result->companyLogo }}" alt="{{ $result->name }} logo">
+                                    <div class="internship-information">
+                                        <div>
+                                            <div class="bold">{{ $result->title }}</div>
+                                            <div class="small">
+                                                {{ TimeUtil::calculateDuration($result->beginDate, $result->endDate) }}
+                                                -
+                                                {{ $result->city->name }}
+                                                -
+                                                {{ $result->companyName }}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="internship-description">
-                                        {{ $result->description }}
+                                        <div class="internship-description">
+                                            {{ $result->description }}
+                                        </div>
                                     </div>
                                 </a>
                             @endforeach

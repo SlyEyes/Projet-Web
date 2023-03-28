@@ -132,9 +132,8 @@ section {
 
 .internship-result {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: .5rem;
-    padding: 1rem;
     width: 100%;
     border-radius: 1rem;
     background-color: var(--light-gray);
@@ -142,10 +141,23 @@ section {
     text-decoration: none;
 
     img {
-        height: 5rem;
-        width: 5rem;
+        height: 6.5rem;
+        width: 6.5rem;
         border-radius: .5rem;
+
+        @media screen and (max-width: 32rem) {
+            display: none;
+        }
     }
+}
+
+.internship-information {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: .5rem;
+    width: 100%;
+    height: 100%;
 }
 
 .internship-description {
