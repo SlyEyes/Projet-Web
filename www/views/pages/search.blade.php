@@ -139,7 +139,7 @@
                     @endif
                 </div>
 
-                @if((!empty($results) && count($results) > 4) || $page > 1)
+                @if((!empty($results) && count($results) == 4) || $page > 1)
                     <div id="page-zone">
                         <button class="navigation-btn"
                                 {{ $page < 2 ? 'disabled' : '' }}
@@ -148,7 +148,7 @@
                         </button>
                         <p>Page {{ $page }}</p>
                         <button class="navigation-btn"
-                                {{ empty($result) || count($result) < 4 ? 'disabled' : '' }}
+                                {{ empty($results) || count($results) < 4 ? 'disabled' : '' }}
                                 id="pages-forward">
                             <img src="/public/icons/chevron-right-white.svg" alt="Suivant">
                         </button>
