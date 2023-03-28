@@ -1,7 +1,8 @@
 // Description: This file contains the javascript for the search page
 
-// This is used to update the radio buttons in the filter form to match the target in the url
 let url = new URL(window.location.href);
+
+// This is used to update the radio buttons in the filter form to match the target in the url
 let target = url.searchParams.get('target');
 
 let radioInternship = document.getElementById('research-target-0');
@@ -13,6 +14,30 @@ if (target === 'internships' || target === null) {
 } else if (target === 'companies') {
     radioInternship.checked = false;
     radioCompany.checked = true;
+}
+
+let filter = url.searchParams.get('f');
+
+let filterDuration0 = document.querySelector('#filter-duration-0');
+let filterDuration1 = document.querySelector('#filter-duration-1');
+let filterDuration2 = document.querySelector('#filter-duration-2');
+let filterDuration3 = document.querySelector('#filter-duration-3');
+
+function filterDuration($bool0 = false, $bool1 = false, $bool2 = false, $bool3 = false) {
+    filterDuration0.checked = $bool0;
+    filterDuration1.checked = $bool1;
+    filterDuration2.checked = $bool2;
+    filterDuration3.checked = $bool3;
+}
+
+if (filter === '19' || filter === null) {
+    filterDuration(true, false, false, false);
+} else if (filter === '13') {
+    filterDuration(false, true, false, false);
+} else if (filter === '36') {
+    filterDuration(false, false, true, false);
+} else if (filter === '69') {
+    filterDuration(false, false, false, true);
 }
 
 

@@ -87,7 +87,7 @@ class InternshipModel extends BaseModel
                         OFFSET :firstResult";
 
         $statement = $this->db->prepare($sql);
-        $statement->bindValue('internshipDuration', $search);
+        $statement->bindValue('internshipDuration', $internshipDuration);
         $statement->bindValue('search', $search);
         $statement->bindValue('limit', $limit, \PDO::PARAM_INT);
         $statement->bindValue('firstResult', $firstResult, \PDO::PARAM_INT);
