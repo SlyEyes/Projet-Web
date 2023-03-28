@@ -50,7 +50,7 @@ class LoginController extends BaseController
         setcookie('TOKEN', $token, time() + 3600 * 24 * 7, '/', '', true, true);
 
         http_response_code(302);
-        header('Location: ' . ($redirect ?? '/profile'));
+        header('Location: ' . ($redirect ?? '/'));
         die();
     }
 }
