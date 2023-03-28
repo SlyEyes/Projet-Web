@@ -119,11 +119,11 @@ section {
 
   @media screen and (max-width: 48rem) {
     width: 30rem;
+    display: grid;
   }
 
   #page-zone {
-    @include flex(row);
-    align-items: center;
+    display: grid;
     margin-top: 1rem;
 
     a {
