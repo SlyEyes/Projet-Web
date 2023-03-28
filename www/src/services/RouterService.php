@@ -133,6 +133,11 @@ class RouterService
             $controller = new api\ApplianceValidationController($this->database);
             return $controller->render();
         });
+
+        $this->klein->respond('GET', '/rgpd', function () {
+            $controller = new controllers\RgpdController($this->blade, $this->database);
+            return $controller->render();
+        });
     }
 
     /**

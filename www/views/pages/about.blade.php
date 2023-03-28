@@ -28,8 +28,10 @@
                 N'hésitez pas à contacter vos tuteurs ou à nous envoyer un mail à l'adresse suivante :
                 <a href="mailto:contact@linked-out.fr "> contact@linked-out.fr </a>
             </p>
-
-            <p><a href="/legal-notice">Mentions Légales </a></p>
+            <p><a href="/legal-notice">Mentions Légales </a>
+            <br><a href="/rgpd">RGPD </a>
+        </p>
+            
         </section>
     </main>
 @endsection
