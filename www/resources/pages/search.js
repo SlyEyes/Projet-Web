@@ -33,6 +33,12 @@ if (window.innerWidth <= mobileWidth) {
 
 
 // This is used to toggle the filter form on mobile
+let filterZone = document.querySelector('#filter-zone');
+
 document.querySelector('#btn-filter').addEventListener('click', function () {
-    document.querySelector('#filters').classList.add('active');
+    if (filterZone.classList.contains('active')) {
+        filterZone.classList.remove('active');
+    } else {
+        filterZone.classList.add('active');
+    }
 });

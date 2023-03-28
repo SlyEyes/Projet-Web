@@ -37,6 +37,10 @@ section {
     #filters {
       @include flex(column);
 
+      h4 {
+        margin: 0;
+      }
+
       .filters-research-type {
         @include flex(row, 0.5rem);
       }
@@ -48,15 +52,16 @@ section {
 
     @media screen and (max-width: 48rem) {
       display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      width: max-content;
+      margin-left: 0;
 
       &.active {
         display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: max-content;
       }
     }
   }
