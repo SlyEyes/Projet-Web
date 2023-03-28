@@ -32,6 +32,7 @@ section {
     @include back-border();
     width: 25rem;
     padding: 1rem 1rem 0 1rem;
+    margin-left: 1rem;
 
     #filters {
       @include flex(column);
@@ -43,6 +44,10 @@ section {
       #filter-search-input {
         display: none;
       }
+    }
+
+    @media screen and (max-width: 48rem) {
+      width: 10rem;
     }
   }
 
@@ -56,6 +61,19 @@ section {
       #search-bar-input {
         width: 25rem;
         margin-right: 1rem;
+
+        @media screen and (max-width: 48rem) {
+          width: 100%;
+          margin-right: 0;
+        }
+      }
+
+      @media screen and (max-width: 48rem) {
+        @include flex(column);
+      }
+
+      @media screen and (max-width: 32rem) {
+        width: 18rem;
       }
     }
 
@@ -90,6 +108,14 @@ section {
           margin: 0;
         }
       }
+    }
+
+    @media screen and (max-width: 48rem) {
+      width: 30rem;
+    }
+
+    @media screen and (max-width: 32rem) {
+      width: 18rem;
     }
   }
 
