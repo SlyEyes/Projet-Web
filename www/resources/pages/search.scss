@@ -2,157 +2,123 @@
 @import '../components/navbar';
 
 @mixin flex($direction, $spacing: 1rem) {
-  display: flex;
-  flex-direction: $direction;
-  gap: $spacing;
+    display: flex;
+    flex-direction: $direction;
+    gap: $spacing;
 }
 
 @mixin back-border($color: var(--light-gray), $width: 10px, $radius: 10px) {
-  background-color: $color;
-  border: $color solid $width;
-  border-radius: $radius;
-}
-
-main {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-
-  @media screen and (max-width: 32rem) {
-    min-height: calc(100vh - 4rem);
-  }
+    background-color: $color;
+    border: $color solid $width;
+    border-radius: $radius;
 }
 
 section {
-  @include flex(row);
-  width: 50rem;
-
-  #filter-zone {
-    @include flex(column, 0);
-    @include back-border();
-    width: 25rem;
-    padding: 1rem 1rem 0 1rem;
-    margin-left: 1rem;
-
-    #filters {
-      @include flex(column);
-
-      h4 {
-        margin: 0;
-      }
-
-      .filters-research-type {
-        @include flex(row, 0.5rem);
-      }
-
-      #filter-search-input {
-        display: none;
-      }
-    }
+    display: flex;
+    max-width: 48rem;
+    gap: 2rem;
+    width: 100%;
 
     @media screen and (max-width: 48rem) {
-      display: none;
-      margin-left: 0;
-
-      &.active {
-        display: block;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        width: max-content;
-      }
+        width: 32rem;
+        display: grid;
     }
-  }
+}
 
-  #search-zone {
-    @include flex(column);
+#filters {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background-color: var(--light-gray);
+    height: fit-content;
+    width: 12rem;
+}
 
-    #search-bar {
-      @include flex(row, 0);
-      margin: 0;
+.filter-category {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
 
-      #search-bar-input {
-        width: 25rem;
-        margin-right: 1rem;
-
-        @media screen and (max-width: 48rem) {
-          width: 100%;
-        }
-      }
-    }
-  }
-
-  #results-list {
-    @include flex(column);
-    margin: 0;
-    padding: 0;
+#results-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     width: 100%;
-    height: 24.5rem;
+}
 
-    .result {
-      @include flex(column);
-      @include back-border();
-      list-style: none;
+#search-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+}
 
-      a {
-        text-decoration: none;
-        color: var(--black);
-      }
+#search-bar-input {
+    width: 100%;
+}
 
-      img {
-        width: 67.5px;
-        height: 67.5px;
-        border-radius: 10px;
-      }
+#results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
 
-      #company {
-        @include flex(row);
-      }
+.internship-result {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 1rem;
+    background-color: var(--light-gray);
+    color: inherit;
+    text-decoration: none;
+}
 
-      p {
-        margin: 0;
-      }
+.internship-description {
+    max-height: 2.6rem;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
+
+.company-result {
+    display: flex;
+    gap: .5rem;
+    width: 100%;
+    border-radius: 1rem;
+    background-color: var(--light-gray);
+    color: inherit;
+    text-decoration: none;
+
+    img {
+        height: 5rem;
+        width: 5rem;
+        border-radius: .5rem;
     }
-  }
+}
 
-  @media screen and (max-width: 48rem) {
-    width: 30rem;
-    display: grid;
-  }
-
-  #page-zone {
-    @include flex(row, 1rem);
+.company-information {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
+    gap: .5rem;
+    width: 100%;
+    height: 100%;
+}
 
-    .btn-primary {
-      width: 110px;
-    }
+#page-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
 
     a {
-      text-decoration: none;
-      text-align: center;
+        color: var(--white);
+        text-decoration: none;
     }
-  }
-
-  #btn-filter {
-    display: none;
-    position: fixed;
-    width: max-content;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-
-    @media screen and (max-width: 48rem) {
-      display: block;
-    }
-
-    @media screen and (max-width: 32rem) {
-      bottom: 5rem;
-    }
-  }
 }
