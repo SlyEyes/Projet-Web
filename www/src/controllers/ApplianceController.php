@@ -14,6 +14,7 @@ class ApplianceController extends BaseController
     protected ?entities\ApplianceEntity $appliance = null;
     protected ?entities\CompanyEntity $company = null;
     protected ?entities\PersonEntity $person = null;
+    protected ?entities\RatingEntity $rating = null;
 
     /**
      * The setter for the route parameters
@@ -56,21 +57,30 @@ class ApplianceController extends BaseController
         $applianceModel = new models\ApplianceModel($this->database);
         $this->appliance = $applianceModel->getApplianceById($this->person->id, $this->internship->id);
 
+        $ratingModel = new models\RatingModel($this->database);
+        if ($this->appliance && $this->appliance->validation)
+            $this->rating = $ratingModel->getRatingForUserInternship($this->person->id, $this->internship->id);
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $postulate = !empty($_POST['postulate']) && $_POST['postulate'] == 'on';
             $response = !empty($_POST['response']) && $_POST['response'] == 'on';
+            $rate = !empty($_POST['rate']) ? (int)$_POST['rate'] : null;
 
-            if (!$postulate && !$response)
+            if (!$postulate && !$response && !$rate)
                 $error = 'Aucune action spécifiée.';
 
-            if ($postulate && $response)
-                $error = 'Vous ne pouvez pas postuler et signaler une réponse à la fois.';
+            // check if more than one action is specified
+            if ($postulate + $response + !!$rate > 1)
+                $error = 'Vous ne pouvez pas effectuer plusieurs action à la fois.';
 
             if (empty($error) && $postulate)
                 $error = $this->handleAppliance();
 
             if (empty($error) && $response)
                 $error = $this->handleResponse();
+
+            if (empty($error) && $rate)
+                $error = $this->handleRating($rate);
         }
 
         return $this->blade->make('pages.appliance', [
@@ -78,6 +88,7 @@ class ApplianceController extends BaseController
             'company' => $this->company,
             'internship' => $this->internship,
             'appliance' => $this->appliance,
+            'rating' => $this->rating,
             'error' => $error ?? null,
         ]);
     }
@@ -129,6 +140,30 @@ class ApplianceController extends BaseController
 
         $this->appliance->responseDate = new \DateTime();
         $applianceModel->updateAppliance($this->appliance);
+
+        return null;
+    }
+
+    /**
+     * Handles the rating of the internship
+     * @param int $rate The rating
+     * @return string|null The error message, or null if no error
+     */
+    private function handleRating(int $rate): ?string
+    {
+        if ($rate < 1 || $rate > 5)
+            return 'La note doit être comprise entre 1 et 5.';
+
+        $ratingModel = new models\RatingModel($this->database);
+
+        if ($this->rating) {
+            $this->rating->rating = $rate;
+            $ratingModel->updateRating($this->rating, $this->person->id, $this->internship->id);
+        } else {
+            $this->rating = new entities\RatingEntity();
+            $this->rating->rating = $rate;
+            $ratingModel->createRating($this->rating, $this->person->id, $this->internship->id);
+        }
 
         return null;
     }

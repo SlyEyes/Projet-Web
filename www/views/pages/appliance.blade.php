@@ -7,6 +7,8 @@
 
 @section('head')
     @pagestyle('appliance')
+    @pagescript('appliance')
+    @componentscript('grade')
 @endsection
 
 
@@ -34,7 +36,16 @@
                 </div>
             @endif
 
-            @if ($appliance && $appliance->applianceDate)
+            @if ($appliance && $appliance->validation)
+                Ce stage a été validé par votre tuteur. Vous pouvez désormais le noter.
+                <form method="post" id="rate-form">
+                    @include('components.grade.select', [
+                        'name' => 'rate',
+                        'value' => !empty($rating) ? $rating->rating : null,
+                    ])
+                </form>
+                <button class="btn btn-primary" form="rate-form" disabled>Valider la note</button>
+            @elseif ($appliance && $appliance->applianceDate)
                 <h3>Candidature</h3>
 
                 <div>
