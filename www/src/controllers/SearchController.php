@@ -12,7 +12,7 @@ class SearchController extends BaseController
         $method = $_SERVER['REQUEST_METHOD'];
 
         $page = (int) ($_GET['page'] ?? 1);
-        $limit = 5;
+        $limit = 4;
         $firstResult = ($page - 1) * $limit;
 
         $search = $_GET['q'] ?? null;
