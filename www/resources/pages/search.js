@@ -54,13 +54,13 @@ function navigateToPage(gap) {
     window.location.search = url.searchParams.toString();
 }
 
-document.querySelector('#pages-backward').addEventListener('click', function (e) {
+document.querySelector('#pages-backward')?.addEventListener('click', function (e) {
     if (e.target.disabled)
         return;
     navigateToPage(-1);
 });
 
-document.querySelector('#pages-forward').addEventListener('click', function (e) {
+document.querySelector('#pages-forward')?.addEventListener('click', function (e) {
     if (e.target.disabled)
         return;
     navigateToPage(1);
