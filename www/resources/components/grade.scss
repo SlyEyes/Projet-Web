@@ -1,0 +1,15 @@
+.star {
+    height: 2rem;
+    width: 2rem;
+}
+
+.grade-select {
+    display: flex;
+    align-items: center;
+
+    .star {
+        width: 2.25rem;
+        cursor: pointer;
+        padding: 0 .125rem;
+    }
+}
