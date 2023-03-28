@@ -228,7 +228,8 @@ CREATE TABLE `persons` (
   `roleId` int NOT NULL,
   PRIMARY KEY (`personId`),
   KEY `persons_roles_FK` (`roleId`),
-  CONSTRAINT `persons_roles_FK` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`)
+  CONSTRAINT `persons_roles_FK` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`),
+  CONSTRAINT `persons_email_uindex` UNIQUE (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
