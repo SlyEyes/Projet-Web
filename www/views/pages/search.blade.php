@@ -42,20 +42,16 @@
                     <div class="filter-category">
                         <div class="bold">Durée</div>
                         <div class="checkbox">
-                            <input id="filter-duration-0" type="checkbox" value="one-to-three">
+                            <input id="filter-duration-0" name="f" type="radio" value="13">
                             <label for="filter-duration-0">De 1 à 3 mois</label>
                         </div>
                         <div class="checkbox">
-                            <input id="filter-duration-1" type="checkbox" value="three-to-six">
+                            <input id="filter-duration-1" name="f" type="radio" value="36">
                             <label for="filter-duration-1">De 3 à 6 mois</label>
                         </div>
                         <div class="checkbox">
-                            <input id="filter-duration-2" type="checkbox" value="six-to-nine">
-                            <label for="filter-duration-2">De 6 à 9 mois</label>
-                        </div>
-                        <div class="checkbox">
-                            <input id="filter-duration-3" type="checkbox" value="nine-to-twelve">
-                            <label for="filter-duration-3">De 9 à 12 mois</label>
+                            <input id="filter-duration-2" name="f" type="radio" value="69">
+                            <label for="filter-duration-2">De 6 mois à +</label>
                         </div>
                     </div>
                 </form>

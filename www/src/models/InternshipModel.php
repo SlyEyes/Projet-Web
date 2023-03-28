@@ -49,9 +49,11 @@ class InternshipModel extends BaseModel
         return new InternshipEntity($result);
     }
 
-    public function getInternshipsBySearch($search, $limit,$firstResult): array
+    public function getInternshipsBySearch($search, $limit,$firstResult, $f): array
     {
-        $sql = 'SELECT internships.internshipId, 
+        $internshipDuration = 'ROUND((DATEDIFF(internships.internshipEndDate, internships.internshipBeginDate) + 1) / 30)';
+
+        $sql = "SELECT internships.internshipId, 
                             internships.internshipTitle,
                             internships.internshipDescription, 
                             internships.internshipSkills, 
@@ -61,6 +63,8 @@ class InternshipModel extends BaseModel
                             internships.internshipEndDate, 
                             internships.numberPlaces, 
                             internships.maskedInternship,
+                            :internshipDuration
+                                AS internshipDuration,
                             companies.companyId,
                             companies.companyName,
                             cities.cityId,
@@ -75,14 +79,20 @@ class InternshipModel extends BaseModel
                             maskedInternship = 0 AND
                             maskedCompany = 0 AND
                             MATCH(internshipTitle) AGAINST(:search) OR
-                            MATCH(internshipSkills) AGAINST(:search)
+                            MATCH(internshipSkills) AGAINST(:search) AND
+                            :internshipDuration >= :f0 AND
+                            :internshipDuration <= :f1
+                        ORDER BY scoreInternshipTitle DESC, scoreInternshipSkills DESC
                         LIMIT :limit
-                        OFFSET :firstResult';
+                        OFFSET :firstResult";
 
         $statement = $this->db->prepare($sql);
+        $statement->bindValue('internshipDuration', $search);
         $statement->bindValue('search', $search);
         $statement->bindValue('limit', $limit, \PDO::PARAM_INT);
         $statement->bindValue('firstResult', $firstResult, \PDO::PARAM_INT);
+        $statement->bindValue('f0', $f[0], \PDO::PARAM_INT);
+        $statement->bindValue('f1', $f[1], \PDO::PARAM_INT);
         $statement->execute();
 
         $result = $statement->fetchAll();

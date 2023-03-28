@@ -8,7 +8,7 @@ class SearchController extends BaseController
 {
     public function render(): string
     {
-        $url = $_SERVER['REQUEST_URI'];
+        $complete_url = $_SERVER['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
 
         $page = (int) ($_GET['page'] ?? 1);
@@ -17,6 +17,7 @@ class SearchController extends BaseController
 
         $search = $_GET['q'] ?? null;
         $target = $_GET['target'] ?? 'internships';
+        $f = str_split($_GET['f'] ?? '19');
 
         $companyModel = new models\CompanyModel($this->database);
         $internshipModel = new models\InternshipModel($this->database);
@@ -24,10 +25,10 @@ class SearchController extends BaseController
         $personModel = new models\PersonModel($this->database);
         $person = $personModel->getPersonFromJwt();
 
-        $url = str_replace("&page=$page", '', $url);
-
         if ($page < 1)
             $page = 1;
+
+        $url = str_replace("&page=$page", '', $complete_url);
 
         if ($person === null) {
             header("Location: /login?r=/search?q=$search&target=internships");
@@ -36,7 +37,7 @@ class SearchController extends BaseController
 
         if ($method == 'GET' && !empty($search)) {
             if ($target == 'internships')
-                $results = $internshipModel->getInternshipsBySearch($search, $limit, $firstResult);
+                $results = $internshipModel->getInternshipsBySearch($search, $limit, $firstResult, $f);
             else if ($target == 'companies')
                 $results = $companyModel->getCompaniesBySearch($search, $limit, $firstResult);
             else
