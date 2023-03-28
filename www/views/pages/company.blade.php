@@ -47,7 +47,19 @@
                 </div>
             </div>
 
-            {{-- TODO: global rating --}}
+            <div class="average-rating">
+                @if ($averageRating > 0)
+                    @include('components.grade.display', [
+                        'value' => $averageRating,
+                    ])
+
+                    <h3>
+                        {{ number_format($averageRating, 1, ',', ' ') }} / 5
+                    </h3>
+                @else
+                    Aucune note
+                @endif
+            </div>
 
             @if(count($internships) > 0)
                 <div class="company-section">

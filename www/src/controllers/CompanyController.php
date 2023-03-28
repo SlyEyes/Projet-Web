@@ -42,6 +42,15 @@ class CompanyController extends BaseController
         $internshipModel = new models\InternshipModel($this->database);
         $internships = $internshipModel->getInternshipsByCompanyId($this->id);
 
+        $ratingModel = new models\RatingModel($this->database);
+        $ratings = $ratingModel->getRatingsForCompany($this->id);
+        if ($ratings) {
+            $averageRating = array_sum(array_map(fn($rating) => $rating->rating, $ratings)) / count($ratings);
+            $averageRating = round($averageRating, 1);
+        } else {
+            $averageRating = 0;
+        }
+
         $cities = array_map(fn($internship) => $internship->city->name, $internships);
         $cities = array_unique($cities);
         $cities = implode(', ', $cities);
@@ -59,6 +68,7 @@ class CompanyController extends BaseController
             'company' => $company,
             'internships' => $internships,
             'cities' => $cities,
+            'averageRating' => $averageRating,
         ]);
     }
 }

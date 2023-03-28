@@ -35,6 +35,32 @@ class RatingModel extends BaseModel
     }
 
     /**
+     * Get all ratings for a specific company
+     * @param int $companyId
+     * @return RatingEntity[]|null
+     */
+    public function getRatingsForCompany(int $companyId): ?array
+    {
+        $sql = "SELECT rating.rate,
+                        rating.ratingId
+                FROM rating
+                INNER JOIN appliance ON rating.ratingId = appliance.ratingId
+                INNER JOIN internships on appliance.internshipId = internships.internshipId
+                INNER JOIN persons on appliance.personId = persons.personId
+                WHERE internships.companyId = :companyId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            'companyId' => $companyId
+        ]);
+        $result = $stmt->fetchAll();
+
+        if (!$result)
+            return null;
+
+        return array_map(fn($rating) => new RatingEntity($rating), $result);
+    }
+
+    /**
      * Create a rating for a specific person - internship combo
      * @param RatingEntity $rating The rating to create. The ID will be set to the newly created ID
      * @param int $personId The ID of the person
