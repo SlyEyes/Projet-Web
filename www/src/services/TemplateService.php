@@ -49,5 +49,9 @@ class TemplateService
         $this->blade->directive('pagescript', function ($expression) {
             return "<?php echo '<script src=\"/resources/pages/' . {$expression} . '.js\" defer></script>'; ?>";
         });
+
+        $this->blade->directive('componentscript', function ($expression) {
+            return "<?php echo '<script src=\"/resources/components/' . {$expression} . '.js\" defer></script>'; ?>";
+        });
     }
 }
