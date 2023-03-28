@@ -89,6 +89,8 @@
                             @foreach ($results as $result)
                                 <a href="/internship/{{ $result->id }}" class="internship-result">
                                     <div>
+                                        <img src="{{ $result->companyLogo }}" alt="{{ $result->name }} logo">
+
                                         <div class="bold">{{ $result->title }}</div>
                                         <div class="small">
                                             {{ TimeUtil::calculateDuration($result->beginDate, $result->endDate) }}

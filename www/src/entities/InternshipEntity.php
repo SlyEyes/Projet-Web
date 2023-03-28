@@ -18,6 +18,7 @@ class InternshipEntity
     public bool $masked;
     public ?string $companyName;
     public int $companyId;
+    public ?string $companyLogo;
     public CityEntity $city;
 
     // This function is used to create a new InternshipEntity object
@@ -40,6 +41,8 @@ class InternshipEntity
             $this->companyName = $rawData['companyName'];
         if (isset($rawData['companyId']))
             $this->companyId = (int)$rawData['companyId'];
+        if (isset($rawData['companyLogo']))
+            $this->companyLogo = $rawData['companyLogo'];
         $this->city = new CityEntity($rawData);
     }
 }
