@@ -67,7 +67,11 @@ class CompanyModel extends BaseModel
                             companies.companyEmail,
                             companies.companyTrustRating,
                             companies.acceptedCesiStudents,
-                            (SELECT COUNT(*) FROM internships WHERE internships.companyId = companies.companyId) AS internshipCount
+                            (SELECT COUNT(*) 
+                             FROM internships 
+                             WHERE internships.companyId = companies.companyId 
+                               AND maskedInternship = 0
+                             ) AS internshipCount
                         FROM companies
                         WHERE companies.companyId = :id';
         $statement = $this->db->prepare($sql_request);
