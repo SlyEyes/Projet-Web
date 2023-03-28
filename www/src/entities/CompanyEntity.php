@@ -14,6 +14,7 @@ class CompanyEntity
     public ?int $internshipCount = null;
     public string $email;
     public int $cesiStudents;
+    public int $trustRating;
 
     // This function is used to create a new CompanyEntity object
     public function __construct(?array $rawData = null)
@@ -31,5 +32,6 @@ class CompanyEntity
             $this->internshipCount = (int)$rawData['internshipCount'];
         $this->email = $rawData['companyEmail'];
         $this->cesiStudents = $rawData['acceptedCesiStudents'];
+        $this->trustRating = $rawData['companyTrustRating'];
     }
 }

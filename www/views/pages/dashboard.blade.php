@@ -5,6 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" async></script>
     @pagestyle('dashboard')
     @pagescript('dashboard')
+    @componentscript('grade')
 @endsection
 
 

@@ -311,3 +311,25 @@ if (window.location.href.match(/\/students\/\d+$/)) {
         });
     });
 }
+
+
+// Show an alert popup if the company trust rating is not defined
+if (window.location.href.match(/\/companies\/(new|\d+)$/)) {
+    const ratingInput = document.querySelector('input[name="trust-rating"]');
+    const form = document.getElementById('content-edit');
+
+    form.addEventListener('submit', async e => {
+        const value = parseInt(ratingInput.value);
+
+        if (!isNaN(value) && value >= 1 && value <= 5)
+            return;
+
+        e.preventDefault();
+        Swal.fire({
+            title: 'Note requise',
+            text: 'Vous devez attribuer une note de confiance à cette entreprise',
+            icon: 'error',
+            iconColor: 'var(--red)',
+        });
+    });
+}

@@ -21,6 +21,7 @@ class CompanyModel extends BaseModel
                     companies.companyWebsite,
                     companies.maskedCompany,
                     companies.companyEmail,
+                    companies.companyTrustRating,
                     companies.acceptedCesiStudents,
                     MATCH(companyName) AGAINST(:search) as scoreCompanyName,
                     MATCH(companySector) AGAINST(:search) as scoreCompanySector
@@ -64,6 +65,7 @@ class CompanyModel extends BaseModel
                             companies.companyWebsite, 
                             companies.maskedCompany,
                             companies.companyEmail,
+                            companies.companyTrustRating,
                             companies.acceptedCesiStudents,
                             (SELECT COUNT(*) FROM internships WHERE internships.companyId = companies.companyId) AS internshipCount
                         FROM companies
@@ -97,6 +99,7 @@ class CompanyModel extends BaseModel
                             companies.companyWebsite,
                             companies.companyEmail,
                             companies.acceptedCesiStudents,
+                            companies.companyTrustRating,
                             companies.maskedCompany
                         FROM companies
                         WHERE companyName = :name';
@@ -129,6 +132,7 @@ class CompanyModel extends BaseModel
                             companies.companyWebsite,
                             companies.companyEmail,
                             companies.acceptedCesiStudents,
+                            companies.companyTrustRating,
                             companies.maskedCompany
                         FROM companies
                         WHERE companySector = :sector';
@@ -161,6 +165,7 @@ class CompanyModel extends BaseModel
                     companies.companyWebsite,
                     companies.companyEmail,
                     companies.acceptedCesiStudents,
+                    companies.companyTrustRating,
                     companies.maskedCompany
                 FROM companies
                 LIMIT :limit 
@@ -184,10 +189,18 @@ class CompanyModel extends BaseModel
      */
     public function createCompany(CompanyEntity $newCompany): int
     {
-        $sql = 'INSERT INTO companies 
-                    (companyLogo, companyName, companySector, companyWebsite, companyEmail, acceptedCesiStudents, maskedCompany) 
+        $sql = 'INSERT INTO companies (
+                       companyLogo, 
+                       companyName, 
+                       companySector, 
+                       companyWebsite, 
+                       companyEmail, 
+                       acceptedCesiStudents,
+                       companyTrustRating,
+                       maskedCompany
+                   ) 
                 VALUES 
-                    (:logo, :name, :sector, :website, :email, :cesiStudents, :masked)';
+                    (:logo, :name, :sector, :website, :email, :cesiStudents, :trustRating, :masked)';
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindValue(':logo', $newCompany->logo);
@@ -196,6 +209,7 @@ class CompanyModel extends BaseModel
         $stmt->bindValue(':website', $newCompany->website);
         $stmt->bindValue(':email', $newCompany->email);
         $stmt->bindValue(':cesiStudents', $newCompany->cesiStudents, PDO::PARAM_INT);
+        $stmt->bindValue(':trustRating', $newCompany->trustRating, PDO::PARAM_INT);
         $stmt->bindValue(':masked', $newCompany->masked, PDO::PARAM_BOOL);
 
         $stmt->execute();
@@ -216,6 +230,7 @@ class CompanyModel extends BaseModel
                     companySector = :sector, 
                     companyWebsite = :website,
                     acceptedCesiStudents = :cesiStudents,
+                    companyTrustRating = :trustRating,
                     maskedCompany = :masked,
                     companyEmail = :email
                 WHERE companyId = :id';
@@ -227,6 +242,7 @@ class CompanyModel extends BaseModel
         $stmt->bindValue(':sector', $company->sector);
         $stmt->bindValue(':website', $company->website);
         $stmt->bindValue(':cesiStudents', $company->cesiStudents, PDO::PARAM_INT);
+        $stmt->bindValue(':trustRating', $company->trustRating, PDO::PARAM_INT);
         $stmt->bindValue(':masked', $company->masked, PDO::PARAM_BOOL);
         $stmt->bindValue(':email', $company->email);
 

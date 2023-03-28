@@ -53,3 +53,13 @@
         </div>
     </div>
 </div>
+
+<div class="field-group">
+    <div>
+        <label>Note de confiance</label>
+        @include('components.grade.select', [
+            'name' => 'trust-rating',
+            'value' => $data->trustRating ?? null,
+        ])
+    </div>
+</div>
