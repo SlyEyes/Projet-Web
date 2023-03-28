@@ -118,26 +118,26 @@ CREATE TABLE `companies` (
 -- Dumping data for table `companies`
 --
 
-INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
+INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail, acceptedCesiStudents)
     VALUES ('data:image/png;base64,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',
-            'Crédit Agricole', 'Bancaire', 'https://www.credit-agricole.fr/', 0, 'contact@credit-agricole.fr');
-INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
+            'Crédit Agricole', 'Bancaire', 'https://www.credit-agricole.fr/', 0, 'contact@credit-agricole.fr', 0);
+INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail, acceptedCesiStudents)
     VALUES ('https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK',
-            'Google', 'Informatique', 'https://careers.google.com/jobs/results/', 0, 'contact@google.com');
-INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
+            'Google', 'Informatique', 'https://careers.google.com/jobs/results/', 0, 'contact@google.com', 0);
+INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail, acceptedCesiStudents)
     VALUES ('https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?202303160802',
-            'Apple', 'Informatique', 'https://jobs.apple.com/fr-fr/search?location=france-FRAC', 0, 'contact@apple.com');
-INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
+            'Apple', 'Informatique', 'https://jobs.apple.com/fr-fr/search?location=france-FRAC', 0, 'contact@apple.com', 0);
+INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail, acceptedCesiStudents)
     VALUES ('https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Facebook-icon-1.png/640px-Facebook-icon-1.png',
             'Facebook', 'Informatique',
             'https://www.metacareers.com/areas-of-work/Facebook%20App/?p[divisions][0]=Facebook&divisions[0]=Facebook',
-            'contact@facebook.com', 0);
-INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
+            'contact@facebook.com', 0, 0);
+INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail, acceptedCesiStudents)
     VALUES ('https://s3-symbol-logo.tradingview.com/amazon--600.png',
-            'Amazon', 'Informatique', 'https://www.amazon.jobs/fr', 0, 'contact@amazon.com');
-INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail)
+            'Amazon', 'Informatique', 'https://www.amazon.jobs/fr', 0, 'contact@amazon.com', 0);
+INSERT INTO linkedout.companies (companyLogo, companyName, companySector, companyWebsite, maskedCompany, companyEmail, acceptedCesiStudents)
     VALUES ('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAADgCAMAAAAt85rTAAAARVBMVEXzUyWBvAYFpvD/ugj/////+ff//fbzTBf4nIX7/fa113j2/P8Ao/D/uAD/1Xl4yvb8/vryRAB4uAD7w7TS56ys3vn/5q1vYD6GAAABKElEQVR4nO3PSQrCUABEwa9mVpM43v+obiSia2lIqAe9bqqUVG1XV+/64bpLFfMBAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgL+E9imuvwCMytdrNsCnO9DrFLnqpbmPlapNh7g2gNce4Brb/vAY67P69zEKlOsxyKcn2Oscoo1LcBmPMcq+1TfwEMqQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEDANQJfDICe0X+So2cAAAAASUVORK5CYII=',
-            'Microsoft', 'Informatique', 'https://careers.microsoft.com/us/en', 0, 'contact@microsoft.com');
+            'Microsoft', 'Informatique', 'https://careers.microsoft.com/us/en', 0, 'contact@microsoft.com', 0);
 
 --
 -- Altering table `companies` to add FULLTEXT index
