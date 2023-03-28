@@ -47,6 +47,26 @@ document.querySelector('#search-bar-input').addEventListener('input', function (
 });
 
 
+// Page navigation
+function navigateToPage(gap) {
+    const page = parseInt(url.searchParams.get('page') || '1') + gap;
+    url.searchParams.set('page', String(page));
+    window.location.search = url.searchParams.toString();
+}
+
+document.querySelector('#pages-backward').addEventListener('click', function (e) {
+    if (e.target.disabled)
+        return;
+    navigateToPage(-1);
+});
+
+document.querySelector('#pages-forward').addEventListener('click', function (e) {
+    if (e.target.disabled)
+        return;
+    navigateToPage(1);
+});
+
+
 // This is used to toggle the filter form on mobile
 let filterZone = document.querySelector('#filter-zone');
 

@@ -187,6 +187,34 @@ section {
     }
 }
 
+.navigation-btn {
+    display: grid;
+    place-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    border-radius: .5rem;
+    background-color: var(--violet);
+    color: var(--white);
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--dark-violet);
+    }
+
+    &:disabled {
+        background-color: var(--dark-violet);
+        cursor: not-allowed;
+    }
+
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+}
+
 #btn-filter {
     display: none;
 

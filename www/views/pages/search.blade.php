@@ -139,11 +139,21 @@
                     @endif
                 </div>
 
-                <div id="page-zone">
-                    <a class="btn-primary" href="{{ $url }}@if ($page != 1)&page={{$page - 1}}@endif">Précédent</a>
-                    <p>Page {{ $page }}</p>
-                    <a class="btn-primary" href="{{ $url }}&page={{ $page + 1 }}">Suivant</a>
-                </div>
+                @if((!empty($results) && count($results) > 4) || $page > 1)
+                    <div id="page-zone">
+                        <button class="navigation-btn"
+                                {{ $page < 2 ? 'disabled' : '' }}
+                                id="pages-backward">
+                            <img src="/public/icons/chevron-left-white.svg" alt="Précédent">
+                        </button>
+                        <p>Page {{ $page }}</p>
+                        <button class="navigation-btn"
+                                {{ empty($result) || count($result) < 4 ? 'disabled' : '' }}
+                                id="pages-forward">
+                            <img src="/public/icons/chevron-right-white.svg" alt="Suivant">
+                        </button>
+                    </div>
+                @endif
             </div>
         </section>
     </main>
