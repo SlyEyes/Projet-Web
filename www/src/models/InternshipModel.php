@@ -136,7 +136,7 @@ class InternshipModel extends BaseModel
     }
 
     /**
-     * This function is used to get an internship from the database
+     * This function is used to get all available internships from a company. Do not return masked internships
      * @param $id int The id of a company
      * @return array all internships from a company
      */
@@ -162,7 +162,7 @@ class InternshipModel extends BaseModel
                 FROM internships
                 INNER JOIN cities ON internships.cityId = cities.cityId
                 INNER JOIN companies ON internships.companyId = companies.companyId
-                WHERE companies.companyId = :id';
+                WHERE companies.companyId = :id AND internships.maskedInternship = 0';
         $statement = $this->db->prepare($sql_request);
         $statement->execute([
             'id' => $id,
