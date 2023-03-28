@@ -136,6 +136,8 @@
                     <a class="btn-primary" href="{{ $url }}&page={{ $page + 1 }}">Suivant</a>
                 </div>
             </div>
+
+            <button id="btn-filter" class="btn-primary">Filtres</button>
         </section>
     </main>
 @endsection
