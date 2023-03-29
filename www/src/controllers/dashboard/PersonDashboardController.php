@@ -127,8 +127,10 @@ class PersonDashboardController extends BaseDashboardController
             $newPerson->firstName = $_POST['firstname'];
             $newPerson->lastName = $_POST['lastname'];
             $newPerson->email = $_POST['email'];
-            if (!empty($_POST['password']))
+            if (!empty($_POST['password'])) {
                 $newPerson->password = $_POST['password'];
+                $newPerson->passwordChanged = false;
+            }
             $newPerson->role = RoleEnum::fromValue(substr($this->collection->value, 0, -1));
 
             $this->database->beginTransaction();

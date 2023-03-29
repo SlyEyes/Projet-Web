@@ -30,12 +30,20 @@
         <input class="input-field" type="email" name="email" id="email" value="{{ $data->email ?? null }}" required>
     </div>
 
-    @if($layout == 'create')
-        <div>
-            <label for="password">Mot de passe provisoire</label>
-            <input class="input-field" type="password" name="password" id="password" required>
-        </div>
-    @endif
+    <div>
+        <label for="password">
+            @if($layout == 'create')
+                Mot de passe provisoire
+            @else
+                Nouveau mot de passe provisoire
+            @endif
+        </label>
+        <input class="input-field"
+               type="password"
+               name="password"
+               id="password"
+               {{ $layout == 'create' ? 'required' : '' }}>
+    </div>
 </div>
 
 @if($collection == 'students')
