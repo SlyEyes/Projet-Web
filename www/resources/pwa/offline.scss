@@ -3,3 +3,19 @@
 .error-section {
     gap: .5rem;
 }
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1rem;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    background-color: var(--white);
+}

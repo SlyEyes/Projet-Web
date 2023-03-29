@@ -30,6 +30,17 @@
     }
 
     const USER_LOGGED_IN = {{ $person ? 'true' : 'false' }};
+    const ROLE = '{{ !empty($person) ? $person->role->value : '' }}';
+
+    if (USER_LOGGED_IN && ROLE === 'student')
+        fetch('/api/offline', { credentials: 'include' })
+            .then(res => res.json())
+            .then(({ data }) => {
+                if (data)
+                    window.localStorage.setItem('offline', JSON.stringify(data));
+            });
+    else
+        window.localStorage.removeItem('offline');
 </script>
 </body>
 </html>

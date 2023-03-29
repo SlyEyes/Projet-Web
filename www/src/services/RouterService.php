@@ -123,6 +123,11 @@ class RouterService
             return $controller->render();
         });
 
+        $this->klein->respond('GET', '/api/offline', function () {
+            $controller = new api\OfflineController($this->database);
+            return $controller->render();
+        });
+
         $this->klein->respond(array('POST', 'DELETE'), '/api/wishlist/[i:id]', function ($request) {
             $controller = new api\WishlistController($this->database);
             $controller->setRouteParams($request->id);
