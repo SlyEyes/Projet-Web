@@ -166,6 +166,55 @@ class PersonDashboardController extends BaseDashboardController
 
     protected function handleDelete(): ?string
     {
-        return 'Not implemented yet';
+        $promotionModel = new models\PromotionModel($this->database);
+        $personModel = new models\PersonModel($this->database);
+        $applianceModel = new models\ApplianceModel($this->database);
+
+        if ($this->collection != DashboardCollectionEnum::STUDENTS && $this->collection != DashboardCollectionEnum::TUTORS)
+            return 'Seuls les étudiants et les tuteurs peuvent être supprimés';
+
+
+        if ($this->collection == DashboardCollectionEnum::STUDENTS) {
+            $invalidAppliances = $applianceModel->getAppliancesByPersonId($this->elementId);
+            if (!empty($invalidAppliances) && count($invalidAppliances) > 0)
+                return 'Impossible de supprimer un étudiant qui a postulé à des stages';
+
+            $validAppliances = $applianceModel->getAppliancesByPersonId($this->elementId, true);
+            if (!empty($validAppliances) && count($validAppliances) > 0)
+                return 'Impossible de supprimer un étudiant qui a été accepté sur un stage';
+
+            $this->database->beginTransaction();
+
+            try {
+                $personPromotion = $promotionModel->getPromotionForStudentId($this->elementId);
+                if (!empty($personPromotion))
+                    $promotionModel->removePromotionForStudentId($this->elementId, $personPromotion->id);
+
+                $wishlist = $applianceModel->getWishlistByPersonId($this->elementId);
+                if (!empty($wishlist))
+                    foreach ($wishlist as $wish)
+                        $applianceModel->deleteAppliance($wish->personId, $wish->internshipId);
+
+                $personModel->deletePerson($this->elementId);
+
+                $this->database->commit();
+            } catch (Exception $e) {
+                $this->database->rollBack();
+                return 'Erreur lors de la suppression de l\'étudiant : ' . $e->getMessage();
+            }
+        } else {
+            $this->database->beginTransaction();
+
+            try {
+                $promotionModel->removePromotionsForTutorId($this->elementId);
+                $personModel->deletePerson($this->elementId);
+                $this->database->commit();
+            } catch (Exception $e) {
+                $this->database->rollBack();
+                return 'Erreur lors de la suppression du tuteur : ' . $e->getMessage();
+            }
+        }
+
+        return null;
     }
 }

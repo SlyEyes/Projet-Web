@@ -23,7 +23,7 @@
                         </a>
                     @else
                         <div class="icon-btn-group">
-                            @if ($layout == 'edit' && $collection == 'internships')
+                            @if ($layout == 'edit' && ($collection == 'students' || $collection == 'tutors' || $collection == 'internships'))
                                 <form method="post">
                                     <input type="hidden" name="delete" value="true">
                                     <button class="icon-btn red-icon-btn" id="delete-btn">

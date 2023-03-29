@@ -213,16 +213,32 @@ if (window.location.href.match(/\/tutors\/(new|\d+)$/)) {
 }
 
 
-// Prompt for delete for internship
-if (window.location.href.match(/\/internships\/\d+$/)) {
+// Prompt for delete for student, tutor, and internship
+if (window.location.href.match(/\/(students|tutors|internships)\/\d+$/)) {
     const deleteButton = document.getElementById('delete-btn');
 
     deleteButton.addEventListener('click', async e => {
         e.preventDefault();
 
+        let title, text;
+        const collection = window.location.href.match(/\/(students|tutors|internships)\//)?.[1];
+        switch (collection) {
+            case 'students':
+                title = 'Êtes-vous sûr de vouloir supprimer cet étudiant ?';
+                text = 'Cette action est irréversible.';
+                break;
+            case 'tutors':
+                title = 'Êtes-vous sûr de vouloir supprimer ce tuteur ?';
+                text = 'Cette action est irréversible. Ses promotions deviendront vacantes';
+                break;
+            case 'internships':
+                title = 'Êtes-vous sûr de vouloir supprimer ce stage ?';
+                text = 'Cette action est irréversible. Il sera supprimé de toutes les wishlists.';
+        }
+
         const { isConfirmed } = await Swal.fire({
-            title: 'Êtes-vous sûr de vouloir supprimer ce stage ?',
-            text: 'Cette action est irréversible. Il sera supprimé de toutes les wishlists.',
+            title,
+            text,
             icon: 'warning',
             iconColor: 'var(--red)',
             showCancelButton: true,

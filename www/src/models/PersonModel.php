@@ -1,5 +1,5 @@
 <?php
-// TODO : modify sql requests to add attributes for promotions and campus
+
 namespace Linkedout\App\models;
 
 use Linkedout\App\entities\PersonEntity;
@@ -194,5 +194,14 @@ class PersonModel extends BaseModel
         $stmt->bindValue('personPasswordChanged', $newPerson->passwordChanged, PDO::PARAM_BOOL);
         $stmt->bindValue('id', $newPerson->id);
         $stmt->execute();
+    }
+
+    public function deletePerson(?int $elementId): bool
+    {
+        $sql = 'DELETE FROM persons WHERE personId = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue('id', $elementId);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 }
