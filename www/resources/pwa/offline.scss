@@ -18,4 +18,8 @@
     padding: 1rem;
     border-radius: .5rem;
     background-color: var(--white);
+
+    @media screen and (max-width: 48rem) {
+        background-color: var(--light-gray);
+    }
 }
