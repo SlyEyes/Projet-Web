@@ -2,7 +2,7 @@
 
 ![Home PC](images/linkedout-home-pc.png)
 
-LinkedOut est un site web pour les étudiants de cESI, afin qu'ils puissent rechercher facilement
+LinkedOut est un site web pour les étudiants de CESI, afin qu'ils puissent rechercher facilement
 un stage. Il permet de rechercher un stage ou une entreprise, voir les détails, postuler, noter.
 
 Les tuteurs peuvent poster les annonces de stage et voir l'état des candidatures des étudiants.
